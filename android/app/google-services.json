@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "754427206411",
+    "project_id": "aura-kart",
+    "storage_bucket": "aura-kart.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754427206411:android:a54584b173dd92ce9ae00e",
+        "android_client_info": {
+          "package_name": "com.example.aurakart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754427206411-2gnooaid0n6t7dg8bhgs9telsbap4pne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aurakart",
+            "certificate_hash": "3b693f25135301fc6146188275ff4bbde3ab14cb"
+          }
+        },
+        {
+          "client_id": "754427206411-rjud8vpht5c9ra69q6i9etfhbof4ugei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aurakart",
+            "certificate_hash": "69956a06246c90311ba44cfe0e64296bf6fff054"
+          }
+        },
+        {
+          "client_id": "754427206411-6jof1s52len8u5osn1g572iu7d69hveh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBappFRRaCsnVpDjmtq92Si2qZx3NAJSNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754427206411-4k5br94l1098g004l5bddpqnf87uodh7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "754427206411-6k3vqkbi9011r9mmq42o9mksjf9e8gs9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.auraKartAdminPanel"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754427206411:android:bccd4a7c3dfdc0119ae00e",
+        "android_client_info": {
+          "package_name": "com.example.aurakart_admin_panel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754427206411-6jof1s52len8u5osn1g572iu7d69hveh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBappFRRaCsnVpDjmtq92Si2qZx3NAJSNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754427206411-4k5br94l1098g004l5bddpqnf87uodh7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "754427206411-6k3vqkbi9011r9mmq42o9mksjf9e8gs9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.auraKartAdminPanel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
