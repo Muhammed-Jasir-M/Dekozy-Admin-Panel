@@ -3,7 +3,6 @@ import 'package:aura_kart_admin_panel/routes/app_routes.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'utils/constants/colors.dart';
 import 'utils/constants/text_strings.dart';
 import 'utils/device/web_material_scroll.dart';
@@ -40,12 +39,12 @@ class ResponsiveDesignScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ASiteTemplate();
+    return const ASiteTemplate(desktop: Desktop(), tablet: Tablet(), mobile: Mobile());
   }
 }
 
-class FirstScreen extends StatelessWidget {
-  const FirstScreen({super.key});
+class Desktop extends StatelessWidget {
+  const Desktop({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +54,19 @@ class FirstScreen extends StatelessWidget {
   }
 }
 
-class SecondScreen extends StatelessWidget {
-  const SecondScreen({super.key});
+class Tablet extends StatelessWidget {
+  const Tablet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('Second Screen'),
+    );
+  }
+}
+
+class Mobile extends StatelessWidget {
+  const Mobile({super.key});
 
   @override
   Widget build(BuildContext context) {
