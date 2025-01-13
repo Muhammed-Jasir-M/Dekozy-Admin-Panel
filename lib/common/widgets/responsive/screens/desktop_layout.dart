@@ -3,13 +3,16 @@ import 'package:aura_kart_admin_panel/common/widgets/layouts/headers/sidebars/si
 import 'package:flutter/material.dart';
 
 class DesktopLayout extends StatelessWidget {
-  const DesktopLayout({super.key, this.body});
+   DesktopLayout({super.key, this.body});
 
   final Widget? body;
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       drawer: Drawer(),
       body: Row(
         children: [
@@ -18,11 +21,7 @@ class DesktopLayout extends StatelessWidget {
             child: Column(
               children: [
                 // Header
-                ARoundedContainer(
-                  width: double.infinity,
-                  height: 70,
-                  backgroundColor: Colors.yellow,
-                ),
+                const AHeader(),
 
                 // Body
                 body ?? SizedBox(),

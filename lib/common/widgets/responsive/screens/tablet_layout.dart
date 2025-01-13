@@ -5,11 +5,14 @@ class TabletLayout extends StatelessWidget {
 
   final Widget? body;
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
-      appBar: AppBar(),
+      key: scaffoldKey,
+      drawer: const Drawer(),
+      appBar: AHeader(scaffoldKey:scaffoldKey),
       body: body ?? const SizedBox(),
     );
   }

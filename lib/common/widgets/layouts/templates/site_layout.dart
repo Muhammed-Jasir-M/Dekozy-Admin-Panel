@@ -28,6 +28,7 @@ class ASiteTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: Container(),
       body: AResponsiveWidget(
         desktop: useLayout ? DesktopLayout(body: desktop) : desktop ?? Container(),
         tablet: useLayout ? TabletLayout(body: tablet ?? desktop) : tablet ?? desktop ?? Container(),
