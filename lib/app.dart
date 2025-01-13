@@ -24,54 +24,12 @@ class MyApp extends StatelessWidget {
         backgroundColor: AColors.primary,
         body: Center(child: CircularProgressIndicator(color: Colors.white)),
       ),
-      initialRoute: ARoutes.firstScreen,
+      initialRoute: ARoutes.login,
       getPages: AAppRoutes.pages,
       unknownRoute: GetPage(
         name: '/page-not-found',
         page: () => const Scaffold(body: Center(child: Text('Page Not Found'))),
       ),
-    );
-  }
-}
-
-class ResponsiveDesignScreen extends StatelessWidget {
-  const ResponsiveDesignScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const ASiteTemplate(desktop: Desktop(), tablet: Tablet(), mobile: Mobile());
-  }
-}
-
-class Desktop extends StatelessWidget {
-  const Desktop({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('First Screen'),
-    );
-  }
-}
-
-class Tablet extends StatelessWidget {
-  const Tablet({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Second Screen'),
-    );
-  }
-}
-
-class Mobile extends StatelessWidget {
-  const Mobile({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Second Screen'),
     );
   }
 }

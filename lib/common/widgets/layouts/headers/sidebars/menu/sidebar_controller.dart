@@ -3,7 +3,7 @@ import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:get/get.dart';
 
 class SidebarController extends GetxController {
-  final activeItem = ARoutes.responsiveDesignTutorialScreen.obs;
+  final activeItem = ARoutes.login.obs;
   final hoverItem = ''.obs;
 
   void changeActiveItems(String route) => activeItem.value = route;
@@ -17,11 +17,10 @@ class SidebarController extends GetxController {
 
   void menuOnTap(String route) {
     if (!isActive(route)) {
-
       changeActiveItems(route);
 
       if (ADeviceUtils.isMobileScreen(Get.context!)) Get.back();
-      
+
       Get.toNamed(route);
     }
   }

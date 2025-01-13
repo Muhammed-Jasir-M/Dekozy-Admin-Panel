@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 
 class RouteObserver extends GetObserver {
   @override
-  void diPop(Route<dynamic>? route, Route<dynamic>? previousRoute) {
+  void didPop(Route<dynamic>? route, Route<dynamic>? previousRoute) {
     final sidebarController = Get.put(SidebarController());
 
     if (previousRoute != null) {
       for (var routeName in ARoutes.sidebarMenuItems) {
-        if(previousRoute.settings.name == routeName) {
+        if (previousRoute.settings.name == routeName) {
           sidebarController.activeItem.value = routeName;
         }
       }

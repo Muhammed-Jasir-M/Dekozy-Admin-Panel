@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TDialogs {
+class ADialogs {
   static defaultDialog({
     required BuildContext context,
     String title = 'Removal Confirmation',

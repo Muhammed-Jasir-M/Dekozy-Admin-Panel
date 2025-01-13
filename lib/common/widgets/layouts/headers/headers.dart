@@ -1,4 +1,7 @@
+import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
+import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
+import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +23,9 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         // mobile
         leading: !ADeviceUtils.isDesktopScreen(context)
-            ? IconButton(onPressed: () => scaffoldKey?.currentState?.openDrawer(), 
-            icon: const Icon(Iconsax.menu))
+            ? IconButton(
+                onPressed: () => scaffoldKey?.currentState?.openDrawer(),
+                icon: const Icon(Iconsax.menu))
             : null,
         // search field
         title: ADeviceUtils.isDesktopScreen(context)
@@ -59,7 +63,7 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
               const SizedBox(width: ASizes.sm),
 
               //name and email
-              if (!Deviceutils.isMobileScreen(context))
+              if (!ADeviceUtils.isMobileScreen(context))
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -85,6 +86,7 @@ class AImageUploader extends StatelessWidget {
                 imageType: imageType,
                 memoryImage: memoryImage,
                 backgroundColor: AColors.primaryBackground,
+                Padding: 1,
               ),
         // Display the edit icon button on top of the image
         Positioned(

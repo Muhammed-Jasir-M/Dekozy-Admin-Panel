@@ -3,10 +3,10 @@ import 'package:aura_kart_admin_panel/common/widgets/layouts/headers/sidebars/si
 import 'package:flutter/material.dart';
 
 class MobileLayout extends StatelessWidget {
-   MobileLayout({super.key, this.body});
+  MobileLayout({super.key, this.body});
 
   final Widget? body;
-  final GlobalKey<ScaffoldState> scaffold = GlobalKey();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -18,4 +18,3 @@ class MobileLayout extends StatelessWidget {
     );
   }
 }
- 

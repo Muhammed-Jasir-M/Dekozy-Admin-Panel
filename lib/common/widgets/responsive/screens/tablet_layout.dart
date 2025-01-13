@@ -1,7 +1,8 @@
+import 'package:aura_kart_admin_panel/common/widgets/layouts/headers/headers.dart';
 import 'package:flutter/material.dart';
 
 class TabletLayout extends StatelessWidget {
-  const TabletLayout({super.key, this.body});
+  TabletLayout({super.key, this.body});
 
   final Widget? body;
 
@@ -12,7 +13,7 @@ class TabletLayout extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       drawer: const Drawer(),
-      appBar: AHeader(scaffoldKey:scaffoldKey),
+      appBar: AHeader(scaffoldKey: scaffoldKey),
       body: body ?? const SizedBox(),
     );
   }

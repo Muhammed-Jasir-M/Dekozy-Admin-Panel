@@ -23,13 +23,18 @@ class AMenuItem extends StatelessWidget {
 
     return InkWell(
       onTap: () => menuController.menuOnTap(route),
-       onHover: (hovering) => hovering ? menuController.changeHoverItems(route) : menuController.changeHoverItems(''),
+      onHover: (hovering) => hovering
+          ? menuController.changeHoverItems(route)
+          : menuController.changeHoverItems(''),
       child: Obx(
-        () =>  Padding(
+        () => Padding(
           padding: const EdgeInsets.symmetric(vertical: ASizes.xs),
           child: Container(
             decoration: BoxDecoration(
-              color: menuController.isHovering(route) || menuController.isActive(route) ? AColors.primary : Colors.transparent,
+              color: menuController.isHovering(route) ||
+                      menuController.isActive(route)
+                  ? AColors.primary
+                  : Colors.transparent,
               borderRadius: BorderRadius.circular(ASizes.cardRadiusMd),
             ),
             child: Row(
@@ -42,31 +47,34 @@ class AMenuItem extends StatelessWidget {
                       top: ASizes.md,
                       bottom: ASizes.md,
                       right: ASizes.md),
-                  child: menuController.isActive(route) 
-                  ? Icon(icon, size: 22, color: AColors.white)
-                  : Icon(icon, size: 22, color: menuController.isHovering(route) ? AColors.white : AColors.grey),
+                  child: menuController.isActive(route)
+                      ? Icon(icon, size: 22, color: AColors.white)
+                      : Icon(icon,
+                          size: 22,
+                          color: menuController.isHovering(route)
+                              ? AColors.white
+                              : AColors.grey),
                 ),
-        
+
                 //text
-                if(menuController.isHovering(route) || menuController.isActive(route))
-                Flexible(
-                  child: Text(itemName,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .apply(color: AColors.white)))
-
+                if (menuController.isHovering(route) ||
+                    menuController.isActive(route))
+                  Flexible(
+                      child: Text(itemName,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .apply(color: AColors.white)))
                 else
+                  Flexible(
+                      child: Text(itemName,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .apply(color: AColors.darkGrey))),
 
-                 Flexible(
-                  child: Text(itemName,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .apply(color: AColors.darkGrey))),
-        
                 //menu items
-                const AMenuItem(
+                /*  const AMenuItem(
                     route: ARoutes.firstScreen,
                     icon: Iconsax.status,
                     itemName: 'Dashboard'),
@@ -77,7 +85,7 @@ class AMenuItem extends StatelessWidget {
                 const AMenuItem(
                     route: ARoutes.responsiveDesignTutorialScreen,
                     icon: Iconsax.picture_frame,
-                    itemName: 'Banners'),
+                    itemName: 'Banners'),*/
               ],
             ),
           ),
