@@ -1,7 +1,8 @@
+import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-class AuthenticationRepository  extends GetxController{
+class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
   // Firebase Auth Instance
@@ -13,7 +14,7 @@ class AuthenticationRepository  extends GetxController{
   // Get IsAuthenticated User
   bool get isAuthenticated => _auth.currentUser != null;
 
-  @override 
+  @override
   void onReady() {
     // // Redirect to the appropriate screen
     // screenRedirect();
@@ -21,22 +22,22 @@ class AuthenticationRepository  extends GetxController{
     _auth.setPersistence(Persistence.LOCAL);
   }
 
-  // // Function to describe the relevant screen and redirect accordingly
-  // void screenRedirect() async {
-  //   final user = _auth.currentUser;
+  // Function to describe the relevant screen and redirect accordingly
+   void screenRedirect() async {
+    final user = _auth.currentUser;
 
-  //   // If the user is logged in
-  //   if (user != null) {
-  //     // Navigate to the Home
-  //     Get.offAllNamed(ARoutes.dashboard);
-  //   } else {
-  //     Get.offAllNamed(ARoutes.login);
-  //   }
-  // }
+    //  If the user is logged in
+     if (user != null) {
+       // Navigate to the Home
+       Get.offAllNamed(ARoutes.dashboard);
+     } else {
+       Get.offAllNamed(ARoutes.login);
+     }
+   }
 
   // Login
 
-  // Register 
+  // Register
 
   // Register User By Admin
 
@@ -49,5 +50,4 @@ class AuthenticationRepository  extends GetxController{
   // Logout User
 
   // Delete User
-
 }

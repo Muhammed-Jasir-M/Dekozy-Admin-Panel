@@ -1,3 +1,4 @@
+import 'package:aura_kart_admin_panel/bindings/general_bindings.dart';
 import 'package:aura_kart_admin_panel/routes/app_routes.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       scrollBehavior: MyCustomScrollBehavior(),
       initialRoute: ARoutes.dashboard,
       getPages: AAppRoutes.pages,
+      initialBinding: GeneralBindings(),
       unknownRoute: GetPage(
         name: '/page-not-found',
         page: () => const Scaffold(body: Center(child: Text('Page Not Found'))),

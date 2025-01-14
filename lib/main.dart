@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:aura_kart_admin_panel/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 /// Entry point of Flutter App
@@ -16,14 +17,13 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
 
   // Initaialize GetX Local Storage
-
+  await GetStorage.init();
   // Remove # sign from url
   setPathUrlStrategy();
 
   // Initialize Firebase & Authentication Repository
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .then((_) => Get.put(AuthenticationRepository()));
-
+      .then((Value) => Get.put(AuthenticationRepository()));
   // Main App starts from here ...
   runApp(const MyApp());
 }
