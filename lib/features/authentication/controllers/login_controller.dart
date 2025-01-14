@@ -1,4 +1,5 @@
 import 'package:aura_kart_admin_panel/data/repositories/authentication/authentication_repository.dart';
+import 'package:aura_kart_admin_panel/data/repositories/authentication/models/user_model.dart';
 import 'package:aura_kart_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:aura_kart_admin_panel/features/authentication/controllers/user_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
@@ -51,13 +52,17 @@ class LoginController extends GetxController {
         localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
         localStorage.write('REMEMBER_ME_PASSWORD', password.text.trim());
       }
+
       //Login user email & password authentication
       await AuthenticationRepository.instance
           .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+
 //Fetch user using email & password Authentication
       final user = await UserController.instance.fetchUserDetails();
+
       // Remove Loader
       AFullScreenLoader.stopLoading();
+
       //if user is not admin,logout and return
       if (user.role != AppRole.admin) {
         await AuthenticationRepository.instance.logout();
@@ -90,8 +95,13 @@ class LoginController extends GetxController {
       await AuthenticationRepository.instance.registerWithEmailAndPassword(
           ATexts.adminEmail, ATexts.adminPassword);
       final userRepository = Get.put(UserRepository());
-      await userRepository.createUser(
-          UserModel(id: AuthenticationRepository.instance.authUser!.uid));
+      await userRepository.createUser(UserModel(
+          id: AuthenticationRepository.instance.authUser!.uid,
+          firstName: 'CwT',
+          lastName: 'Admin',
+          email: ATexts.adminEmail,
+          role: AppRole.admin,
+          createdAt: DateTime.now()));
       // Remove Loader
       AFullScreenLoader.stopLoading();
       // Redirect

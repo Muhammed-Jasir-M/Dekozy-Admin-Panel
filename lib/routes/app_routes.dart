@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/features/authentication/screens/dashboard/dashboard_screen.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/dashboard_screen.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/forget_password/forget_password.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/login/login.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/reset_password/reset_password.dart';
@@ -14,6 +14,8 @@ class AAppRoutes {
     GetPage(
         name: ARoutes.resetPassword, page: () => const ResetPasswordScreen()),
     GetPage(
-        name: ARoutes.dashboard, page: () => const DashboardScreen(), middlewares: [ARoutesMiddleware()]),
+        name: ARoutes.dashboard,
+        page: () => const DashboardScreen(),
+        middlewares: [ARoutesMiddleware()]),
   ];
 }

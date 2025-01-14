@@ -1,7 +1,7 @@
+import 'package:aura_kart_admin_panel/data/repositories/authentication/models/user_model.dart';
 import 'package:aura_kart_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:get/get.dart';
-import 'package:web/web.dart';
 
 class UserController extends GetxController {
   static UserController get instance => Get.find();
