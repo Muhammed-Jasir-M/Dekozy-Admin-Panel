@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../utils/constants/colors.dart';
 import '../../../utils/helpers/helper_functions.dart';
 
@@ -19,7 +18,6 @@ class AShimmerEffect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = AHelperFunctions.isDarkMode(context);
-
     return Shimmer.fromColors(
       baseColor: dark ? Colors.grey[850]! : Colors.grey[300]!,
       highlightColor: dark ? Colors.grey[700]! : Colors.grey[100]!,

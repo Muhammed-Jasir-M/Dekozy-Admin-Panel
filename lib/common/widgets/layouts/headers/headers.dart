@@ -1,10 +1,13 @@
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
+import 'package:aura_kart_admin_panel/common/widgets/shimmers/shimmer.dart';
+import 'package:aura_kart_admin_panel/features/authentication/controllers/user_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -14,6 +17,7 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Container(
       decoration: BoxDecoration(
           color: AColors.white,
@@ -54,25 +58,32 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const ARoundedImage(
-                  width: 40,
-                  Padding: 2,
-                  height: 40,
-                  imageType: ImageType.asset,
-                  image: AImages.user),
+               Obx(
+                 () =>  ARoundedImage(
+                    width: 40,
+                    Padding: 2,
+                    height: 40,
+                    imageType: controller.user.value.profilePicture.isNotEmpty ? ImageType.network : ImageType.asset,
+                    image: controller.user.value.profilePicture.isNotEmpty ? controller.user.value.profilePicture : AImages.user),
+               ),
+
               const SizedBox(width: ASizes.sm),
 
               //name and email
               if (!ADeviceUtils.isMobileScreen(context))
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('AURAKART',
-                        style: Theme.of(context).textTheme.titleLarge),
-                    Text('support@aurakart.com',
-                        style: Theme.of(context).textTheme.titleMedium),
-                  ],
+                Obx(
+                  () => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      controller.loading.value 
+                      ? const AShimmerEffect(width: 50, height: 13)  
+                      : Text(controller.user.value.fullName, style: Theme.of(context).textTheme.titleLarge),
+                          controller.loading.value 
+                      ? const AShimmerEffect(width: 50, height: 13)
+                      : Text(controller.user.value.email, style: Theme.of(context).textTheme.labelMedium),
+                    ],
+                  ),
                 ),
             ],
           )
