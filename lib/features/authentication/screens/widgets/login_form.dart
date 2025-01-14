@@ -1,6 +1,8 @@
+import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/text_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ALoginForm extends StatelessWidget {
@@ -49,7 +51,7 @@ class ALoginForm extends StatelessWidget {
 
               ///Forget Password
               TextButton(
-                  onPressed: () {}, child: const Text(ATexts.forgetPassword)),
+                  onPressed: () => Get.toNamed(ARoutes.forgetPassword), child: const Text(ATexts.forgetPassword)),
             ],
           ),
 
