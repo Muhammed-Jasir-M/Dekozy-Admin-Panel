@@ -14,13 +14,14 @@ class DesktopLayout extends StatelessWidget {
         children: [
           const Expanded(child: ASidebar()),
           Expanded(
+            flex: 5,
             child: Column(
               children: [
                 // Header
                 const AHeader(),
 
                 // Body
-                body ?? SizedBox(),
+                Expanded(child: body ?? const SizedBox()),
               ],
             ),
           ),
