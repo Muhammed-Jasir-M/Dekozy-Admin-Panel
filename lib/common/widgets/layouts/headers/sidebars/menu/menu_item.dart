@@ -1,10 +1,8 @@
 import 'package:aura_kart_admin_panel/common/widgets/layouts/headers/sidebars/menu/sidebar_controller.dart';
-import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class AMenuItem extends StatelessWidget {
   const AMenuItem(

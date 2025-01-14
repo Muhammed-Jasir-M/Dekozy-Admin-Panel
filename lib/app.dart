@@ -1,4 +1,3 @@
-import 'package:aura_kart_admin_panel/common/widgets/layouts/templates/site_layout.dart';
 import 'package:aura_kart_admin_panel/routes/app_routes.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +19,15 @@ class MyApp extends StatelessWidget {
       darkTheme: AAppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
       scrollBehavior: MyCustomScrollBehavior(),
-      home: const Scaffold(
-        backgroundColor: AColors.primary,
-        body: Center(child: CircularProgressIndicator(color: Colors.white)),
-      ),
-      initialRoute: ARoutes.login,
+      initialRoute: ARoutes.dashboard,
       getPages: AAppRoutes.pages,
       unknownRoute: GetPage(
         name: '/page-not-found',
         page: () => const Scaffold(body: Center(child: Text('Page Not Found'))),
+      ),
+      home: const Scaffold(
+        backgroundColor: AColors.primary,
+        body: Center(child: CircularProgressIndicator(color: Colors.white)),
       ),
     );
   }

@@ -82,7 +82,6 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize =>
       Size.fromHeight(ADeviceUtils.getAppBarHeight() + 15);
 }
