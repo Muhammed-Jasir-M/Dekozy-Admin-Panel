@@ -1,8 +1,8 @@
-
+import 'package:aura_kart_admin_panel/features/authentication/models/address_model.dart';
+import 'package:aura_kart_admin_panel/features/authentication/models/cart_item.model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/helpers/helper_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class OrderModel {
   final String id;
@@ -13,18 +13,20 @@ class OrderModel {
   final String paymentMethod;
   final AddressModel? address;
   final DateTime? deliveryDate;
-  final List<CartItemModel> items;
+  final List<CartItemModel>? items;
 
-  OrderModel(
-      {required this.id,
-      this.userId = '',
-      required this.status,
-      required this.totalAmount,
-      required this.orderDate,
-      this.paymentMethod = 'Paypal',
-      this.address,
-      this.deliveryDate,
-      required this.items});
+  OrderModel({
+    required this.id,
+    this.userId = '',
+    required this.status,
+    required this.totalAmount,
+    required this.orderDate,
+    this.paymentMethod = 'Paypal',
+    this.address,
+    this.deliveryDate,
+    this.items,
+  });
+
   String get formattedOrderDate => AHelperFunctions.getFormattedDate(orderDate);
   String get formattedDeliveryDate => deliveryDate != null
       ? AHelperFunctions.getFormattedDate(deliveryDate!)
@@ -34,6 +36,7 @@ class OrderModel {
       : status == OrderStatus.shipped
           ? 'Shipment on the way'
           : 'Processing';
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -44,7 +47,7 @@ class OrderModel {
       'paymentMethod': paymentMethod,
       'address': address?.toJson(),
       'deliveryDate': deliveryDate,
-      'items': items.map((item) => item.toJson()).toList(),
+      'items': items?.map((item) => item.toJson()).toList(),
     };
   }
 

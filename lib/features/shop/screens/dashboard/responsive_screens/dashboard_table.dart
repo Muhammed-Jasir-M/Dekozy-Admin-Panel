@@ -1,6 +1,10 @@
-import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/responsive_screens/widgets/dashboard_card.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../common/widgets/containers/rounded_container.dart';
+import '../widgets/order_status_graph.dart';
+import '../widgets/weekly_sales.dart';
 
 class DashboardTabletScreen extends StatelessWidget {
   const DashboardTabletScreen({super.key});
@@ -10,44 +14,69 @@ class DashboardTabletScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(ASizes.defaultSpace),
+          padding: const EdgeInsets.all(30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //Heading
+              // Heading
               Text('Dashboard',
                   style: Theme.of(context).textTheme.headlineLarge),
               const SizedBox(height: ASizes.spaceBtwSections),
-              //Cards
+
+              // Cards
               const Row(
                 children: [
                   Expanded(
                     child: ADashboardCard(
-                        title: 'Sales Total', subTitle: '\$365', stats: 25),
+                      title: 'Sales Total',
+                      subTitle: '\$365',
+                      stats: 25,
+                    ),
                   ),
                   SizedBox(width: ASizes.spaceBtwItems),
                   Expanded(
                     child: ADashboardCard(
-                        title: 'Average order value',
-                        subTitle: '\$25',
-                        stats: 15),
+                      title: 'Average order value',
+                      subTitle: '\$25',
+                      stats: 15,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: ASizes.spaceBtwItems),
-              const Row(
+              SizedBox(width: ASizes.spaceBtwItems),
+              Row(
                 children: [
                   Expanded(
                     child: ADashboardCard(
-                        title: 'Total Orders', subTitle: '36', stats: 44),
+                      title: 'Total Orders',
+                      subTitle: '36',
+                      stats: 44,
+                    ),
                   ),
                   SizedBox(width: ASizes.spaceBtwItems),
                   Expanded(
                     child: ADashboardCard(
-                        title: 'Visitors', subTitle: '25353', stats: 3),
+                      title: 'Visitors',
+                      subTitle: '25353',
+                      stats: 3,
+                    ),
                   ),
                 ],
               ),
+
+              const SizedBox(height: ASizes.spaceBtwSections),
+
+              /// Graphs
+              /// Bar Graph
+              AWeekklySaleGraph(),
+              const SizedBox(height: ASizes.spaceBtwSections),
+                        
+              /// Orders
+              const ARoundedContainer(),
+              const SizedBox(width: ASizes.spaceBtwSections),
+              
+              /// Pie Chart
+              AOrderStatusPieChart()
             ],
           ),
         ),
