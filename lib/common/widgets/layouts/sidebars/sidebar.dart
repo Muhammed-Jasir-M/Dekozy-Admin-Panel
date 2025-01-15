@@ -50,6 +50,11 @@ class ASidebar extends StatelessWidget {
                       icon: Iconsax.status,
                       itemName: 'Dashboard',
                     ),
+                    const AMenuItem(
+                      route: ARoutes.media,
+                      icon: Iconsax.image,
+                      itemName: 'Media',
+                    ),
                   ],
                 ),
               )

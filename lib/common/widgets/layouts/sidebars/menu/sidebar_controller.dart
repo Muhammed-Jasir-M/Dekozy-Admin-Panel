@@ -3,7 +3,7 @@ import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:get/get.dart';
 
 class SidebarController extends GetxController {
-  final activeItem = ARoutes.login.obs;
+  final activeItem = ARoutes.dashboard.obs;
   final hoverItem = ''.obs;
 
   void changeActiveItems(String route) => activeItem.value = route;

@@ -1,3 +1,4 @@
+import 'package:aura_kart_admin_panel/features/media/screens/media.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/dashboard.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/forget_password/forget_password.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/login/login.dart';
@@ -18,5 +19,9 @@ class AAppRoutes {
       page: () => const DashboardScreen(),
       middlewares: [ARoutesMiddleware()],
     ),
+    GetPage(
+        name: ARoutes.media,
+        page: () => const MediaScreen(),
+        middlewares: [ARoutesMiddleware()]),
   ];
 }

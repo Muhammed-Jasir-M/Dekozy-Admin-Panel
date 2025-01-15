@@ -3,8 +3,6 @@ class ARoutes {
   static const forgetPassword = '/fogot-password/';
   static const resetPassword = '/reset-password';
   static const dashboard = '/dashboard';
-
-  static List sidebarMenuItems = [
-    dashboard
-  ];
+  static const media = '/media';
+  static List sidebarMenuItems = [dashboard];
 }
