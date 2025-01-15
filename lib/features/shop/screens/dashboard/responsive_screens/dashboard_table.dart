@@ -44,7 +44,7 @@ class DashboardTabletScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(width: ASizes.spaceBtwItems),
+              SizedBox(height: ASizes.spaceBtwItems),
               Row(
                 children: [
                   Expanded(
@@ -71,21 +71,26 @@ class DashboardTabletScreen extends StatelessWidget {
               /// Bar Graph
               AWeekklySaleGraph(),
               const SizedBox(height: ASizes.spaceBtwSections),
-                        
+
               /// Orders
-                  /// Orders
-                        ARoundedContainer(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Recent orders', style: Theme.of(context).textTheme.headlineSmall,),
-                              const SizedBox(height: ASizes.spaceBtwSections,),
-                              const DashboardOrderTable(),
-                            ],
-                          ),
-                         ),
+              /// Orders
+              ARoundedContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Recent orders',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(
+                      height: ASizes.spaceBtwSections,
+                    ),
+                    const DashboardOrderTable(),
+                  ],
+                ),
+              ),
               const SizedBox(width: ASizes.spaceBtwSections),
-              
+
               /// Pie Chart
               AOrderStatusPieChart()
             ],

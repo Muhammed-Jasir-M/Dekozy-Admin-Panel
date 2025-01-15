@@ -30,19 +30,19 @@ class DashboardMobileScreen extends StatelessWidget {
                 subTitle: '\$365',
                 stats: 25,
               ),
-              SizedBox(width: ASizes.spaceBtwItems),
+              SizedBox(height: ASizes.spaceBtwItems),
               ADashboardCard(
                 title: 'Average order value',
                 subTitle: '\$25',
                 stats: 15,
               ),
-              SizedBox(width: ASizes.spaceBtwItems),
+              SizedBox(height: ASizes.spaceBtwItems),
               ADashboardCard(
                 title: 'Total Orders',
                 subTitle: '36',
                 stats: 44,
               ),
-              SizedBox(width: ASizes.spaceBtwItems),
+              SizedBox(height: ASizes.spaceBtwItems),
               ADashboardCard(
                 title: 'Visitors',
                 subTitle: '25353',
@@ -55,21 +55,26 @@ class DashboardMobileScreen extends StatelessWidget {
               /// Bar Graph
               AWeekklySaleGraph(),
               const SizedBox(height: ASizes.spaceBtwSections),
-                        
+
               /// Orders
-                 /// Orders
-                        ARoundedContainer(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Recent orders', style: Theme.of(context).textTheme.headlineSmall,),
-                              const SizedBox(height: ASizes.spaceBtwSections,),
-                              const DashboardOrderTable(),
-                            ],
-                          ),
-                         ),
+              /// Orders
+              ARoundedContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Recent orders',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(
+                      height: ASizes.spaceBtwSections,
+                    ),
+                    const DashboardOrderTable(),
+                  ],
+                ),
+              ),
               const SizedBox(width: ASizes.spaceBtwSections),
-              
+
               /// Pie Chart
               AOrderStatusPieChart()
             ],

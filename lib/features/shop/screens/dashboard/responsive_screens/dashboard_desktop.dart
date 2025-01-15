@@ -80,12 +80,18 @@ class DashboardDesktopScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Recent orders', style: Theme.of(context).textTheme.headlineSmall,),
-                              const SizedBox(height: ASizes.spaceBtwSections,),
+                              Text(
+                                'Recent orders',
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
+                              const SizedBox(
+                                height: ASizes.spaceBtwSections,
+                              ),
                               const DashboardOrderTable(),
                             ],
                           ),
-                         ),
+                        ),
                       ],
                     ),
                   ),
