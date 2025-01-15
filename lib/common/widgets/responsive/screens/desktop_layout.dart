@@ -1,5 +1,5 @@
 import 'package:aura_kart_admin_panel/common/widgets/layouts/headers/headers.dart';
-import 'package:aura_kart_admin_panel/common/widgets/layouts/headers/sidebars/sidebar.dart';
+import 'package:aura_kart_admin_panel/common/widgets/layouts/sidebars/sidebar.dart';
 import 'package:flutter/material.dart';
 
 class DesktopLayout extends StatelessWidget {

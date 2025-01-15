@@ -20,10 +20,13 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
     final controller = UserController.instance;
     return Container(
       decoration: BoxDecoration(
-          color: AColors.white,
-          border: Border(bottom: BorderSide(color: AColors.grey, width: 1))),
+        color: AColors.white,
+        border: Border(bottom: BorderSide(color: AColors.grey, width: 1)),
+      ),
       padding: const EdgeInsets.symmetric(
-          horizontal: ASizes.md, vertical: ASizes.md),
+        horizontal: ASizes.md,
+        vertical: ASizes.md,
+      ),
       child: AppBar(
         // mobile
         leading: !ADeviceUtils.isDesktopScreen(context)
@@ -37,8 +40,9 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
                 width: 400,
                 child: TextFormField(
                   decoration: const InputDecoration(
-                      prefixIcon: Icon(Iconsax.search_normal_1),
-                      hintText: 'Search anything...'),
+                    prefixIcon: Icon(Iconsax.search_normal_1),
+                    hintText: 'Search anything...',
+                  ),
                 ),
               )
             : null,
@@ -48,7 +52,9 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
           //search icon
           if (!ADeviceUtils.isDesktopScreen(context))
             IconButton(
-                icon: const Icon(Iconsax.search_normal), onPressed: () {}),
+              icon: const Icon(Iconsax.search_normal),
+              onPressed: () {},
+            ),
 
           // notification icon
           IconButton(icon: const Icon(Iconsax.notification), onPressed: () {}),
@@ -58,15 +64,19 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-               Obx(
-                 () =>  ARoundedImage(
-                    width: 40,
-                    Padding: 2,
-                    height: 40,
-                    imageType: controller.user.value.profilePicture.isNotEmpty ? ImageType.network : ImageType.asset,
-                    image: controller.user.value.profilePicture.isNotEmpty ? controller.user.value.profilePicture : AImages.user),
-               ),
-
+              Obx(
+                () => ARoundedImage(
+                  width: 40,
+                  padding: 2,
+                  height: 40,
+                  imageType: controller.user.value.profilePicture.isNotEmpty
+                      ? ImageType.network
+                      : ImageType.asset,
+                  image: controller.user.value.profilePicture.isNotEmpty
+                      ? controller.user.value.profilePicture
+                      : AImages.user,
+                ),
+              ),
               const SizedBox(width: ASizes.sm),
 
               //name and email
@@ -76,12 +86,18 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      controller.loading.value 
-                      ? const AShimmerEffect(width: 50, height: 13)  
-                      : Text(controller.user.value.fullName, style: Theme.of(context).textTheme.titleLarge),
-                          controller.loading.value 
-                      ? const AShimmerEffect(width: 50, height: 13)
-                      : Text(controller.user.value.email, style: Theme.of(context).textTheme.labelMedium),
+                      controller.loading.value
+                          ? const AShimmerEffect(width: 50, height: 13)
+                          : Text(
+                              controller.user.value.fullName,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                      controller.loading.value
+                          ? const AShimmerEffect(width: 50, height: 13)
+                          : Text(
+                              controller.user.value.email,
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
                     ],
                   ),
                 ),

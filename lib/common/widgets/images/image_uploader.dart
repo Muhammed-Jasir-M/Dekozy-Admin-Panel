@@ -85,7 +85,7 @@ class AImageUploader extends StatelessWidget {
                 imageType: imageType,
                 memoryImage: memoryImage,
                 backgroundColor: AColors.primaryBackground,
-                Padding: 1,
+                padding: 1,
               ),
         // Display the edit icon button on top of the image
         Positioned(

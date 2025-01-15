@@ -1,15 +1,16 @@
-import 'package:aura_kart_admin_panel/common/widgets/layouts/headers/sidebars/menu/sidebar_controller.dart';
+import 'package:aura_kart_admin_panel/common/widgets/layouts/sidebars/menu/sidebar_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AMenuItem extends StatelessWidget {
-  const AMenuItem(
-      {super.key,
-      required this.route,
-      required this.icon,
-      required this.itemName});
+  const AMenuItem({
+    super.key,
+    required this.route,
+    required this.icon,
+    required this.itemName,
+  });
 
   final String route;
   final IconData icon;
@@ -41,49 +42,44 @@ class AMenuItem extends StatelessWidget {
                 //icon
                 Padding(
                   padding: EdgeInsets.only(
-                      left: ASizes.lg,
-                      top: ASizes.md,
-                      bottom: ASizes.md,
-                      right: ASizes.md),
+                    left: ASizes.lg,
+                    top: ASizes.md,
+                    bottom: ASizes.md,
+                    right: ASizes.md,
+                  ),
                   child: menuController.isActive(route)
                       ? Icon(icon, size: 22, color: AColors.white)
-                      : Icon(icon,
+                      : Icon(
+                          icon,
                           size: 22,
                           color: menuController.isHovering(route)
                               ? AColors.white
-                              : AColors.grey),
+                              : AColors.grey,
+                        ),
                 ),
 
                 //text
                 if (menuController.isHovering(route) ||
                     menuController.isActive(route))
                   Flexible(
-                      child: Text(itemName,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .apply(color: AColors.white)))
+                    child: Text(
+                      itemName,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .apply(color: AColors.white),
+                    ),
+                  )
                 else
                   Flexible(
-                      child: Text(itemName,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .apply(color: AColors.darkGrey))),
-
-                //menu items
-                /*  const AMenuItem(
-                    route: ARoutes.firstScreen,
-                    icon: Iconsax.status,
-                    itemName: 'Dashboard'),
-                const AMenuItem(
-                    route: ARoutes.secondScreen,
-                    icon: Iconsax.image,
-                    itemName: 'Media'),
-                const AMenuItem(
-                    route: ARoutes.responsiveDesignTutorialScreen,
-                    icon: Iconsax.picture_frame,
-                    itemName: 'Banners'),*/
+                    child: Text(
+                      itemName,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .apply(color: AColors.darkGrey),
+                    ),
+                  ),
               ],
             ),
           ),

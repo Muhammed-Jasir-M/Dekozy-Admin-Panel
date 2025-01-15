@@ -14,17 +14,18 @@ class UserModel {
   DateTime? createdAt;
   DateTime? updatedAt;
 
-  UserModel(
-      {this.id,
-      this.firstName = '',
-      this.lastName = '',
-      this.phoneNumber = '',
-      this.profilePicture = '',
-      this.username = '',
-      required this.email,
-      this.role = AppRole.user,
-      this.createdAt,
-      this.updatedAt});
+  UserModel({
+    this.id,
+    this.firstName = '',
+    this.lastName = '',
+    this.phoneNumber = '',
+    this.profilePicture = '',
+    this.username = '',
+    required this.email,
+    this.role = AppRole.user,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   // Helper Methods
   String get fullName => '$firstName $lastName';
@@ -33,9 +34,7 @@ class UserModel {
   String get formattedPhoneNo => AFormatter.formatPhoneNumber(phoneNumber);
 
   // Static function to create an empty user model.
-  static UserModel empty() => UserModel(
-        email: '',
-      );
+  static UserModel empty() => UserModel(email: '');
 
   // Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {

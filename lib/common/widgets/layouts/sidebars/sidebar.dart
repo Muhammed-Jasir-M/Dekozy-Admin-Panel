@@ -1,5 +1,5 @@
 import 'package:aura_kart_admin_panel/common/widgets/images/circular_image.dart';
-import 'package:aura_kart_admin_panel/common/widgets/layouts/headers/sidebars/menu/menu_item.dart';
+import 'package:aura_kart_admin_panel/common/widgets/layouts/sidebars/menu/menu_item.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
@@ -16,17 +16,19 @@ class ASidebar extends StatelessWidget {
       shape: BeveledRectangleBorder(),
       child: Container(
         decoration: BoxDecoration(
-            color: AColors.white,
-            border: Border(right: BorderSide(color: AColors.grey, width: 1))),
+          color: AColors.white,
+          border: Border(right: BorderSide(color: AColors.grey, width: 1)),
+        ),
         child: SingleChildScrollView(
           child: Column(
             children: [
               //image
               ACircularImage(
-                  width: 100,
-                  height: 100,
-                  image: AImages.darkAppLogo,
-                  backgroundColor: Colors.transparent),
+                width: 100,
+                height: 100,
+                image: AImages.darkAppLogo,
+                backgroundColor: Colors.transparent,
+              ),
               SizedBox(height: ASizes.spaceBtwSections),
               Padding(
                 padding: EdgeInsets.all(ASizes.md),
@@ -34,25 +36,30 @@ class ASidebar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('MENU',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .apply(letterSpacingDelta: 1.2)),
+                    Text(
+                      'MENU',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .apply(letterSpacingDelta: 1.2),
+                    ),
 
                     //menu items
                     const AMenuItem(
-                        route: ARoutes.login,
-                        icon: Iconsax.status,
-                        itemName: 'Dashboard'),
+                      route: ARoutes.dashboard,
+                      icon: Iconsax.status,
+                      itemName: 'Dashboard',
+                    ),
                     const AMenuItem(
-                        route: ARoutes.resetPassword,
-                        icon: Iconsax.image,
-                        itemName: 'Media'),
+                      route: ARoutes.dashboard,
+                      icon: Iconsax.image,
+                      itemName: 'Media',
+                    ),
                     const AMenuItem(
-                        route: ARoutes.forgetPassword,
-                        icon: Iconsax.picture_frame,
-                        itemName: 'Banners'),
+                      route: ARoutes.dashboard,
+                      icon: Iconsax.picture_frame,
+                      itemName: 'Banners',
+                    ),
                   ],
                 ),
               )

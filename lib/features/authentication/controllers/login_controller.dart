@@ -1,5 +1,5 @@
 import 'package:aura_kart_admin_panel/data/repositories/authentication/authentication_repository.dart';
-import 'package:aura_kart_admin_panel/data/repositories/authentication/models/user_model.dart';
+import 'package:aura_kart_admin_panel/features/authentication/models/user_model.dart';
 import 'package:aura_kart_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:aura_kart_admin_panel/features/authentication/controllers/user_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
@@ -35,18 +35,23 @@ class LoginController extends GetxController {
     try {
       //Start Loading
       AFullScreenLoader.openLoadingDialog(
-          'Logging you in... ', AImages.docerAnimation);
+        'Logging you in... ',
+        AImages.docerAnimation,
+      );
+
       //Check internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AFullScreenLoader.stopLoading();
         return;
       }
+
       //Form Validation
       if (!loginFormKey.currentState!.validate()) {
         AFullScreenLoader.stopLoading();
         return;
       }
+
       //Save data if remember me is selected
       if (rememberMe.value) {
         localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
@@ -54,10 +59,12 @@ class LoginController extends GetxController {
       }
 
       //Login user email & password authentication
-      await AuthenticationRepository.instance
-          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      await AuthenticationRepository.instance.loginWithEmailAndPassword(
+        email.text.trim(),
+        password.text.trim(),
+      );
 
-//Fetch user using email & password Authentication
+      //Fetch user using email & password Authentication
       final user = await UserController.instance.fetchUserDetails();
 
       // Remove Loader
@@ -67,8 +74,9 @@ class LoginController extends GetxController {
       if (user.role != AppRole.admin) {
         await AuthenticationRepository.instance.logout();
         ALoaders.errorSnackBar(
-            title: 'Not Authorized',
-            message: 'You are not authorized or do have access.contact Admin');
+          title: 'Not Authorized',
+          message: 'You are not authorized or do have access.contact Admin',
+        );
       } else {
         // Redirect
         AuthenticationRepository.instance.screenRedirect();
@@ -84,24 +92,34 @@ class LoginController extends GetxController {
     try {
       //Start Loading
       AFullScreenLoader.openLoadingDialog(
-          'Registering Admin Account', AImages.docerAnimation);
+        'Registering Admin Account',
+        AImages.docerAnimation,
+      );
+
       //Check internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AFullScreenLoader.stopLoading();
         return;
       }
+
       // Register user using Email & Password Authentication
       await AuthenticationRepository.instance.registerWithEmailAndPassword(
-          ATexts.adminEmail, ATexts.adminPassword);
+        ATexts.adminEmail,
+        ATexts.adminPassword,
+      );
+
       final userRepository = Get.put(UserRepository());
-      await userRepository.createUser(UserModel(
+      await userRepository.createUser(
+        UserModel(
           id: AuthenticationRepository.instance.authUser!.uid,
           firstName: 'CwT',
           lastName: 'Admin',
           email: ATexts.adminEmail,
           role: AppRole.admin,
-          createdAt: DateTime.now()));
+          createdAt: DateTime.now(),
+        ),
+      );
       // Remove Loader
       AFullScreenLoader.stopLoading();
       // Redirect

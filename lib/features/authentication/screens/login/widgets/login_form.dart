@@ -8,88 +8,102 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ALoginForm extends StatelessWidget {
-  const ALoginForm({
-    super.key,
-  });
+  const ALoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
     return Form(
-        key: controller.loginFormKey,
-        child: Padding(
-          padding:
-              const EdgeInsets.symmetric(vertical: ASizes.spaceBtwSections),
-          child: Column(
-            children: [
-              /// Email
-              TextFormField(
-                controller: controller.email,
-                validator: AValidator.validateEmail,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Iconsax.direct_right),
-                  labelText: ATexts.email,
-                ),
+      key: controller.loginFormKey,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: ASizes.spaceBtwSections),
+        child: Column(
+          children: [
+            /// Email
+            TextFormField(
+              controller: controller.email,
+              validator: AValidator.validateEmail,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Iconsax.direct_right),
+                labelText: ATexts.email,
               ),
-              const SizedBox(height: ASizes.spaceBtwInputFields),
+            ),
 
-              ///Password
-              Obx(
-                () => TextFormField(
-                  controller: controller.password,
-                  validator: (value) =>
-                      AValidator.validateEmptyText('Password', value),
-                  obscureText: controller.hidePassword.value,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Iconsax.password_check),
-                    labelText: ATexts.password,
-                    suffixIcon: IconButton(
-                      onPressed: () => controller.hidePassword.value =
-                          !controller.hidePassword.value,
-                      icon: Icon(controller.hidePassword.value
+            const SizedBox(height: ASizes.spaceBtwInputFields),
+
+            /// Password
+            Obx(
+              () => TextFormField(
+                controller: controller.password,
+                validator: (value) =>
+                    AValidator.validateEmptyText('Password', value),
+                obscureText: controller.hidePassword.value,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Iconsax.password_check),
+                  labelText: ATexts.password,
+                  suffixIcon: IconButton(
+                    onPressed: () => controller.hidePassword.value =
+                        !controller.hidePassword.value,
+                    icon: Icon(
+                      controller.hidePassword.value
                           ? Iconsax.eye_slash
-                          : Iconsax.eye),
+                          : Iconsax.eye,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: ASizes.spaceBtwInputFields / 2),
+            ),
+            const SizedBox(height: ASizes.spaceBtwInputFields / 2),
 
-              /// Remember me & Forget Password
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ///Remember me
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Obx(
-                        () => Checkbox(
-                            value: controller.rememberMe.value,
-                            onChanged: (value) =>
-                                controller.rememberMe.value = value!),
-                      ),
-                      const Text(ATexts.rememberMe),
-                    ],
-                  ),
+            /// Remember me & Forget Password
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                /// Remember me
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Obx(
+                      () => Checkbox(
+                          value: controller.rememberMe.value,
+                          onChanged: (value) =>
+                              controller.rememberMe.value = value!),
+                    ),
+                    const Text(ATexts.rememberMe),
+                  ],
+                ),
 
-                  ///Forget Password
-                  TextButton(
-                      onPressed: () => Get.toNamed(ARoutes.forgetPassword),
-                      child: const Text(ATexts.forgetPassword)),
-                ],
+                /// Forget Password
+                TextButton(
+                  onPressed: () => Get.toNamed(ARoutes.forgetPassword),
+                  child: const Text(ATexts.forgetPassword),
+                ),
+              ],
+            ),
+
+            SizedBox(height: ASizes.spaceBtwItems),
+
+            /// Sign in Button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => controller.emailAndPasswordSignIn(),
+                child: const Text(ATexts.signIn),
               ),
+            ),
 
-              ///Sign in Button
-              SizedBox(
-                width: double.infinity,child: ElevatedButton
-                (onPressed: () => controller.emailAndPasswordSignIn(),
-                child: const Text(ATexts.signIn)),
+            SizedBox(height: ASizes.spaceBtwItems),
 
-                //child: ElevatedButton(onPressed: () => controller.registerAdmin(),child: Text(ATexts.signIn)),
-              )
-            ],
-          ),
-        ));
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => controller.registerAdmin(),
+                child: Text('Register'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

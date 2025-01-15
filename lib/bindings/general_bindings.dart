@@ -2,7 +2,6 @@ import 'package:aura_kart_admin_panel/features/authentication/controllers/user_c
 import 'package:aura_kart_admin_panel/utils/helpers/network_manager.dart';
 import 'package:get/get.dart';
 
-
 class GeneralBindings extends Bindings {
   @override
   void dependencies() {

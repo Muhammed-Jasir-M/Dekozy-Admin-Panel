@@ -6,7 +6,6 @@ import 'package:aura_kart_admin_panel/utils/constants/text_strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class ResetPasswordWidget extends StatelessWidget {
   const ResetPasswordWidget({

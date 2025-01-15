@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/data/repositories/authentication/models/user_model.dart';
+import 'package:aura_kart_admin_panel/features/authentication/models/user_model.dart';
 import 'package:aura_kart_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:get/get.dart';
@@ -13,6 +13,7 @@ class UserController extends GetxController {
 
   @override
   void onInit() {
+    fetchUserDetails();
     super.onInit();
   }
 
@@ -26,7 +27,9 @@ class UserController extends GetxController {
       return user;
     } catch (e) {
       ALoaders.errorSnackBar(
-          title: 'oopsie doopsie !! Something went wrong.', message: e.toString());
+        title: 'oopsie doopsie !! Something went wrong.',
+        message: e.toString(),
+      );
       return UserModel.empty();
     }
   }

@@ -24,7 +24,6 @@ class ARoundedImage extends StatelessWidget {
     this.fit = BoxFit.contain,
     this.applyImageRadius = true,
     this.borderRadius = ASizes.md,
-    required int Padding,
   });
 
   final bool applyImageRadius;

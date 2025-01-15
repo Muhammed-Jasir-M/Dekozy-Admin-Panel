@@ -65,23 +65,31 @@ class APaginatedDataTable extends StatelessWidget {
           dividerThickness: 0,
           horizontalMargin: 12,
           rowsPerPage: rowsPerPage,
-          showFirstLastButtons: true,
-          showCheckboxColumn: true,
-          sortAscending: sortAscending,
-          onPageChanged: onPageChanged,
           dataRowHeight: dataRowHeight,
+
+          /// CheckBox
+          showCheckboxColumn: true,
+
+          /// Pagination
+          showFirstLastButtons: true,
+          onPageChanged: onPageChanged,
           renderEmptyRowsInTheEnd: false,
           onRowsPerPageChanged: (noOfRows) {},
-          sortColumnIndex: sortColumnIndex,
+
+          /// Header Design
           headingTextStyle: Theme.of(context).textTheme.titleMedium,
           headingRowColor: WidgetStateProperty.resolveWith((states) => AColors.primaryBackground),
-          empty: AAnimationLoaderWidget(animation: AImages.packageAnimation, text: 'Nothing Found', height: 200, width: 200),
           headingRowDecoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(ASizes.borderRadiusMd),
               topRight: Radius.circular(ASizes.borderRadiusMd),
             ),
           ),
+          empty: AAnimationLoaderWidget(animation: AImages.packageAnimation, text: 'Nothing Found', height: 200, width: 200),
+          
+          /// Sorting
+          sortColumnIndex: sortColumnIndex,
+          sortAscending: sortAscending,
           sortArrowBuilder: (bool ascending, bool sorted) {
             if (sorted) {
               return Icon(ascending ? Iconsax.arrow_up_3 : Iconsax.arrow_down, size: ASizes.iconSm);
