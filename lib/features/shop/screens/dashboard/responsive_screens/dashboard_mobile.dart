@@ -1,4 +1,5 @@
 import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/table/data_table.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
@@ -56,7 +57,17 @@ class DashboardMobileScreen extends StatelessWidget {
               const SizedBox(height: ASizes.spaceBtwSections),
                         
               /// Orders
-              const ARoundedContainer(),
+                 /// Orders
+                        ARoundedContainer(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Recent orders', style: Theme.of(context).textTheme.headlineSmall,),
+                              const SizedBox(height: ASizes.spaceBtwSections,),
+                              const DashboardOrderTable(),
+                            ],
+                          ),
+                         ),
               const SizedBox(width: ASizes.spaceBtwSections),
               
               /// Pie Chart
