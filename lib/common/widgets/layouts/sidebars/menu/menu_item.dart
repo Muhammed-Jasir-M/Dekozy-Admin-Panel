@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/common/widgets/layouts/sidebars/menu/sidebar_controller.dart';
+import 'package:aura_kart_admin_panel/common/widgets/layouts/sidebars/sidebar_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class AMenuItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                //icon
+                // Icon
                 Padding(
                   padding: EdgeInsets.only(
                     left: ASizes.lg,
@@ -54,11 +54,11 @@ class AMenuItem extends StatelessWidget {
                           size: 22,
                           color: menuController.isHovering(route)
                               ? AColors.white
-                              : AColors.grey,
+                              : AColors.darkGrey,
                         ),
                 ),
 
-                //text
+                // Text
                 if (menuController.isHovering(route) ||
                     menuController.isActive(route))
                   Flexible(

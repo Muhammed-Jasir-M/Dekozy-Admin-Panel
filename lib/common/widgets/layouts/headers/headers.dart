@@ -13,28 +13,30 @@ import 'package:iconsax/iconsax.dart';
 class AHeader extends StatelessWidget implements PreferredSizeWidget {
   const AHeader({super.key, this.scaffoldKey});
 
+  // Global Key to access the Scaffold state
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
     final controller = UserController.instance;
+
     return Container(
       decoration: BoxDecoration(
         color: AColors.white,
         border: Border(bottom: BorderSide(color: AColors.grey, width: 1)),
       ),
       padding: const EdgeInsets.symmetric(
-        horizontal: ASizes.md,
-        vertical: ASizes.md,
-      ),
+          horizontal: ASizes.md, vertical: ASizes.sm),
       child: AppBar(
-        // mobile
+        // Menu Icon for Tablet & Mobile Screen
         leading: !ADeviceUtils.isDesktopScreen(context)
             ? IconButton(
                 onPressed: () => scaffoldKey?.currentState?.openDrawer(),
-                icon: const Icon(Iconsax.menu))
+                icon: const Icon(Iconsax.menu),
+              )
             : null,
-        // search field
+
+        // Search Bar (Only visible in Desktop)
         title: ADeviceUtils.isDesktopScreen(context)
             ? SizedBox(
                 width: 400,
@@ -47,23 +49,22 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
               )
             : null,
 
-        //actions
+        // Actions
         actions: [
-          //search icon
+          // Search Icon For Mobile & Tablet
           if (!ADeviceUtils.isDesktopScreen(context))
             IconButton(
-              icon: const Icon(Iconsax.search_normal),
-              onPressed: () {},
-            ),
+                icon: const Icon(Iconsax.search_normal), onPressed: () {}),
 
-          // notification icon
+          // Notification Icon
           IconButton(icon: const Icon(Iconsax.notification), onPressed: () {}),
           const SizedBox(width: ASizes.spaceBtwItems / 2),
 
-          // user data
+          // User Data
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Image
               Obx(
                 () => ARoundedImage(
                   width: 40,
@@ -79,7 +80,7 @@ class AHeader extends StatelessWidget implements PreferredSizeWidget {
               ),
               const SizedBox(width: ASizes.sm),
 
-              //name and email
+              // Name & Email
               if (!ADeviceUtils.isMobileScreen(context))
                 Obx(
                   () => Column(

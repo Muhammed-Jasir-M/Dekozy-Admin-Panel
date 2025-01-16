@@ -22,7 +22,7 @@ class ASidebar extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              //image
+              // Image
               ACircularImage(
                 width: 100,
                 height: 100,
@@ -30,6 +30,7 @@ class ASidebar extends StatelessWidget {
                 backgroundColor: Colors.transparent,
               ),
               SizedBox(height: ASizes.spaceBtwSections),
+
               Padding(
                 padding: EdgeInsets.all(ASizes.md),
                 child: Column(
@@ -44,7 +45,7 @@ class ASidebar extends StatelessWidget {
                           .apply(letterSpacingDelta: 1.2),
                     ),
 
-                    //menu items
+                    // Menu Items
                     const AMenuItem(
                       route: ARoutes.dashboard,
                       icon: Iconsax.status,
@@ -54,6 +55,16 @@ class ASidebar extends StatelessWidget {
                       route: ARoutes.media,
                       icon: Iconsax.image,
                       itemName: 'Media',
+                    ),
+                    const AMenuItem(
+                      route: ARoutes.banners,
+                      icon: Iconsax.picture_frame,
+                      itemName: 'Banners',
+                    ),
+                    const AMenuItem(
+                      route: 'logout',
+                      icon: Iconsax.logout,
+                      itemName: 'Logout',
                     ),
                   ],
                 ),

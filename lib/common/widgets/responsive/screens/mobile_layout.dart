@@ -6,6 +6,7 @@ class MobileLayout extends StatelessWidget {
   MobileLayout({super.key, this.body});
 
   final Widget? body;
+  
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override

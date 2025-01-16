@@ -13,6 +13,7 @@ class ALoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
+
     return Form(
       key: controller.loginFormKey,
       child: Padding(
@@ -24,9 +25,8 @@ class ALoginForm extends StatelessWidget {
               controller: controller.email,
               validator: AValidator.validateEmail,
               decoration: const InputDecoration(
-                prefixIcon: Icon(Iconsax.direct_right),
-                labelText: ATexts.email,
-              ),
+                  prefixIcon: Icon(Iconsax.direct_right),
+                  labelText: ATexts.email),
             ),
 
             const SizedBox(height: ASizes.spaceBtwInputFields),
@@ -55,11 +55,11 @@ class ALoginForm extends StatelessWidget {
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields / 2),
 
-            /// Remember me & Forget Password
+            /// Remember Me & Forget Password
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                /// Remember me
+                /// Remember Me
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -81,9 +81,9 @@ class ALoginForm extends StatelessWidget {
               ],
             ),
 
-            SizedBox(height: ASizes.spaceBtwItems),
+            SizedBox(height: ASizes.spaceBtwSections),
 
-            /// Sign in Button
+            /// Sign In Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -94,6 +94,7 @@ class ALoginForm extends StatelessWidget {
 
             SizedBox(height: ASizes.spaceBtwItems),
 
+            /// Register Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

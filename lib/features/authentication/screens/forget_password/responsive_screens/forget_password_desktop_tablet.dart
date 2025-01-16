@@ -8,7 +8,7 @@ class ForgetPasswordScreenDesktopTablet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ALoginTemplate(
-      child: HeaderAndform(),
+      child: HeaderAndForm(),
     );
   }
 }

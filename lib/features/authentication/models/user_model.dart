@@ -14,6 +14,7 @@ class UserModel {
   DateTime? createdAt;
   DateTime? updatedAt;
 
+  // Constructor
   UserModel({
     this.id,
     this.firstName = '',

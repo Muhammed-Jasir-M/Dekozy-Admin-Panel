@@ -18,6 +18,7 @@ Future<void> main() async {
 
   // Initaialize GetX Local Storage
   await GetStorage.init();
+  
   // Remove # sign from url
   setPathUrlStrategy();
 

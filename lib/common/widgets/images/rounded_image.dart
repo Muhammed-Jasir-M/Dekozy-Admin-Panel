@@ -47,9 +47,10 @@ class ARoundedImage extends StatelessWidget {
       margin: margin != null ? EdgeInsets.all(margin!) : null,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-          border: border,
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(borderRadius)),
+        border: border,
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
       child: _buildImageWidget(),
     );
   }

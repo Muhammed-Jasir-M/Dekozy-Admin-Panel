@@ -2,8 +2,8 @@ import 'package:aura_kart_admin_panel/features/authentication/screens/reset_pass
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
-class ResetPasswordScreenMobail extends StatelessWidget {
-  const ResetPasswordScreenMobail({super.key});
+class ResetPasswordScreenMobile extends StatelessWidget {
+  const ResetPasswordScreenMobile({super.key});
 
   @override
   Widget build(BuildContext context) {

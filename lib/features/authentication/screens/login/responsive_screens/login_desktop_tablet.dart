@@ -13,7 +13,8 @@ class LoginScreenDesktopTablet extends StatelessWidget {
         children: [
           // Header
           ALoginHeader(),
-          //Form
+
+          // Form
           ALoginForm()
         ],
       ),

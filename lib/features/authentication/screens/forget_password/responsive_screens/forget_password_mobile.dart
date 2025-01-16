@@ -11,7 +11,7 @@ class ForgetPasswordScreenMobile extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(ASizes.defaultSpace),
-          child: HeaderAndform(),
+          child: HeaderAndForm(),
         ),
       ),
     );

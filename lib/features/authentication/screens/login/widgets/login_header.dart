@@ -4,9 +4,7 @@ import 'package:aura_kart_admin_panel/utils/constants/text_strings.dart';
 import 'package:flutter/material.dart';
 
 class ALoginHeader extends StatelessWidget {
-  const ALoginHeader({
-    super.key,
-  });
+  const ALoginHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +18,7 @@ class ALoginHeader extends StatelessWidget {
             height: 100,
             image: AssetImage(AImages.darkAppLogo),
           ),
-          const SizedBox(
-            height: ASizes.spaceBtwSections,
-          ),
+          const SizedBox(height: ASizes.spaceBtwSections),
           Text(ATexts.loginTitle,
               style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: ASizes.sm),

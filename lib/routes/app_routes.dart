@@ -14,13 +14,27 @@ class AAppRoutes {
         name: ARoutes.forgetPassword, page: () => const ForgetPasswordScreen()),
     GetPage(
         name: ARoutes.resetPassword, page: () => const ResetPasswordScreen()),
+        
     GetPage(
-      name: ARoutes.dashboard,
-      page: () => const DashboardScreen(),
-      middlewares: [ARoutesMiddleware()],
-    ),
+        name: ARoutes.dashboard,
+        page: () => const DashboardScreen(),
+        middlewares: [ARoutesMiddleware()]),
     GetPage(
         name: ARoutes.media,
+        page: () => const MediaScreen(),
+        middlewares: [ARoutesMiddleware()]),
+
+    // Banners
+    GetPage(
+        name: ARoutes.banners,
+        page: () => const DashboardScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    GetPage(
+        name: ARoutes.createBanner,
+        page: () => const DashboardScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    GetPage(
+        name: ARoutes.editBanner,
         page: () => const MediaScreen(),
         middlewares: [ARoutesMiddleware()]),
   ];

@@ -9,19 +9,20 @@ class LoginScreenMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(ASizes.defaultSpace),
-        child: Column(
-          children: [
-            //Header
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(ASizes.defaultSpace),
+          child: Column(
+            children: [
+              // Header
+              ALoginHeader(),
 
-            ALoginHeader(),
-            //Form
-            ALoginForm()
-          ],
+              // Form
+              ALoginForm()
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }

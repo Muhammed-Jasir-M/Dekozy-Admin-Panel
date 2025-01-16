@@ -11,7 +11,7 @@ class ResetPasswordScreen extends StatelessWidget {
     return const ASiteTemplate(
       useLayout: false,
       desktop: ResetPasswordScreenDesktopTablet(),
-      mobile: ResetPasswordScreenMobail(),
+      mobile: ResetPasswordScreenMobile(),
     );
   }
 }
