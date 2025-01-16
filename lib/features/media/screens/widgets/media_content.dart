@@ -1,4 +1,5 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
 import 'package:aura_kart_admin_panel/features/media/controller/media_controller.dart';
 import 'package:aura_kart_admin_panel/features/media/screens/widgets/folder_dropdown.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
@@ -36,71 +37,66 @@ class MediaContent extends StatelessWidget {
           SizedBox(height: ASizes.spaceBtwSections),
 
           // show media
-     
-                        const Wrap(
-      
-                        alignment: WrapAlignment.start,
-                        spacing: ASizes.spaceBtwItems / 2,
-                        runSpacing: ASizes.spaceBtwItems / 2,
-                        children: [
-                          ARoundedContainer(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                          
-                          ARoundedContainer(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                          
-                          ARoundedContainer(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                          
-                          ARoundedContainer(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                          
-                          ARoundedContainer(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                        ],
-                      ),
 
+          const Wrap(
+            alignment: WrapAlignment.start,
+            spacing: ASizes.spaceBtwItems / 2,
+            runSpacing: ASizes.spaceBtwItems / 2,
+            children: [
+              ARoundedImage(
+                width: 90,
+                height: 90,
+                padding: ASizes.sm,
+                imageType: ImageType.asset,
+                image: AImages.darkAppLogo,
+                backgroundColor: AColors.primaryBackground,
+              ),
+              ARoundedImage(
+                width: 90,
+                height: 90,
+                padding: ASizes.sm,
+                imageType: ImageType.asset,
+                image: AImages.darkAppLogo,
+                backgroundColor: AColors.primaryBackground,
+              ),
+              ARoundedImage(
+                width: 90,
+                height: 90,
+                padding: ASizes.sm,
+                imageType: ImageType.asset,
+                image: AImages.darkAppLogo,
+                backgroundColor: AColors.primaryBackground,
+              ),
+              ARoundedImage(
+                width: 90,
+                height: 90,
+                padding: ASizes.sm,
+                imageType: ImageType.asset,
+                image: AImages.darkAppLogo,
+                backgroundColor: AColors.primaryBackground,
+              ),
+              ARoundedImage(
+                width: 90,
+                height: 90,
+                padding: ASizes.sm,
+                imageType: ImageType.asset,
+                image: AImages.darkAppLogo,
+                backgroundColor: AColors.primaryBackground,
+              ),
+            ],
+          ),
 
           // load more media button
           Padding(
-            padding: const EdgeInsets.symmetric(vertical : ASizes.spaceBtwSections),
+            padding:
+                const EdgeInsets.symmetric(vertical: ASizes.spaceBtwSections),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
                   width: ASizes.buttonWidth,
                   child: ElevatedButton.icon(
-                    onPressed: () {}, 
+                    onPressed: () {},
                     label: const Text('Load More'),
                     icon: const Icon(Iconsax.arrow_down),
                   ),

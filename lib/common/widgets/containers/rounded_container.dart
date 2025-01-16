@@ -5,7 +5,7 @@ import '../../../../utils/constants/sizes.dart';
 /// A container widget with rounded corners and customizable properties.
 class ARoundedContainer extends StatelessWidget {
   /// Create a rounded container with customizable properties.
-  
+
   /// Parameters:
   ///   - width: The width of the container.
   ///   - height: The height of the container.
