@@ -39,7 +39,7 @@ class ARoutes {
     brands,
     banners,
     products,
-    customers,
+    customers, 
     orders,
   ];
 }

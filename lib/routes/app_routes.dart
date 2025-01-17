@@ -36,6 +36,11 @@ class AAppRoutes {
         name: ARoutes.media,
         page: () => const MediaScreen(),
         middlewares: [ARoutesMiddleware()]),
+    GetPage(name: ARoutes.forgetPassword, page: () => const ForgetPasswordScreen()),
+    GetPage(name: ARoutes.resetPassword, page: () => const ResetPasswordScreen()),
+        
+    GetPage(name: ARoutes.dashboard,page: () => const DashboardScreen(),middlewares: [ARoutesMiddleware()]),
+    GetPage(name: ARoutes.media,page: () => const MediaScreen(),middlewares: [ARoutesMiddleware()]),
 
     //Categories
     GetPage(
@@ -64,5 +69,8 @@ class AAppRoutes {
         name: ARoutes.editBanner,
         page: () => const EditBannerScreen(),
         middlewares: [ARoutesMiddleware()]),
+    GetPage(name: ARoutes.banners,page: () => const DashboardScreen(),middlewares: [ARoutesMiddleware()]),
+    GetPage(name: ARoutes.createBanner,page: () => const DashboardScreen(),middlewares: [ARoutesMiddleware()]),
+    GetPage(name: ARoutes.editBanner,page: () => const MediaScreen(),middlewares: [ARoutesMiddleware()]),
   ];
 }
