@@ -4,8 +4,8 @@ import 'package:aura_kart_admin_panel/features/shop/screens/banner/all_banners/r
 import 'package:aura_kart_admin_panel/features/shop/screens/banner/all_banners/responsive_screens/banners_tablet.dart';
 import 'package:flutter/material.dart';
 
-class BannerScreen extends StatelessWidget {
-  const BannerScreen({super.key});
+class BannersScreen extends StatelessWidget {
+  const BannersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

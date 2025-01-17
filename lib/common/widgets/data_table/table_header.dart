@@ -1,5 +1,6 @@
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class ATableHeader extends StatelessWidget {
   const ATableHeader({
@@ -12,17 +13,6 @@ class ATableHeader extends StatelessWidget {
 
   final Function()? onPressed;
   final String buttonText;
-import 'package:iconsax/iconsax.dart';
-
-class ATableHeader extends StatelessWidget {
-  const ATableHeader(
-      {super.key,
-      this.onPressed,
-      required this.buttonText,
-      this.searchController,
-      this.searchOnChanged});
-  final Function()? onPressed;
-  final String buttonText;
 
   final TextEditingController? searchController;
   final Function(String)? searchOnChanged;
@@ -33,18 +23,15 @@ class ATableHeader extends StatelessWidget {
       children: [
         Expanded(
           flex: ADeviceUtils.isDesktopScreen(context) ? 3 : 1,
-          flex: !ADeviceUtils.isDesktopScreen(context) ? 3 : 1,
           child: Row(
             children: [
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
-                    onPressed: onPressed, child: Text(buttonText)),
+                  onPressed: onPressed,
+                  child: Text(buttonText),
+                ),
               )
-            ],
-          ),
-        ),
-              ),
             ],
           ),
         ),
@@ -54,8 +41,9 @@ class ATableHeader extends StatelessWidget {
             controller: searchController,
             onChanged: searchOnChanged,
             decoration: const InputDecoration(
-                hintText: 'Search Here...',
-                prefixIcon: Icon(Iconsax.search_normal)),
+              hintText: 'Search Here...',
+              prefixIcon: Icon(Iconsax.search_normal),
+            ),
           ),
         ),
       ],

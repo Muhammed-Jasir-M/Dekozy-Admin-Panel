@@ -1,3 +1,7 @@
+// ignore_for_file: avoid_print
+
+import 'dart:typed_data';
+
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
 import 'package:aura_kart_admin_panel/features/media/controller/media_controller.dart';
@@ -7,13 +11,12 @@ import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
+
+import '../../models/image_model.dart';
 
 class MediaUploader extends StatelessWidget {
   const MediaUploader({super.key});
@@ -21,6 +24,7 @@ class MediaUploader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = MediaController.instance;
+
     return Obx(
       () => controller.showImagesUploaderSection.value
           ? Column(
@@ -48,11 +52,32 @@ class MediaUploader extends StatelessWidget {
                               onLeave: () => print('Zone left'),
                               onCreated: (ctrl) =>
                                   controller.dropzoneController = ctrl,
-                              onDrop: (file) => print(file.name),
                               onDropInvalid: (ev) =>
                                   print('Zone invalid MIME : $ev'),
                               onDropMultiple: (ev) =>
                                   print('Zone drop multiple: $ev'),
+                              onDrop: (file) async {
+                                if (file is html.File) {
+                                  final bytes = await controller
+                                      .dropzoneController
+                                      .getFileData(
+                                          file as DropzoneFileInterface);
+                                  final image = ImageModel(
+                                    url: '',
+                                    file: file,
+                                    folder: '',
+                                    filename: file.name,
+                                    localImageToDisplay:
+                                        Uint8List.fromList(bytes),
+                                  );
+                                  controller.selectedImagesToUpload.add(image);
+                                } else if (file is String) {
+                                  print('Zone drop: $file');
+                                } else {
+                                  print(
+                                      'Zone unknown type: ${file.runtimeType}');
+                                }
+                              },
                             ),
                             Column(
                               mainAxisSize: MainAxisSize.min,

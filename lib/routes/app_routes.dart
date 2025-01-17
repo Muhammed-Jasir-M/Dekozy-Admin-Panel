@@ -10,22 +10,33 @@ import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/routes/routes_middleware.dart';
 import 'package:get/get.dart';
 
+import '../features/shop/screens/banner/all_banners/banners.dart';
+import '../features/shop/screens/banner/create_banner/create_banner.dart';
+import '../features/shop/screens/banner/edit_banner/edit_banner.dart';
+
 class AAppRoutes {
   static final List<GetPage> pages = [
+    // Login
     GetPage(name: ARoutes.login, page: () => const LoginScreen()),
+    // ForgetPassword
     GetPage(
         name: ARoutes.forgetPassword, page: () => const ForgetPasswordScreen()),
+    // ResetPassword
     GetPage(
         name: ARoutes.resetPassword, page: () => const ResetPasswordScreen()),
 
+    // Dashboard
     GetPage(
         name: ARoutes.dashboard,
         page: () => const DashboardScreen(),
         middlewares: [ARoutesMiddleware()]),
+
+    // Media
     GetPage(
         name: ARoutes.media,
         page: () => const MediaScreen(),
         middlewares: [ARoutesMiddleware()]),
+
     //Categories
     GetPage(
         name: ARoutes.categories,
@@ -38,6 +49,20 @@ class AAppRoutes {
     GetPage(
         name: ARoutes.editCategory,
         page: () => const EditCategoryScreen(),
+                middlewares: [ARoutesMiddleware()]),
+
+    // Banners
+    GetPage(
+        name: ARoutes.banners,
+        page: () => const BannersScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    GetPage(
+        name: ARoutes.createBanner,
+        page: () => const CreateBannerScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    GetPage(
+        name: ARoutes.editBanner,
+        page: () => const EditBannerScreen(),
         middlewares: [ARoutesMiddleware()]),
   ];
 }

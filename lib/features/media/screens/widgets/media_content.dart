@@ -20,7 +20,6 @@ class MediaContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // media images header
-
           Row(
             children: [
               Text('Select Folder',

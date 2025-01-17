@@ -57,6 +57,11 @@ class ASidebar extends StatelessWidget {
                       itemName: 'Media',
                     ),
                     const AMenuItem(
+                      route: ARoutes.categories,
+                      icon: Iconsax.category_2,
+                      itemName: 'Catogories',
+                    ),
+                    const AMenuItem(
                       route: ARoutes.banners,
                       icon: Iconsax.picture_frame,
                       itemName: 'Banners',
@@ -65,9 +70,6 @@ class ASidebar extends StatelessWidget {
                       route: 'logout',
                       icon: Iconsax.logout,
                       itemName: 'Logout',
-                      route: ARoutes.categories,
-                      icon: Iconsax.category_2,
-                      itemName: 'Catogories',
                     ),
                   ],
                 ),
