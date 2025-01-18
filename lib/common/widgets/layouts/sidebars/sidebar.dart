@@ -66,6 +66,11 @@ class ASidebar extends StatelessWidget {
                       icon: Iconsax.picture_frame,
                       itemName: 'Banners',
                     ),
+                     const AMenuItem(
+                      route: ARoutes.products,
+                      icon: Iconsax.shopping_bag,
+                      itemName: 'Products',
+                    ),
                     const AMenuItem(
                       route: 'logout',
                       icon: Iconsax.logout,

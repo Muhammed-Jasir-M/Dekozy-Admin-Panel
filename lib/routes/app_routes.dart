@@ -6,6 +6,7 @@ import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/dashboard.
 import 'package:aura_kart_admin_panel/features/authentication/screens/forget_password/forget_password.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/login/login.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/reset_password/reset_password.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/product/all_products/widgets/products.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/routes/routes_middleware.dart';
 import 'package:get/get.dart';
@@ -69,8 +70,9 @@ class AAppRoutes {
         name: ARoutes.editBanner,
         page: () => const EditBannerScreen(),
         middlewares: [ARoutesMiddleware()]),
-    GetPage(name: ARoutes.banners,page: () => const DashboardScreen(),middlewares: [ARoutesMiddleware()]),
-    GetPage(name: ARoutes.createBanner,page: () => const DashboardScreen(),middlewares: [ARoutesMiddleware()]),
-    GetPage(name: ARoutes.editBanner,page: () => const MediaScreen(),middlewares: [ARoutesMiddleware()]),
+
+    // Products
+    GetPage(name: ARoutes.products,page: () => const ProductsScreen(),middlewares: [ARoutesMiddleware()]),
+
   ];
 }
