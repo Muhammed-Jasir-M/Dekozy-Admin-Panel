@@ -1,5 +1,5 @@
-import 'package:aura_kart_admin_panel/features/authentication/models/address_model.dart';
-import 'package:aura_kart_admin_panel/features/authentication/models/cart_item.model.dart';
+import 'package:aura_kart_admin_panel/features/shop/models/address_model.dart';
+import 'package:aura_kart_admin_panel/features/shop/models/cart_item.model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/helpers/helper_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

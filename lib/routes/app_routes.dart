@@ -1,4 +1,6 @@
 import 'package:aura_kart_admin_panel/features/media/screens/media.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/brand/all_brands/brands.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/brand/edit_brand/edit_brand.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/category/all_categories/categories.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/category/create_categories/create_category.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/category/edit_categories/edit_catogory.dart';
@@ -14,6 +16,7 @@ import 'package:get/get.dart';
 import '../features/shop/screens/banner/all_banners/banners.dart';
 import '../features/shop/screens/banner/create_banner/create_banner.dart';
 import '../features/shop/screens/banner/edit_banner/edit_banner.dart';
+import '../features/shop/screens/brand/create_brand/create_brand.dart';
 
 class AAppRoutes {
   static final List<GetPage> pages = [
@@ -37,13 +40,8 @@ class AAppRoutes {
         name: ARoutes.media,
         page: () => const MediaScreen(),
         middlewares: [ARoutesMiddleware()]),
-    GetPage(name: ARoutes.forgetPassword, page: () => const ForgetPasswordScreen()),
-    GetPage(name: ARoutes.resetPassword, page: () => const ResetPasswordScreen()),
-        
-    GetPage(name: ARoutes.dashboard,page: () => const DashboardScreen(),middlewares: [ARoutesMiddleware()]),
-    GetPage(name: ARoutes.media,page: () => const MediaScreen(),middlewares: [ARoutesMiddleware()]),
 
-    //Categories
+    // Categories
     GetPage(
         name: ARoutes.categories,
         page: () => const CategoriesScreen(),
@@ -55,7 +53,21 @@ class AAppRoutes {
     GetPage(
         name: ARoutes.editCategory,
         page: () => const EditCategoryScreen(),
-                middlewares: [ARoutesMiddleware()]),
+        middlewares: [ARoutesMiddleware()]),
+
+    // Brands
+    GetPage(
+        name: ARoutes.brands,
+        page: () => const BrandsScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    GetPage(
+        name: ARoutes.createBrand,
+        page: () => const CreateBrandScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    GetPage(
+        name: ARoutes.editBanner,
+        page: () => const EditBrandScreen(),
+        middlewares: [ARoutesMiddleware()]),
 
     // Banners
     GetPage(
@@ -72,7 +84,9 @@ class AAppRoutes {
         middlewares: [ARoutesMiddleware()]),
 
     // Products
-    GetPage(name: ARoutes.products,page: () => const ProductsScreen(),middlewares: [ARoutesMiddleware()]),
-
+    GetPage(
+        name: ARoutes.products,
+        page: () => const ProductsScreen(),
+        middlewares: [ARoutesMiddleware()]),
   ];
 }

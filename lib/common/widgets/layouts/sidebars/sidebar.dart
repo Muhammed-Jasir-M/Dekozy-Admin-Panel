@@ -62,6 +62,11 @@ class ASidebar extends StatelessWidget {
                       itemName: 'Catogories',
                     ),
                     const AMenuItem(
+                      route: ARoutes.brands,
+                      icon: Iconsax.dcube,
+                      itemName: 'Brands',
+                    ),
+                    const AMenuItem(
                       route: ARoutes.banners,
                       icon: Iconsax.picture_frame,
                       itemName: 'Banners',

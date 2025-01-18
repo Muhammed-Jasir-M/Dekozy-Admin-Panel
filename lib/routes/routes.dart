@@ -9,7 +9,7 @@ class ARoutes {
   static const createCategory = '/createCategory';
   static const editCategory = '/editCategory';
 
-  static const brands = '/brand';
+  static const brands = '/brands';
   static const createBrand = '/createBrand';
   static const editBrand = '/editBrand';
 

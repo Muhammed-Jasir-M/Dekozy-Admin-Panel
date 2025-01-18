@@ -5,7 +5,6 @@ import 'package:aura_kart_admin_panel/features/shop/screens/product/all_products
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../../../routes/routes.dart';
 

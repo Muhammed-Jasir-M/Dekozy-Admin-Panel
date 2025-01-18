@@ -30,7 +30,7 @@ class OrderRows extends DataTableSource {
         padding:
             EdgeInsets.symmetric(vertical: ASizes.xs, horizontal: ASizes.md),
         backgroundColor:
-            AHelperFunctions.getOrderStatusColor(order.status).withOpacity(0.1),
+            AHelperFunctions.getOrderStatusColor(order.status).withValues(alpha: 0.1),
         child: Text(
           order.status.name.capitalize.toString(),
           style: TextStyle(

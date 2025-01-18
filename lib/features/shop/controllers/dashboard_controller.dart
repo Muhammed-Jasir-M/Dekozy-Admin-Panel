@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/features/authentication/models/order_model.dart';
+import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';

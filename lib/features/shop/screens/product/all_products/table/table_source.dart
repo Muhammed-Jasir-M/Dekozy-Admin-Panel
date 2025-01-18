@@ -8,7 +8,8 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+
+import '../../../../models/product_model.dart';
 
 class ProductsRows extends DataTableSource {
   @override
