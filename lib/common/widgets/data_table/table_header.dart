@@ -6,14 +6,15 @@ class ATableHeader extends StatelessWidget {
   const ATableHeader({
     super.key,
     this.onPressed,
-    required this.buttonText,
+    this.buttonText = 'Add',
     this.searchController,
     this.searchOnChanged,
+    this.showLeftWidget = true,
   });
 
   final Function()? onPressed;
   final String buttonText;
-
+  final bool showLeftWidget;
   final TextEditingController? searchController;
   final Function(String)? searchOnChanged;
 
@@ -23,17 +24,19 @@ class ATableHeader extends StatelessWidget {
       children: [
         Expanded(
           flex: ADeviceUtils.isDesktopScreen(context) ? 3 : 1,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: onPressed,
-                  child: Text(buttonText),
-                ),
-              )
-            ],
-          ),
+          child: showLeftWidget
+              ? Row(
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: onPressed,
+                        child: Text(buttonText),
+                      ),
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
         ),
         Expanded(
           flex: ADeviceUtils.isDesktopScreen(context) ? 2 : 1,

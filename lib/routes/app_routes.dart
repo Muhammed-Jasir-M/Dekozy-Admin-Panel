@@ -4,6 +4,8 @@ import 'package:aura_kart_admin_panel/features/shop/screens/brand/edit_brand/edi
 import 'package:aura_kart_admin_panel/features/shop/screens/category/all_categories/categories.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/category/create_categories/create_category.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/category/edit_categories/edit_catogory.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/customer/all_customers/customers.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/customer/customer_detail/customer.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/dashboard.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/forget_password/forget_password.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/login/login.dart';
@@ -95,8 +97,17 @@ class AAppRoutes {
         page: () => const CreateProductScreen(),
         middlewares: [ARoutesMiddleware()]),
     GetPage(
-        name: ARoutes.editProduct,
-        page: () => const EditProductScreen(),
+      name: ARoutes.editProduct,
+      page: () => const EditProductScreen(),
+    ),
+    //Customers
+    GetPage(
+        name: ARoutes.customers,
+        page: () => const CustomersScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    GetPage(
+        name: ARoutes.customerDetails,
+        page: () => const CustomerDetailScreen(),
         middlewares: [ARoutesMiddleware()]),
   ];
 }
