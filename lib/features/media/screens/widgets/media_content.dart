@@ -4,10 +4,11 @@ import 'package:aura_kart_admin_panel/features/media/controller/media_controller
 import 'package:aura_kart_admin_panel/features/media/screens/widgets/folder_dropdown.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
-import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../../../../utils/constants/image_strings.dart';
 
 class MediaContent extends StatelessWidget {
   const MediaContent({super.key});
@@ -15,29 +16,33 @@ class MediaContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = MediaController.instance;
+
     return ARoundedContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // media images header
+          // Media Images Header
           Row(
             children: [
-              Text('Select Folder',
-                  style: Theme.of(context).textTheme.headlineSmall),
+              Text(
+                'Select Folder',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
               const SizedBox(width: ASizes.spaceBtwItems),
-              MediaFolderDropdown(onChanged: (MediaCategory? newValue) {
-                if (newValue != null) {
-                  controller.selectedPath.value = newValue;
-                }
-              }),
+              MediaFolderDropdown(
+                onChanged: (MediaCategory? newValue) {
+                  if (newValue != null) {
+                    controller.selectedPath.value = newValue;
+                  }
+                },
+              ),
             ],
           ),
 
           SizedBox(height: ASizes.spaceBtwSections),
 
-          // show media
-
-          const Wrap(
+          // Show Media
+          Wrap(
             alignment: WrapAlignment.start,
             spacing: ASizes.spaceBtwItems / 2,
             runSpacing: ASizes.spaceBtwItems / 2,
@@ -85,7 +90,7 @@ class MediaContent extends StatelessWidget {
             ],
           ),
 
-          // load more media button
+          // Load More Media Button
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: ASizes.spaceBtwSections),
