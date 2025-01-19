@@ -82,7 +82,27 @@ class ASidebar extends StatelessWidget {
                       itemName: 'Customers',
                     ),
                     const AMenuItem(
-                      route: 'logout',
+                      route: ARoutes.orders,
+                      icon: Iconsax.box,
+                      itemName: 'Orders',
+                    ),
+                    
+
+                    //other menus items
+                    Text('OTHERS', style: Theme.of(context).textTheme.bodySmall!.apply(letterSpacingDelta: 1.2)),
+                   
+                    const AMenuItem(
+                      route: ARoutes.profile,
+                      icon: Iconsax.user,
+                      itemName: 'Profile',
+                    ),
+                    const AMenuItem(
+                      route: ARoutes.settings,
+                      icon: Iconsax.setting2,
+                      itemName: 'Settings',
+                    ),
+                    const AMenuItem(
+                      route: 'Logout',
                       icon: Iconsax.logout,
                       itemName: 'Logout',
                     ),
