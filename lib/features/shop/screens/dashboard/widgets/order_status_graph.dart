@@ -1,5 +1,5 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/circular_container.dart';
-import 'package:aura_kart_admin_panel/features/shop/controllers/dashboard_controller.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/helpers/helper_functions.dart';
 import 'package:fl_chart/fl_chart.dart';

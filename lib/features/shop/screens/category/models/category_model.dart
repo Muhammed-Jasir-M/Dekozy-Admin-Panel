@@ -1,3 +1,4 @@
+import 'package:aura_kart_admin_panel/utils/formatters/formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryModel {
@@ -6,6 +7,8 @@ class CategoryModel {
   String image;
   String parentId;
   bool isFeatured;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   CategoryModel({
     required this.id,
@@ -13,7 +16,12 @@ class CategoryModel {
     required this.image,
     this.isFeatured = false,
     this.parentId = '',
+    this.createdAt,
+    this.updatedAt,
   });
+
+  String get formattedDate => AFormatter.formatDate(createdAt);
+  String get formattedUpdatedAtDate => AFormatter.formatDate(updatedAt);
 
   /// Empty Helper Function
   static CategoryModel empty() =>

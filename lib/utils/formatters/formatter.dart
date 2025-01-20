@@ -3,7 +3,9 @@ import 'package:intl/intl.dart';
 class AFormatter {
   static String formatDate(DateTime? date) {
     date ??= DateTime.now();
-    return DateFormat('dd-MMM-yyyy').format(date);
+    return onlyDate = DateFormat('dd-MMM-yyyy').format(date);
+    return onlyTime = DateFormat('hh:mm').format(date);
+    return '$onlyDate at $onlyTime';
   }
 
   static String formatCurrency(double amount) {

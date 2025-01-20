@@ -70,6 +70,7 @@ class SettingsForm extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: ASizes.spaceBtwInputFields * 2),
+                
 
                 SizedBox(
                   width: double.infinity,
