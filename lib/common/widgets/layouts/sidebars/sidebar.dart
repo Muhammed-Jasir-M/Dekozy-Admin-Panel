@@ -106,6 +106,7 @@ class ASidebar extends StatelessWidget {
                       icon: Iconsax.setting2,
                       itemName: 'Settings',
                     ),
+               
                     const AMenuItem(
                       route: 'logout',
                       icon: Iconsax.logout,

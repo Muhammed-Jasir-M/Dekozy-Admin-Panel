@@ -11,6 +11,8 @@ import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/dashboard.
 import 'package:aura_kart_admin_panel/features/authentication/screens/forget_password/forget_password.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/login/login.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/reset_password/reset_password.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/order/all_orders/orders.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/order/orders_detail/order_detail.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/product/all_products/widgets/products.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/product/create_product/create_product.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/product/edit_product/edit_product.dart';
@@ -121,6 +123,15 @@ class AAppRoutes {
     GetPage(
         name: ARoutes.profile,
         page: () => const ProfileScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    //Orders
+    GetPage(
+        name: ARoutes.orders,
+        page: () => const OrdersScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    GetPage(
+        name: ARoutes.orderDetails,
+        page: () => const OrderDetailScreen(),
         middlewares: [ARoutesMiddleware()]),
   ];
 }
