@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../utils/constants/api_constants.dart';
+import '../../../utils/constants/enums.dart';
 import '../../../utils/exceptions/firebase_auth_exceptions.dart';
 import '../../../utils/exceptions/format_exceptions.dart';
 import '../../../utils/exceptions/platform_exceptions.dart';
@@ -49,7 +50,8 @@ class MediaRepository {
         print("Cloudinary Response: $jsonResponse");
 
         // Create the ImageModel from the response
-        return ImageModel.fromCloudinaryResponse(jsonResponse, folderPath, imageName);
+        return ImageModel.fromCloudinaryResponse(
+            jsonResponse, folderPath, imageName);
       } else {
         throw Exception('Failed to upload image');
       }
@@ -62,6 +64,53 @@ class MediaRepository {
     try {
       final data = await _db.collection('Images').add(image.toJson());
       return data.id;
+    } on FirebaseAuthException catch (e) {
+      throw AFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  // Fetch Images from Firestore based on media category & load count
+  Future<List<ImageModel>> fetchImagesFromDatabase(
+      MediaCategory mediaCategory, int loadCount) async {
+    try {
+      final querySnapshot = await _db
+          .collection('Images')
+          .where('mediaCategory', isEqualTo: mediaCategory.name.toString())
+          .orderBy('createdAt', descending: true)
+          .limit(loadCount)
+          .get();
+
+      return querySnapshot.docs.map((e) => ImageModel.fromSnapshot(e)).toList();
+    } on FirebaseAuthException catch (e) {
+      throw AFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  // Load Images from Firestore based on media category, load count & last fetched data
+  Future<List<ImageModel>> loadMoreImagesFromDatabase(
+      MediaCategory mediaCategory, int loadCount, DateTime lastFetchedDate) async {
+    try {
+      final querySnapshot = await _db
+          .collection('Images')
+          .where('mediaCategory', isEqualTo: mediaCategory.name.toString())
+          .orderBy('createdAt', descending: true)
+          .startAfter([lastFetchedDate])
+          .limit(loadCount)
+          .get();
+
+      return querySnapshot.docs.map((e) => ImageModel.fromSnapshot(e)).toList();
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
     } on FormatException catch (_) {

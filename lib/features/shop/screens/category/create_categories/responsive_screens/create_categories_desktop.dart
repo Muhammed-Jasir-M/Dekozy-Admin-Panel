@@ -16,13 +16,14 @@ class CreateCategoryDesktopScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //Breadcrumbs
+              // Breadcrumbs
               ABreadcrumbsWithHeading(
                   returnToPreviousScreen: true,
                   heading: 'Create Category',
                   breadcrumbItems: [ARoutes.categories, 'Create Category']),
+
               SizedBox(height: ASizes.spaceBtwSections),
-              //Form
+              // Form
               CreateCategoryForm(),
             ],
           ),
