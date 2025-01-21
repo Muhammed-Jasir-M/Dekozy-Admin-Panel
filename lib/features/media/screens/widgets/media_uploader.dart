@@ -42,15 +42,15 @@ class MediaUploader extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             DropzoneView(
-                              mime: const ['Image/jpeg', 'Image/png'],
+                              // mime: const ['Image/jpeg', 'Image/png'],
                               cursor: CursorType.Default,
                               operation: DragOperation.copy,
+                              onCreated: (ctrl) =>
+                                  controller.dropzoneController = ctrl,
                               onLoaded: () => print('Zone Loaded'),
                               onError: (ev) => print('Zone error: $ev'),
                               onHover: () => print('Zone hovered'),
                               onLeave: () => print('Zone left'),
-                              onCreated: (ctrl) =>
-                                  controller.dropzoneController = ctrl,
                               onDropInvalid: (ev) =>
                                   print('Zone invalid MIME : $ev'),
                               onDropFile: (DropzoneFileInterface ev) async {
@@ -78,8 +78,11 @@ class MediaUploader extends StatelessWidget {
 
                                 controller.selectedImagesToUpload.add(image);
                               },
-                              onDropFiles: (ev) =>
-                                  print('Zone drop multiple: $ev'),
+                              onDropString: (String s) => print('Drop: $s'),
+                              onDropFiles: (files) =>
+                                  print('Zone drop multiple files: $files'),
+                              onDropStrings: (strings) =>
+                                  print('Zone drop strings multiple: $strings'),
                             ),
 
                             // Drop Zone Content
@@ -95,7 +98,8 @@ class MediaUploader extends StatelessWidget {
                                 const Text('Drag and Drop Images here'),
                                 const SizedBox(height: ASizes.spaceBtwItems),
                                 OutlinedButton(
-                                  onPressed: () => controller.selectLocalImages(),
+                                  onPressed: () =>
+                                      controller.selectLocalImages(),
                                   child: const Text('Select Images'),
                                 ),
                               ],

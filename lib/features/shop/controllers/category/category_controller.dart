@@ -1,5 +1,5 @@
-import 'package:aura_kart_admin_panel/features/shop/controllers/category/category_repository.dart';
-import 'package:aura_kart_admin_panel/features/shop/screens/category/models/category_model.dart';
+import 'package:aura_kart_admin_panel/data/repositories/category/category_repository.dart';
+import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
 import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +31,7 @@ class CategoryController extends GetxController {
       isLoading.value = false;
     } catch (e) {
       isLoading.value = false;
-      ALoaders.errorSnackBar(title: 'Uh Oh!!', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 }

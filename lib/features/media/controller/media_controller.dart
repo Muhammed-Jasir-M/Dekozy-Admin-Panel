@@ -38,8 +38,6 @@ class MediaController extends GetxController {
 
     if (files.isNotEmpty) {
       for (var file in files) {
-        print("Picked file: ${file.name}");
-
         // Retrieve file data as Uint8List
         final bytes = await dropzoneController.getFileData(file);
 

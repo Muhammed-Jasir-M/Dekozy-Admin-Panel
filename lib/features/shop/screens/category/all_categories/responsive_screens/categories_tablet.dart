@@ -7,13 +7,15 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../../common/widgets/loaders/loader_animation.dart';
+import '../../../../controllers/category/category_controller.dart';
+
 class CategoriesTabletScreen extends StatelessWidget {
-  const CategoriesTabletScreen({
-    super.key,
-  });
+  const CategoriesTabletScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CategoryController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -21,23 +23,29 @@ class CategoriesTabletScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //Breadcrumbs
+              // Breadcrumbs
               const ABreadcrumbsWithHeading(
                   heading: 'Catogories', breadcrumbItems: ['Catogories']),
               const SizedBox(height: ASizes.spaceBtwSections),
-              //Table Body
 
-              //Show Loader
+              // Table Body
+              // Show Loader
               ARoundedContainer(
                 child: Column(
                   children: [
-                    //Table Header
+                    // Table Header
                     ATableHeader(
                         buttonText: 'Create New Category',
                         onPressed: () => Get.toNamed(ARoutes.createCategory)),
                     const SizedBox(height: ASizes.spaceBtwItems),
-                    //Table
-                    CategoryTable(),
+
+                    // Table
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return const ALoaderAnimation();
+                      }
+                      return const CategoryTable();
+                    }),
                   ],
                 ),
               )

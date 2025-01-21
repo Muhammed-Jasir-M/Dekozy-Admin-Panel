@@ -10,13 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoriesDesktopScreen extends StatelessWidget {
-  const CategoriesDesktopScreen({
-    super.key,
-  });
+  const CategoriesDesktopScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CategoryController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -24,28 +23,27 @@ class CategoriesDesktopScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //Breadcrumbs
+              // Breadcrumbs
               const ABreadcrumbsWithHeading(
                   heading: 'Catogories', breadcrumbItems: ['Catogories']),
               const SizedBox(height: ASizes.spaceBtwSections),
 
-              //Table Body
-
-              //Show Loader
+              // Table Body
+              // Show Loader
               ARoundedContainer(
                 child: Column(
                   children: [
-                    //Table Header
+                    // Table Header
                     ATableHeader(
                         buttonText: 'Create New Category',
                         onPressed: () => Get.toNamed(ARoutes.createCategory)),
                     const SizedBox(height: ASizes.spaceBtwItems),
 
-                    //Table
-
+                    // Table
                     Obx(() {
-                      if (controller.isLoading.value)
+                      if (controller.isLoading.value) {
                         return const ALoaderAnimation();
+                      }
                       return const CategoryTable();
                     }),
                   ],

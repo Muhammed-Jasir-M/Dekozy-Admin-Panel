@@ -12,6 +12,7 @@ class ImageModel {
   final int? sizeBytes;
   String mediaCategory;
   final String filename;
+  final String? publicId;
   final String? fullPath;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -28,6 +29,7 @@ class ImageModel {
     this.mediaCategory = '',
     required this.url,
     required this.folder,
+    this.publicId,
     this.sizeBytes,
     required this.filename,
     this.fullPath,
@@ -49,6 +51,7 @@ class ImageModel {
     return {
       'url': url,
       'folder': folder,
+      'publicId': publicId,
       'filename': filename,
       'sizeBytes': sizeBytes,
       'fullPath': fullPath,
@@ -68,6 +71,7 @@ class ImageModel {
         id: document.id,
         url: data['url'] ?? '',
         folder: data['folder'] ?? '',
+        publicId: data['publicId'] ?? '',
         filename: data['filename'] ?? '',
         fullPath: data['fullPath'] ?? '',
         sizeBytes: data['sizeBytes'] ?? 0,
@@ -83,14 +87,15 @@ class ImageModel {
     }
   }
 
-  factory ImageModel.fromCloudinaryResponse(Map<String, dynamic> response) {
+  factory ImageModel.fromCloudinaryResponse(Map<String, dynamic> response, String folder , String imageName) {
     return ImageModel(
       url: response['secure_url'] ?? '',
-      folder: response['folder'] ?? '',
-      filename: response['public_id'] ?? '',
+      publicId: response['public_id'] ?? '',
+      folder: folder,
+      filename: imageName,
       fullPath: '${response['folder'] ?? ''}/${response['public_id'] ?? ''}',
       sizeBytes: response['bytes'] ?? 0,
-      contentType: response['resource_type'] ?? '',
+      contentType: '${response['resource_type']}.${response['format']?? ''}',
       createdAt: DateTime.now(),
     );
   }

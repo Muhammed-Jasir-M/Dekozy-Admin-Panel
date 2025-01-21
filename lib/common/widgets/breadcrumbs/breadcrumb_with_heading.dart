@@ -13,21 +13,22 @@ class ABreadcrumbsWithHeading extends StatelessWidget {
     this.returnToPreviousScreen = false,
   });
 
-// The Heading for the page
+  // The Heading for the page
   final String heading;
-//List of Breadcrumb items representing the Navigate path
+  // List of Breadcrumb items representing the Navigate path
   final List<String> breadcrumbItems;
-//Flag indicating whether to include a button to return to the previous screen
+  // Flag indicating whether to include a button to return to the previous screen
   final bool returnToPreviousScreen;
+  
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        //Breadcrumb trail
+        // Breadcrumb Trail
         Row(
           children: [
-            // DashBoard link
+            // DashBoard Link
             InkWell(
               onTap: () => Get.offAllNamed(ARoutes.dashboard),
               child: Padding(
@@ -51,7 +52,7 @@ class ABreadcrumbsWithHeading extends StatelessWidget {
                         : () => Get.toNamed(breadcrumbItems[i]),
                     child: Padding(
                       padding: const EdgeInsets.all(ASizes.xs),
-                      //Format breadcrumb item:capitalize and remove loading '/'
+                      // Format breadcrumb item: capitalize and remove loading '/'
                       child: Text(
                         i == breadcrumbItems.length - 1
                             ? breadcrumbItems[i].capitalize.toString()
@@ -62,23 +63,22 @@ class ABreadcrumbsWithHeading extends StatelessWidget {
                             .apply(fontWeightDelta: -1),
                       ),
                     ),
-                  ), //Seperator
+                  ),
                 ],
               ),
           ],
         ),
         SizedBox(height: ASizes.sm),
-        //Heading of the page
+        // Heading of the page
         Row(
           children: [
             if (returnToPreviousScreen)
               IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Icon(Iconsax.arrow_left)),
-            if (returnToPreviousScreen)
-              const SizedBox(
-                width: ASizes.spaceBtwItems,
+                onPressed: () => Get.back(),
+                icon: const Icon(Iconsax.arrow_left),
               ),
+            if (returnToPreviousScreen)
+              const SizedBox(width: ASizes.spaceBtwItems),
             APageHeading(heading: heading),
           ],
         )

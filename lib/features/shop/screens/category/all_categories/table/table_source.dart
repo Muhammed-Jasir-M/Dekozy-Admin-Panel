@@ -12,10 +12,13 @@ import 'package:iconsax/iconsax.dart';
 
 class CategoryRows extends DataTableSource {
   final controller = CategoryController.instance;
+
   @override
   DataRow? getRow(int index) {
     final category = controller.filteredItems[index];
-    final parentCategory = controller.allItems.firstWhereOrNull((item) => item.id == category.parentId);
+    final parentCategory = controller.allItems
+        .firstWhereOrNull((item) => item.id == category.parentId);
+
     return DataRow2(
       cells: [
         DataCell(
@@ -33,8 +36,10 @@ class CategoryRows extends DataTableSource {
               const SizedBox(width: ASizes.spaceBtwItems),
               Expanded(
                 child: Text(
-                  'Name',
-                  style: Theme.of(Get.context!).textTheme.bodyLarge!
+                  category.name,
+                  style: Theme.of(Get.context!)
+                      .textTheme
+                      .bodyLarge!
                       .apply(color: AColors.primary),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -43,13 +48,18 @@ class CategoryRows extends DataTableSource {
             ],
           ),
         ),
-        DataCell(Text(parentCategory != null? parentCategory.name : '')),
-        DataCell(category.isFeatured ? const  Icon(Iconsax.heart5, color: AColors.primary) : const Icon(Iconsax.heart)),
-        DataCell(Text(category.createdAt == null ? '' : category.formattedDate)),
+        DataCell(Text(parentCategory != null ? parentCategory.name : '')),
+        DataCell(
+          category.isFeatured
+              ? const Icon(Iconsax.heart5, color: AColors.primary)
+              : const Icon(Iconsax.heart),
+        ),
+        DataCell(
+            Text(category.createdAt == null ? '' : category.formattedDate)),
         DataCell(
           ATableActionButtons(
             onEditPressed: () =>
-                Get.toNamed(ARoutes.editCategory, arguments: 'category'),
+                Get.toNamed(ARoutes.editCategory, arguments: category),
             onDeletePressed: () {},
           ),
         ),

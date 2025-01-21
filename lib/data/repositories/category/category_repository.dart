@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/features/shop/screens/category/models/category_model.dart';
+import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/firebase_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/platform_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,10 +8,10 @@ import 'package:get/get.dart';
 class CategoryRepository extends GetxController {
   static CategoryRepository get instance => Get.find();
 
-  //firebase firestore instance
+  // Firebase Firestore Instance
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // get all categories from the categories collection
+  // Get all categories from the Categories collection
   Future<List<CategoryModel>> getAllCategories() async {
     try {
       final snapshot = await _db.collection("Categories").get();

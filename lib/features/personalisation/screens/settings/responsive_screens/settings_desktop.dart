@@ -1,9 +1,10 @@
 import 'package:aura_kart_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 
-import 'package:aura_kart_admin_panel/features/personalisation/screens/settings/widgets/image_meta.dart';
 import 'package:aura_kart_admin_panel/features/personalisation/screens/settings/widgets/settings_form.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+
+import '../../settings/widgets/image_meta.dart';
 
 class SettingsDesktopScreen extends StatelessWidget {
   const SettingsDesktopScreen({super.key});
@@ -17,25 +18,26 @@ class SettingsDesktopScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              //breadcrumbs
-              ABreadcrumbsWithHeading(heading: 'Settings', breadcrumbItems: ['Settings']),
+              // Breadcrumbs
+              ABreadcrumbsWithHeading(
+                  heading: 'Settings', breadcrumbItems: ['Settings']),
               SizedBox(height: ASizes.spaceBtwSections),
 
-              // body
+              // Body
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //profile pic and meta
+                  // Profile Pic & Meta
                   Expanded(child: ImageAndMeta()),
                   SizedBox(width: ASizes.spaceBtwSections),
 
-                  //form
+                  // Form
                   Expanded(flex: 2, child: SettingsForm()),
                 ],
               )
             ],
-          ),),
+          ),
+        ),
       ),
     );
   }

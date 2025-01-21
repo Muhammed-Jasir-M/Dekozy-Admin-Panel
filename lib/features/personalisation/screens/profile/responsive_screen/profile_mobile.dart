@@ -1,6 +1,6 @@
 import 'package:aura_kart_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
-import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/widgets/form.dart';
-import 'package:aura_kart_admin_panel/features/personalisation/screens/settings/widgets/image_meta.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/widgets/profile_form.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/widgets/image_meta.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
@@ -16,21 +16,21 @@ class ProfileMobileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //breadcrumbs
+              // Breadcrumbs
               ABreadcrumbsWithHeading(
                   heading: 'Profile', breadcrumbItems: ['Profile']),
+              SizedBox(height: ASizes.spaceBtwSections),
+
+              Column(
+                children: [
+                  // Profile Pic & Meta
+                  ImageAndMeta(),
                   SizedBox(height: ASizes.spaceBtwSections),
 
-                  Column(
-                    children: [
-                      ImageAndMeta(),
-                      SizedBox(height: ASizes.spaceBtwSections),
-
-
-                      //forms
-                      ProfileForm(),
-                    ],
-                  )
+                  // Form
+                  ProfileForm(),
+                ],
+              )
             ],
           ),
         ),

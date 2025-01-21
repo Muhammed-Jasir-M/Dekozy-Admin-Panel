@@ -49,7 +49,7 @@ class MediaRepository {
         print("Cloudinary Response: $jsonResponse");
 
         // Create the ImageModel from the response
-        return ImageModel.fromCloudinaryResponse(jsonResponse);
+        return ImageModel.fromCloudinaryResponse(jsonResponse, folderPath, imageName);
       } else {
         throw Exception('Failed to upload image');
       }

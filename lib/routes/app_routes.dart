@@ -1,7 +1,8 @@
 import 'package:aura_kart_admin_panel/features/media/screens/media.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/profile.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/screens/settings/settings.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/brand/all_brands/brands.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/brand/edit_brand/edit_brand.dart';
-import 'package:aura_kart_admin_panel/features/shop/screens/category/all_categories/categories.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/category/create_categories/create_category.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/category/edit_categories/edit_catogory.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/customer/all_customers/customers.dart';
@@ -21,6 +22,7 @@ import '../features/shop/screens/banner/all_banners/banners.dart';
 import '../features/shop/screens/banner/create_banner/create_banner.dart';
 import '../features/shop/screens/banner/edit_banner/edit_banner.dart';
 import '../features/shop/screens/brand/create_brand/create_brand.dart';
+import '../features/shop/screens/category/all_categories/widgets/categories.dart';
 
 class AAppRoutes {
   static final List<GetPage> pages = [
@@ -97,10 +99,11 @@ class AAppRoutes {
         page: () => const CreateProductScreen(),
         middlewares: [ARoutesMiddleware()]),
     GetPage(
-      name: ARoutes.editProduct,
-      page: () => const EditProductScreen(),
-    ),
-    //Customers
+        name: ARoutes.editProduct,
+        page: () => const EditProductScreen(),
+        middlewares: [ARoutesMiddleware()]),
+
+    // Customers
     GetPage(
         name: ARoutes.customers,
         page: () => const CustomersScreen(),
@@ -108,6 +111,16 @@ class AAppRoutes {
     GetPage(
         name: ARoutes.customerDetails,
         page: () => const CustomerDetailScreen(),
+        middlewares: [ARoutesMiddleware()]),
+
+    // Settings
+    GetPage(
+        name: ARoutes.settings,
+        page: () => const SettingsScreen(),
+        middlewares: [ARoutesMiddleware()]),
+    GetPage(
+        name: ARoutes.profile,
+        page: () => const ProfileScreen(),
         middlewares: [ARoutesMiddleware()]),
   ];
 }

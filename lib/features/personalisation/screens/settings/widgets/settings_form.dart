@@ -10,74 +10,75 @@ class SettingsForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // app settings
+        // App Settings
         ARoundedContainer(
-          padding: const EdgeInsets.symmetric(vertical: ASizes.lg, horizontal: ASizes.md),
+          padding: const EdgeInsets.symmetric(
+              vertical: ASizes.lg, horizontal: ASizes.md),
           child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('App settings', style: Theme.of(context).textTheme.headlineSmall),
-                const SizedBox(height: ASizes.spaceBtwSections),
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('App Settings',
+                  style: Theme.of(context).textTheme.headlineSmall),
+              const SizedBox(height: ASizes.spaceBtwSections),
 
-                //app name
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'App Name',
-                    label: Text('App Name'),
-                    prefixIcon: Icon(Iconsax.user),
+              // App Name
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'App Name',
+                  label: Text('App Name'),
+                  prefixIcon: Icon(Iconsax.user),
+                ),
+              ),
+              const SizedBox(height: ASizes.spaceBtwInputFields),
+
+              Row(
+                children: [
+                  // Tax Rate
+                  Expanded(
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: 'Tax %',
+                        label: Text('Tax Rate (%)'),
+                        prefixIcon: Icon(Iconsax.forward),
+                        enabled: false,
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: ASizes.spaceBtwInputFields),
-
-                // email and phone
-
-                Row(
-                  children: [
-                    //first name
-                    Expanded(
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'Tax %',
-                              label: Text('Tax Rate %'),
-                              prefixIcon: Icon(Iconsax.forward),
-                              enabled: false,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: ASizes.spaceBtwItems),
-                        // last name
-                        Expanded(
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'Shipping Cost',
-                              label: Text('Shipping cost (\$)'),
-                              prefixIcon: Icon(Iconsax.ship),
-                            ),
-                          ),
+                  const SizedBox(width: ASizes.spaceBtwItems),
+                  // Shipping Cost
+                  Expanded(
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: 'Shipping Cost',
+                        label: Text('Shipping Cost (\$)'),
+                        prefixIcon: Icon(Iconsax.ship),
                       ),
-                      const SizedBox(width: ASizes.spaceBtwItems),
-                      // last name
-                      Expanded(
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'Free shipping cost after (\$)',
-                              label: Text('Free Shipping threshold (\$)'),
-                              prefixIcon: Icon(Iconsax.ship),
-                            ),
-                          ),
+                    ),
+                  ),
+                  const SizedBox(width: ASizes.spaceBtwItems),
+                  // Free Shipping Cost 
+                  Expanded(
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: 'Free Shipping After (\$)',
+                        label: Text('Free Shipping Threshold (\$)'),
+                        prefixIcon: Icon(Iconsax.ship),
                       ),
-                  ],
-                ),
-                const SizedBox(height: ASizes.spaceBtwInputFields * 2),
-                
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: ASizes.spaceBtwInputFields * 2),
 
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(onPressed: () {}, child: const Text('Update App Settings')),
-                ),
-              ],
-            )),
+              // Update Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () {}, child: const Text('Update App Settings')),
+              ),
+            ],
+          )),
         )
       ],
     );

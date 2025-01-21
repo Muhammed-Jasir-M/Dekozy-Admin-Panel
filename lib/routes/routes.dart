@@ -41,5 +41,7 @@ class ARoutes {
     products,
     customers, 
     orders,
+    settings,
+    profile,
   ];
 }

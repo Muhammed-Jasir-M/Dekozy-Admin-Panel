@@ -86,11 +86,16 @@ class ASidebar extends StatelessWidget {
                       icon: Iconsax.box,
                       itemName: 'Orders',
                     ),
-                    
 
-                    //other menus items
-                    Text('OTHERS', style: Theme.of(context).textTheme.bodySmall!.apply(letterSpacingDelta: 1.2)),
-                   
+                    // Other Menu Items
+                    Text(
+                      'OTHERS',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .apply(letterSpacingDelta: 1.2),
+                    ),
+
                     const AMenuItem(
                       route: ARoutes.profile,
                       icon: Iconsax.user,
@@ -102,7 +107,7 @@ class ASidebar extends StatelessWidget {
                       itemName: 'Settings',
                     ),
                     const AMenuItem(
-                      route: 'Logout',
+                      route: 'logout',
                       icon: Iconsax.logout,
                       itemName: 'Logout',
                     ),
