@@ -7,12 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../widgets/media_content.dart';
+
 class MediaDesktopScreen extends StatelessWidget {
   const MediaDesktopScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(MediaController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -20,17 +23,17 @@ class MediaDesktopScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ///Header
+              /// Header
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  //Breadcrumbs
+                  // Breadcrumbs
                   const ABreadcrumbsWithHeading(
                       heading: 'Media',
                       breadcrumbItems: [ARoutes.login, 'Media Screen']),
 
-                  // toggle  images section button
+                  // Toggle  Images Section Button
                   SizedBox(
                     width: ASizes.buttonWidth * 1.5,
                     child: ElevatedButton.icon(
@@ -44,11 +47,11 @@ class MediaDesktopScreen extends StatelessWidget {
               ),
               const SizedBox(height: ASizes.spaceBtwSections),
 
-              /// upload area
+              /// Upload Area
               const MediaUploader(),
 
-              /// media
-              const MediaUploader(),
+              /// Media Content
+              const MediaContent(),
             ],
           ),
         ),

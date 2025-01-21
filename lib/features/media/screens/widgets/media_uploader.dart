@@ -12,7 +12,6 @@ import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
-import 'package:universal_html/html.dart' as html;
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +28,7 @@ class MediaUploader extends StatelessWidget {
       () => controller.showImagesUploaderSection.value
           ? Column(
               children: [
-                // drag and drop area
+                // Drag & Drop Area
                 ARoundedContainer(
                   height: 250,
                   showBorder: true,
@@ -54,42 +53,51 @@ class MediaUploader extends StatelessWidget {
                                   controller.dropzoneController = ctrl,
                               onDropInvalid: (ev) =>
                                   print('Zone invalid MIME : $ev'),
-                              onDropMultiple: (ev) =>
-                                  print('Zone drop multiple: $ev'),
-                              onDrop: (file) async {
-                                if (file is html.File) {
-                                  final bytes = await controller
-                                      .dropzoneController
-                                      .getFileData(
-                                          file as DropzoneFileInterface);
-                                  final image = ImageModel(
-                                    url: '',
-                                    file: file,
-                                    folder: '',
-                                    filename: file.name,
-                                    localImageToDisplay:
-                                        Uint8List.fromList(bytes),
-                                  );
-                                  controller.selectedImagesToUpload.add(image);
-                                } else if (file is String) {
-                                  print('Zone drop: $file');
-                                } else {
-                                  print(
-                                      'Zone unknown type: ${file.runtimeType}');
-                                }
+                              onDropFile: (DropzoneFileInterface ev) async {
+                                // Retrieve file data as Uint8List
+                                final bytes = await controller
+                                    .dropzoneController
+                                    .getFileData(ev);
+
+                                // Extract file metadata
+                                final filename = await controller
+                                    .dropzoneController
+                                    .getFilename(ev);
+                                final mimeType = await controller
+                                    .dropzoneController
+                                    .getFileMIME(ev);
+
+                                final image = ImageModel(
+                                  url: '',
+                                  folder: '',
+                                  filename: filename,
+                                  localImageToDisplay:
+                                      Uint8List.fromList(bytes),
+                                  contentType: mimeType,
+                                );
+
+                                controller.selectedImagesToUpload.add(image);
                               },
+                              onDropFiles: (ev) =>
+                                  print('Zone drop multiple: $ev'),
                             ),
+
+                            // Drop Zone Content
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Image.asset(AImages.defaultMultiImageIcon,
-                                    width: 50, height: 50),
+                                Image.asset(
+                                  AImages.defaultMultiImageIcon,
+                                  width: 50,
+                                  height: 50,
+                                ),
                                 const SizedBox(height: ASizes.spaceBtwItems),
-                                const Text('Drag and  drop image here'),
+                                const Text('Drag and Drop Images here'),
                                 const SizedBox(height: ASizes.spaceBtwItems),
                                 OutlinedButton(
-                                    onPressed: () {},
-                                    child: const Text('Select Images')),
+                                  onPressed: () => controller.selectLocalImages(),
+                                  child: const Text('Select Images'),
+                                ),
                               ],
                             )
                           ],
@@ -99,109 +107,96 @@ class MediaUploader extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: ASizes.spaceBtwItems),
-                // locally selected images
-                ARoundedContainer(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // folder dropdown
 
-                          Row(
-                            children: [
-                              Text('Select Folder',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall),
-                              const SizedBox(width: ASizes.spaceBtwItems),
-                              MediaFolderDropdown(
+                /// Heading & Locally selected images
+                if (controller.selectedImagesToUpload.isNotEmpty)
+                  ARoundedContainer(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            /// Folders Dropdown
+                            Row(
+                              children: [
+                                Text(
+                                  'Select Folder',
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                ),
+                                const SizedBox(width: ASizes.spaceBtwItems),
+                                MediaFolderDropdown(
                                   onChanged: (MediaCategory? newValue) {
-                                if (newValue != null) {
-                                  controller.selectedPath.value = newValue;
-                                }
-                              }),
-                            ],
-                          ),
+                                    if (newValue != null) {
+                                      controller.selectedPath.value = newValue;
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
 
-                          // upload and remove buttons
-                          Row(
-                            children: [
-                              TextButton(
-                                  onPressed: () {},
-                                  child: const Text('Remove All')),
-                              const SizedBox(width: ASizes.spaceBtwItems),
-                              ADeviceUtils.isMobileScreen(context)
-                                  ? const SizedBox.shrink()
-                                  : SizedBox(
-                                      width: ASizes.buttonWidth,
-                                      child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: const Text('Upload'))),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: ASizes.spaceBtwSections),
-                      const Wrap(
-                        alignment: WrapAlignment.start,
-                        spacing: ASizes.spaceBtwItems / 2,
-                        runSpacing: ASizes.spaceBtwItems / 2,
-                        children: [
-                          ARoundedImage(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                          ARoundedImage(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                          ARoundedImage(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                          ARoundedImage(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                          ARoundedImage(
-                            width: 90,
-                            height: 90,
-                            padding: ASizes.sm,
-                            imageType: ImageType.asset,
-                            image: AImages.darkAppLogo,
-                            backgroundColor: AColors.primaryBackground,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: ASizes.spaceBtwSections),
-                      ADeviceUtils.isMobileScreen(context)
-                          ? SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                  onPressed: () {},
-                                  child: const Text('Upload')))
-                          : const SizedBox.shrink()
-                    ],
+                            /// Upload & Remove buttons
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () =>
+                                      controller.selectedImagesToUpload.clear(),
+                                  child: const Text('Remove All'),
+                                ),
+                                const SizedBox(width: ASizes.spaceBtwItems),
+                                ADeviceUtils.isMobileScreen(context)
+                                    ? const SizedBox.shrink()
+                                    : SizedBox(
+                                        width: ASizes.buttonWidth,
+                                        child: ElevatedButton(
+                                          onPressed: () => controller
+                                              .uploadImagesConfirmation(),
+                                          child: const Text('Upload'),
+                                        ),
+                                      ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: ASizes.spaceBtwSections),
+
+                        /// Locally Selected Images
+                        Wrap(
+                          alignment: WrapAlignment.start,
+                          spacing: ASizes.spaceBtwItems / 2,
+                          runSpacing: ASizes.spaceBtwItems / 2,
+                          children: controller.selectedImagesToUpload
+                              .where(
+                                  (image) => image.localImageToDisplay != null)
+                              .map(
+                                (element) => ARoundedImage(
+                                  width: 90,
+                                  height: 90,
+                                  padding: ASizes.sm,
+                                  memoryImage: element.localImageToDisplay,
+                                  backgroundColor: AColors.primaryBackground,
+                                  imageType: ImageType.memory,
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        const SizedBox(height: ASizes.spaceBtwSections),
+
+                        /// Upload Button for Mobile
+                        ADeviceUtils.isMobileScreen(context)
+                            ? SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () =>
+                                      controller.uploadImagesConfirmation(),
+                                  child: const Text('Upload'),
+                                ),
+                              )
+                            : const SizedBox.shrink()
+                      ],
+                    ),
                   ),
-                ),
                 const SizedBox(height: ASizes.spaceBtwSections),
               ],
             )

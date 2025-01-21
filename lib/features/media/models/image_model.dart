@@ -82,4 +82,16 @@ class ImageModel {
       return ImageModel.empty();
     }
   }
+
+  factory ImageModel.fromCloudinaryResponse(Map<String, dynamic> response) {
+    return ImageModel(
+      url: response['secure_url'] ?? '',
+      folder: response['folder'] ?? '',
+      filename: response['public_id'] ?? '',
+      fullPath: '${response['folder'] ?? ''}/${response['public_id'] ?? ''}',
+      sizeBytes: response['bytes'] ?? 0,
+      contentType: response['resource_type'] ?? '',
+      createdAt: DateTime.now(),
+    );
+  }
 }
