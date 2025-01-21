@@ -1,6 +1,7 @@
 import 'package:aura_kart_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
 import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController {
@@ -9,7 +10,9 @@ class CategoryController extends GetxController {
   RxBool isLoading = true.obs;
   RxList<CategoryModel> allItems = <CategoryModel>[].obs;
   RxList<CategoryModel> filteredItems = <CategoryModel>[].obs;
-
+//Sorting
+  RxInt sortColumnIndex = 1.obs;
+  RxBool sortAscending = true.obs;
   final _categoryRepository = Get.put(CategoryRepository());
 
   @override
@@ -33,5 +36,29 @@ class CategoryController extends GetxController {
       isLoading.value = false;
       ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
+  }
+
+  void sortByName(int columnIndex, bool ascending) {
+    sortColumnIndex.value = columnIndex;
+    sortAscending.value = ascending;
+    filteredItems.sort((a, b) {
+      if (ascending) {
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      } else {
+        return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+      }
+    });
+  }
+
+  sortByParentName(int columnIndex, bool ascending) {
+    sortColumnIndex.value = columnIndex;
+    sortAscending.value = ascending;
+    filteredItems.sort((a, b) {
+      if (ascending) {
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      } else {
+        return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+      }
+    });
   }
 }
