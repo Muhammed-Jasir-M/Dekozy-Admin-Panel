@@ -2,6 +2,9 @@ import 'dart:typed_data';
 
 import 'package:aura_kart_admin_panel/data/repositories/media/media_repository.dart';
 import 'package:aura_kart_admin_panel/features/media/models/image_model.dart';
+import 'package:aura_kart_admin_panel/features/media/screens/widgets/media_content.dart';
+import 'package:aura_kart_admin_panel/features/media/screens/widgets/media_uploader.dart';
+import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/text_strings.dart';
 import 'package:aura_kart_admin_panel/utils/popups/dialogs.dart';
@@ -44,15 +47,20 @@ class MediaController extends GetxController {
 
       RxList<ImageModel> targetList = <ImageModel>[].obs;
 
-      if (selectedPath.value == MediaCategory.banners && allBannerImages.isEmpty) {
+      if (selectedPath.value == MediaCategory.banners &&
+          allBannerImages.isEmpty) {
         targetList = allBannerImages;
-      } else if (selectedPath.value == MediaCategory.brands && allBrandImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.brands &&
+          allBrandImages.isEmpty) {
         targetList = allBrandImages;
-      } else if (selectedPath.value == MediaCategory.categories && allCategoryImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.categories &&
+          allCategoryImages.isEmpty) {
         targetList = allCategoryImages;
-      } else if (selectedPath.value == MediaCategory.products && allProductImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.products &&
+          allProductImages.isEmpty) {
         targetList = allProductImages;
-      } else if (selectedPath.value == MediaCategory.users && allUserImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.users &&
+          allUserImages.isEmpty) {
         targetList = allUserImages;
       }
 
@@ -266,5 +274,35 @@ class MediaController extends GetxController {
         path = 'Others';
     }
     return path;
+  } // Image Selection Bottom Sheet
+
+  Future<List<ImageModel>?> selectImagesFromMedia(
+      {List<String>? selectedUrls,
+      bool allowSelection = true,
+      bool multipleSelection = false}) async {
+    showImagesUploaderSection.value = true;
+    List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(
+      isScrollControlled: true,
+      backgroundColor: AColors.primaryBackground,
+      FractionallySizedBox(
+        heightFactor: 1,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(ASizes.defaultSpace),
+            child: Column(
+              children: [
+                const MediaUploader(),
+                MediaContent(
+                  allowSelection: allowSelection,
+                  alreadySelectedUrls: selectedUrls ?? [],
+                  allowMultipleSelection: multipleSelection,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    return selectedImages;
   }
 }

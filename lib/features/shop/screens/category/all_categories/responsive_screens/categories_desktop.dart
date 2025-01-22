@@ -25,7 +25,7 @@ class CategoriesDesktopScreen extends StatelessWidget {
             children: [
               // Breadcrumbs
               const ABreadcrumbsWithHeading(
-                  heading: 'Catogories', breadcrumbItems: ['Catogories']),
+                  heading: 'Categories', breadcrumbItems: ['Categories']),
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body

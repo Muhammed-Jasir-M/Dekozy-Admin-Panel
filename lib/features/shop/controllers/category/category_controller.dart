@@ -15,7 +15,7 @@ class CategoryController extends GetxController {
 
   RxInt sortColumnIndex = 1.obs;
   RxBool sortAscending = true.obs;
-  
+
   final searchTextController = TextEditingController();
   final _categoryRepository = Get.put(CategoryRepository());
 

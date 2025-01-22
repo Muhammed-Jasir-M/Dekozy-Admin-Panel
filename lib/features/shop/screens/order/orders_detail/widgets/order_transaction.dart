@@ -1,6 +1,7 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
-import 'package:aura_kart_admin_panel/features/shop/models/order_model%20copy.dart';
+
+import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
@@ -57,15 +58,17 @@ class OrderTransaction extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Date', style: Theme.of(context).textTheme.labelMedium),
-                  Text('April 21, 2025', style: Theme.of(context).textTheme.bodyLarge),
+                  Text('April 21, 2025',
+                      style: Theme.of(context).textTheme.bodyLarge),
                 ],
               )),
-              Expanded(child: 
-              Column(
+              Expanded(
+                  child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Total', style: Theme.of(context).textTheme.labelMedium),
-                  Text('\$${order.totalAmount}', style: Theme.of(context).textTheme.bodyLarge),
+                  Text('\$${order.totalAmount}',
+                      style: Theme.of(context).textTheme.bodyLarge),
                 ],
               ))
             ],

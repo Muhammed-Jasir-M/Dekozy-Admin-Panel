@@ -25,7 +25,7 @@ class CategoriesMobileScreen extends StatelessWidget {
             children: [
               // Breadcrumbs
               const ABreadcrumbsWithHeading(
-                  heading: 'Catogories', breadcrumbItems: ['Catogories']),
+                  heading: 'Categories', breadcrumbItems: ['Categories']),
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body
@@ -41,7 +41,7 @@ class CategoriesMobileScreen extends StatelessWidget {
                         searchOnChanged: (query) => controller.searchQuery(query),
                         ),
                     const SizedBox(height: ASizes.spaceBtwItems),
-                    
+
                     // Table
                     Obx(() {
                       if (controller.isLoading.value) {

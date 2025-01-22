@@ -1,6 +1,7 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/icons/table_action_icon_buttons.dart';
-import 'package:aura_kart_admin_panel/features/shop/controllers/dashboard_controller.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
+
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
@@ -12,8 +13,6 @@ import 'package:get/get.dart';
 class OrderRows extends DataTableSource {
   @override
   DataRow? getRow(int index) {
-
-    
     final order = DashboardController.orders[index];
     return DataRow2(
         onTap: () => Get.toNamed(ARoutes.orderDetails, arguments: order),
@@ -32,25 +31,24 @@ class OrderRows extends DataTableSource {
           DataCell(Text(order.formattedOrderDate)),
           DataCell(Text('${order.items?.length} Items')),
           DataCell(
-          ARoundedContainer(
-            radius: ASizes.cardRadiusSm,
-            padding: EdgeInsets.symmetric(vertical: ASizes.sm, horizontal:  ASizes.md ),
-            backgroundColor: AHelperFunctions.getOrderStatusColor(order.status).withOpacity(0.1),
-          ),
+            ARoundedContainer(
+              radius: ASizes.cardRadiusSm,
+              padding: EdgeInsets.symmetric(
+                  vertical: ASizes.sm, horizontal: ASizes.md),
+              backgroundColor:
+                  AHelperFunctions.getOrderStatusColor(order.status)
+                      .withOpacity(0.1),
+            ),
           ),
           DataCell(Text('\$${order.totalAmount}')),
-          DataCell(
-            ATableActionButtons(
-              view: true,
-              edit: false,
-              onViewPressed: () => Get.toNamed( ARoutes.orderDetails, arguments: order, parameters:{'orderId': order.id }),
-              onDeletePressed: () {
-                
-              },
-            )
-          )
-        ]
-        );
+          DataCell(ATableActionButtons(
+            view: true,
+            edit: false,
+            onViewPressed: () => Get.toNamed(ARoutes.orderDetails,
+                arguments: order, parameters: {'orderId': order.id}),
+            onDeletePressed: () {},
+          ))
+        ]);
   }
 
   @override
