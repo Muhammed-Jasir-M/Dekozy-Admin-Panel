@@ -1,7 +1,7 @@
 import 'package:aura_kart_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
 import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController {
@@ -10,9 +10,13 @@ class CategoryController extends GetxController {
   RxBool isLoading = true.obs;
   RxList<CategoryModel> allItems = <CategoryModel>[].obs;
   RxList<CategoryModel> filteredItems = <CategoryModel>[].obs;
-//Sorting
+
+  //Sorting
+
   RxInt sortColumnIndex = 1.obs;
   RxBool sortAscending = true.obs;
+  
+  final searchTextController = TextEditingController();
   final _categoryRepository = Get.put(CategoryRepository());
 
   @override
@@ -60,5 +64,13 @@ class CategoryController extends GetxController {
         return b.name.toLowerCase().compareTo(a.name.toLowerCase());
       }
     });
+  }
+
+  searchQuery(String query) {
+    print(query);
+    filteredItems.assignAll(
+      allItems.where(
+          (item) => item.name.toLowerCase().contains(query.toLowerCase())),
+    );
   }
 }

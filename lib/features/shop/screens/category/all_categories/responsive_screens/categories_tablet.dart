@@ -4,6 +4,7 @@ import 'package:aura_kart_admin_panel/common/widgets/data_table/table_header.dar
 import 'package:aura_kart_admin_panel/features/shop/screens/category/all_categories/table/data_table.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,6 +34,14 @@ class CategoriesTabletScreen extends StatelessWidget {
               ARoundedContainer(
                 child: Column(
                   children: [
+                    // Table Header
+                    ATableHeader(
+                        buttonText: 'Create New Category',
+                        onPressed: () => Get.toNamed(ARoutes.createCategory),
+                        searchController: controller.searchTextController,
+                        searchOnChanged: (query) => controller.searchQuery(query),
+                        ),
+                        const SizedBox(height: ASizes.spaceBtwItems),
                     // Table Header
                     ATableHeader(
                         buttonText: 'Create New Category',

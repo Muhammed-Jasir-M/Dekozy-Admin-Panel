@@ -16,7 +16,6 @@ class CategoriesMobileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CategoryController());
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -37,7 +36,10 @@ class CategoriesMobileScreen extends StatelessWidget {
                     // Table Header
                     ATableHeader(
                         buttonText: 'Create New Category',
-                        onPressed: () => Get.toNamed(ARoutes.createCategory)),
+                        onPressed: () => Get.toNamed(ARoutes.createCategory),
+                        searchController: controller.searchTextController,
+                        searchOnChanged: (query) => controller.searchQuery(query),
+                        ),
                     const SizedBox(height: ASizes.spaceBtwItems),
                     
                     // Table
