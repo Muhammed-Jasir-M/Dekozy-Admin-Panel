@@ -9,7 +9,7 @@ class ProfileDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(ASizes.defaultSpace),

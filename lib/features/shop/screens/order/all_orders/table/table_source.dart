@@ -37,7 +37,7 @@ class OrderRows extends DataTableSource {
                   vertical: ASizes.sm, horizontal: ASizes.md),
               backgroundColor:
                   AHelperFunctions.getOrderStatusColor(order.status)
-                      .withOpacity(0.1),
+                      .withValues(alpha: 0.1),
             ),
           ),
           DataCell(Text('\$${order.totalAmount}')),

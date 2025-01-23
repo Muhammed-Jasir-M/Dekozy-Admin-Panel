@@ -4,7 +4,6 @@ import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ImageAndMeta extends StatelessWidget {
@@ -21,8 +20,7 @@ class ImageAndMeta extends StatelessWidget {
           Column(
             children: [
               // User image
-              Obx(
-                () => const AImageUploader(
+              AImageUploader(
                   right: 10,
                   bottom: 20,
                   left: null,
@@ -33,13 +31,10 @@ class ImageAndMeta extends StatelessWidget {
                   imageType: ImageType.asset,
                   image: AImages.user,
                 ),
-              ),
               const SizedBox(height: ASizes.spaceBtwItems),
 
-              Obx(
-                () => Text('AURAKART',
-                    style: Theme.of(context).textTheme.headlineLarge),
-              ),
+              Text('AURAKART',
+                  style: Theme.of(context).textTheme.headlineLarge),
               const Text('support@aurakart.com'),
               const SizedBox(height: ASizes.spaceBtwSections),
             ],

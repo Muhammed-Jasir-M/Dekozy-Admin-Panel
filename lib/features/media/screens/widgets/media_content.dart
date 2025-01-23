@@ -16,12 +16,14 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../utils/constants/image_strings.dart';
 
 class MediaContent extends StatelessWidget {
-  MediaContent(
-      {super.key,
-      required this.allowSelection,
-      required this.allowMultipleSelection,
-      this.alreadySelectedUrls,
-      this.onImageSelected});
+  MediaContent({
+    super.key,
+    required this.allowSelection,
+    required this.allowMultipleSelection,
+    this.alreadySelectedUrls,
+    this.onImageSelected,
+  });
+  
   final bool allowSelection;
   final bool allowMultipleSelection;
   final List<String>? alreadySelectedUrls;
@@ -68,8 +70,8 @@ class MediaContent extends StatelessWidget {
             () {
               // Get Selected Folder Images
               List<ImageModel> images = _getSelectedFolderImages(controller);
-//Load Selected Images from the already Selected Images only once otherwise
-//on Obx() rebuild UI first images will be selected then will auto un check.
+              // Load Selected Images from the already Selected Images only once otherwise
+              // on Obx() rebuild UI first images will be selected then will auto un check.
               if (!loadedpreviousScreen) {
                 if (alreadySelectedUrls != null &&
                     alreadySelectedUrls!.isNotEmpty) {

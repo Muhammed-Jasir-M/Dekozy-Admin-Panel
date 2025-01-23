@@ -1,9 +1,12 @@
+import 'package:aura_kart_admin_panel/common/widgets/icons/table_action_icon_buttons.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
+import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/image_strings.dart';
@@ -37,7 +40,7 @@ class BrandRows extends DataTableSource {
                       .bodyLarge!
                       .apply(color: AColors.primary),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -87,6 +90,12 @@ class BrandRows extends DataTableSource {
             ),
           ),
         ),
+        const DataCell(Icon(Iconsax.heart5, color: AColors.primary)),
+        DataCell(Text(DateTime.now().toString())),
+        DataCell(ATableActionButtons(
+          onEditPressed: () => Get.toNamed(ARoutes.editBrand, arguments: ''),
+          onDeletePressed: () {},
+        )),
       ],
     );
   }

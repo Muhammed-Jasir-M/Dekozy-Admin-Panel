@@ -32,7 +32,6 @@ class MediaRepository {
       request.fields['upload_preset'] = APIConstants.cloudinaryUploadPreset;
       request.fields['resource_type'] = 'image';
       request.fields['folder'] = folderPath;
-      request.fields['public_id'] = imageName;
 
       request.files.add(http.MultipartFile.fromBytes(
         'file',
@@ -48,10 +47,14 @@ class MediaRepository {
         final responseBody = await response.stream.bytesToString();
         final jsonResponse = jsonDecode(responseBody);
         print("Cloudinary Response: $jsonResponse");
+        print("Cloudinary: $mimeType");
 
         // Create the ImageModel from the response
         return ImageModel.fromCloudinaryResponse(
-            jsonResponse, folderPath, imageName);
+          jsonResponse,
+          folderPath,
+          imageName,
+        );
       } else {
         throw Exception('Failed to upload image');
       }
@@ -94,13 +97,17 @@ class MediaRepository {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
+      print("Error during fetching: $e");
       throw e.toString();
     }
   }
 
   // Load Images from Firestore based on media category, load count & last fetched data
   Future<List<ImageModel>> loadMoreImagesFromDatabase(
-      MediaCategory mediaCategory, int loadCount, DateTime lastFetchedDate) async {
+    MediaCategory mediaCategory,
+    int loadCount,
+    DateTime lastFetchedDate,
+  ) async {
     try {
       final querySnapshot = await _db
           .collection('Images')
@@ -118,6 +125,7 @@ class MediaRepository {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
+      print("Error during more fetching: $e");
       throw e.toString();
     }
   }

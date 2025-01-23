@@ -86,7 +86,7 @@ class OrderItems extends StatelessWidget {
                     width: ADeviceUtils.isMobileScreen(context)
                         ? ASizes.xl * 1.4
                         : ASizes.xl * 2,
-                    child: Text('\$${item.totalAmount}',
+                    child: Text('\$${(item.price * item.quantity).toStringAsFixed(2)}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ),
                 ],

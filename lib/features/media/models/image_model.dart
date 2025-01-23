@@ -95,7 +95,7 @@ class ImageModel {
       filename: imageName,
       fullPath: '${response['folder'] ?? ''}/${response['public_id'] ?? ''}',
       sizeBytes: response['bytes'] ?? 0,
-      contentType: '${response['resource_type']}.${response['format']?? ''}',
+      contentType: '${response['resource_type']}/${response['format']?? ''}',
       createdAt: DateTime.now(),
     );
   }

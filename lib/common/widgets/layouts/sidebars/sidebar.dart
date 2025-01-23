@@ -103,7 +103,7 @@ class ASidebar extends StatelessWidget {
                     ),
                     const AMenuItem(
                       route: ARoutes.settings,
-                      icon: Iconsax.setting2,
+                      icon: Iconsax.setting,
                       itemName: 'Settings',
                     ),
                

@@ -68,8 +68,11 @@ class MediaController extends GetxController {
           selectedPath.value, initialLoadingCount);
       targetList.assignAll(images);
 
+      print("fetch images: $images");
+
       loading.value = false;
     } catch (e) {
+      print("Error during fetching: $e");
       loading.value = false;
       ALoaders.errorSnackBar(
           title: 'Oh Snap!',
@@ -102,8 +105,12 @@ class MediaController extends GetxController {
           targetList.last.createdAt ?? DateTime.now());
       targetList.assignAll(images);
 
+      print("fetch images: $images");
+      
       loading.value = false;
     } catch (e) {
+      print("Error during fetching: $e");
+
       loading.value = false;
       ALoaders.errorSnackBar(
           title: 'Oh Snap!',
@@ -195,12 +202,14 @@ class MediaController extends GetxController {
       for (int i = selectedImagesToUpload.length - 1; i >= 0; i--) {
         var selectedImage = selectedImagesToUpload[i];
 
+        final folderPath = "Aurakart/${getSelectedPath()}";
+
         // Upload Image to Cloudinary
         final ImageModel uploadedImage =
             await mediaRepository.uploadImageFileCloudinary(
           fileData: selectedImage.localImageToDisplay!,
           mimeType: selectedImage.contentType!,
-          folderPath: getSelectedPath(),
+          folderPath: folderPath,
           imageName: selectedImage.filename,
         );
 
@@ -217,8 +226,6 @@ class MediaController extends GetxController {
       // Stop Loader after successfull upload
       AFullScreenLoader.stopLoading();
     } catch (e) {
-      print("Error during upload: $e");
-
       // Stop Loader in case of an error
       AFullScreenLoader.stopLoading();
 
@@ -276,10 +283,11 @@ class MediaController extends GetxController {
     return path;
   } // Image Selection Bottom Sheet
 
-  Future<List<ImageModel>?> selectImagesFromMedia(
-      {List<String>? selectedUrls,
-      bool allowSelection = true,
-      bool multipleSelection = false}) async {
+  Future<List<ImageModel>?> selectImagesFromMedia({
+    List<String>? selectedUrls,
+    bool allowSelection = true,
+    bool multipleSelection = false,
+  }) async {
     showImagesUploaderSection.value = true;
     List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(
       isScrollControlled: true,

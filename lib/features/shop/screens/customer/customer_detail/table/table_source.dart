@@ -35,7 +35,7 @@ class CustomerOrderRows extends DataTableSource {
             padding: const EdgeInsets.symmetric(
                 vertical: ASizes.sm, horizontal: ASizes.md),
             backgroundColor: AHelperFunctions.getOrderStatusColor(order.status)
-                .withOpacity(0.1),
+                .withValues(alpha: 0.1),
             child: Text(
               order.status.name.capitalize.toString(),
               style: TextStyle(

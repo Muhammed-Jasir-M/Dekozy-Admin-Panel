@@ -58,7 +58,7 @@ class OrderInfo extends StatelessWidget {
                           horizontal: ASizes.sm, vertical: 0),
                       backgroundColor:
                           AHelperFunctions.getOrderStatusColor(order.status)
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                       child: DropdownButton<OrderStatus>(
                         padding: EdgeInsets.symmetric(vertical: 0),
                         value: OrderStatus.pending,
