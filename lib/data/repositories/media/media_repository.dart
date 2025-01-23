@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:aura_kart_admin_panel/features/media/models/image_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -126,6 +127,57 @@ class MediaRepository {
       throw APlatformException(e.code).message;
     } catch (e) {
       print("Error during more fetching: $e");
+      throw e.toString();
+    }
+  }
+
+  // Delete file from Cloudinary & corresponding document from Firebase
+  Future<void> deleteImageFileFromCloudinary(ImageModel image) async {
+    try {
+      final uri = Uri.parse(APIConstants.cloudinaryDeleteUrl);
+
+      final timestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      final publicId = image.publicId;
+
+      final signatureString =
+          'public_id=$publicId&timestamp=$timestamp${APIConstants.cloudinaryApiSecret}';
+
+      final bytes = utf8.encode(signatureString);
+      final signature = sha1.convert(bytes).toString();
+
+      final response = await http.post(uri, body: {
+        'public_id': publicId,
+        'timestamp': timestamp.toString(),
+        'api_key': APIConstants.cloudinaryApiKey,
+        'signature': signature,
+      });
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print('Image deleted successfully from Cloudinary: $jsonResponse');
+      } else {
+        throw Exception(
+            'Failed to delete image from Cloudinary: ${response.body}');
+      }
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  // Delete file from Cloudinary & corresponding document from Firebase
+  Future<void> deleteImageDataFromFirestore(ImageModel image) async {
+    try {
+      await _db.collection("Images").doc(image.id).delete();
+    } on FirebaseAuthException catch (e) {
+      throw AFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      print("Error during deleting: $e");
       throw e.toString();
     }
   }

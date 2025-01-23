@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:aura_kart_admin_panel/common/widgets/loaders/circular_loader.dart';
 import 'package:aura_kart_admin_panel/data/repositories/media/media_repository.dart';
 import 'package:aura_kart_admin_panel/features/media/models/image_model.dart';
 import 'package:aura_kart_admin_panel/features/media/screens/widgets/media_content.dart';
@@ -106,7 +107,7 @@ class MediaController extends GetxController {
       targetList.assignAll(images);
 
       print("fetch images: $images");
-      
+
       loading.value = false;
     } catch (e) {
       print("Error during fetching: $e");
@@ -202,7 +203,8 @@ class MediaController extends GetxController {
       for (int i = selectedImagesToUpload.length - 1; i >= 0; i--) {
         var selectedImage = selectedImagesToUpload[i];
 
-        final folderPath = "Aurakart/${getSelectedPath()}";
+        final folderPath = "aurakart${getSelectedPath().toLowerCase()}";
+        print('folderpath: $folderPath');
 
         // Upload Image to Cloudinary
         final ImageModel uploadedImage =
@@ -281,8 +283,9 @@ class MediaController extends GetxController {
         path = 'Others';
     }
     return path;
-  } // Image Selection Bottom Sheet
-
+  } 
+  
+  // Image Selection Bottom Sheet
   Future<List<ImageModel>?> selectImagesFromMedia({
     List<String>? selectedUrls,
     bool allowSelection = true,
@@ -311,6 +314,84 @@ class MediaController extends GetxController {
         ),
       ),
     );
+    
     return selectedImages;
+  }
+
+  /// Popup confirmation to remove cloud image
+  void removeCloudImageConfirmation(ImageModel image) {
+    // Delete confirmation
+    ADialogs.defaultDialog(
+        context: Get.context!,
+        content: 'Are you sure you want to delete this image?',
+        onConfirm: () {
+          // Close the previous Dialog Popup
+          Get.back();
+
+          removeCloudImage(image);
+        });
+  }
+
+  void removeCloudImage(ImageModel image) async {
+    try {
+      // Close remove Cloud Image Confirmation() Dialog
+      Get.back();
+
+      // Show Loader
+      Get.defaultDialog(
+        title: '',
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        content: const PopScope(
+          canPop: false,
+          child: SizedBox(
+            width: 150,
+            height: 150,
+            child: ACircularLoader(),
+          ),
+        ),
+      );
+
+      // Delete Image
+      await mediaRepository.deleteImageFileFromCloudinary(image);
+      await mediaRepository.deleteImageDataFromFirestore(image);
+
+      // Get the corresponding list to update
+      RxList<ImageModel> targetList;
+
+      // Check the selected category and update the corresponding list
+      switch (selectedPath.value) {
+        case MediaCategory.banners:
+          targetList = allBannerImages;
+          break;
+        case MediaCategory.brands:
+          targetList = allBrandImages;
+          break;
+        case MediaCategory.categories:
+          targetList = allCategoryImages;
+          break;
+        case MediaCategory.products:
+          targetList = allProductImages;
+          break;
+        case MediaCategory.users:
+          targetList = allUserImages;
+          break;
+        default:
+          return;
+      }
+
+      /// Remove from list 
+      targetList.remove(image);
+      update();
+
+      AFullScreenLoader.stopLoading();
+      ALoaders.successSnackBar(
+        title: 'Image Deleted',
+        message: 'Image successfully deleted from your cloud storage',
+      );
+    } catch (e) {
+      AFullScreenLoader.stopLoading();
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+    }
   }
 }

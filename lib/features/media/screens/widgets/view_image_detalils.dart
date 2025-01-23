@@ -1,5 +1,6 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
+import 'package:aura_kart_admin_panel/features/media/controller/media_controller.dart';
 import 'package:aura_kart_admin_panel/features/media/models/image_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
@@ -118,7 +119,7 @@ class ImagePopup extends StatelessWidget {
                   SizedBox(
                     width: 300,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () => MediaController.instance.removeCloudImageConfirmation(image),
                       child: const Text('Delete Image',
                           style: TextStyle(color: Colors.red)),
                     ),

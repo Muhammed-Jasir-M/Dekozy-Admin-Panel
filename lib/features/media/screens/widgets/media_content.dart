@@ -41,6 +41,7 @@ class MediaContent extends StatelessWidget {
         children: [
           // Media Images Header
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
@@ -62,7 +63,6 @@ class MediaContent extends StatelessWidget {
               if (allowSelection) buildAddSelectedImagesButton(),
             ],
           ),
-
           SizedBox(height: ASizes.spaceBtwSections),
 
           // Show Media
@@ -70,12 +70,14 @@ class MediaContent extends StatelessWidget {
             () {
               // Get Selected Folder Images
               List<ImageModel> images = _getSelectedFolderImages(controller);
+
               // Load Selected Images from the already Selected Images only once otherwise
               // on Obx() rebuild UI first images will be selected then will auto un check.
+
               if (!loadedpreviousScreen) {
                 if (alreadySelectedUrls != null &&
                     alreadySelectedUrls!.isNotEmpty) {
-                  //Convert alreadySelectedUrls to a set for faster lookup
+                  // Convert alreadySelectedUrls to a set for faster lookup
                   final selectedUrlsSet =
                       Set<String>.from(alreadySelectedUrls!);
 
@@ -87,13 +89,14 @@ class MediaContent extends StatelessWidget {
                     }
                   }
                 } else {
-                  //If alreadySelectedUrls is null or empty,set all images to not selected
+                  // If alreadySelectedUrls is null or empty, set all images to not selected
                   for (var image in images) {
                     image.isSelected.value = false;
                   }
                 }
                 loadedpreviousScreen = true;
               }
+
               // Loader
               if (controller.loading.value && images.isEmpty) {
                 return const ALoaderAnimation();
@@ -243,7 +246,7 @@ class MediaContent extends StatelessWidget {
                   image.isSelected.value = selected;
                   if (selected) {
                     if (!allowMultipleSelection) {
-                      //If multiple selection is not allowed,uncheck other checkboxes
+                      // If multiple selection is not allowed, uncheck other checkboxes
                       for (var otherImage in selectedImages) {
                         if (otherImage != image) {
                           otherImage.isSelected.value = false;
@@ -268,8 +271,9 @@ class MediaContent extends StatelessWidget {
   Widget buildAddSelectedImagesButton() {
     return Row(
       mainAxisSize: MainAxisSize.min,
+
       children: [
-        //close Button
+        // Close Button
         SizedBox(
           width: 120,
           child: OutlinedButton.icon(

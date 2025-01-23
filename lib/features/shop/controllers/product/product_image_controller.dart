@@ -5,39 +5,41 @@ import 'package:get/get.dart';
 class ProductImageController extends GetxController {
   static ProductImageController get instance => Get.find();
 
-//Rx observable for the selected thumbnail images
+  // Rx observable for the selected thumbnail images
   Rx<String?> selectedThumbnailImageUrl = Rx<String?>(null);
 
-// Lsits to store additional product Images
+  // Lists to store additional product Images
   final RxList<String> additionalProductImageUrls = <String>[].obs;
 
-  ///Pick Thimbnail Image free From Media
+  /// Pick Thumbnail Image from Media
   void selectThumbnailImage() async {
     final controller = Get.put(MediaController());
+
     List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
 
     // Handle the Selected images
     if (selectedImages != null && selectedImages.isNotEmpty) {
-      //Set the selected  images to the main image or perform any other action
+      // Set the selected  images to the main image or perform any other action
       ImageModel selectedImage = selectedImages.first;
-      //Update the main image using the selectedImage
+      // Update the main image using the selectedImage
       selectedThumbnailImageUrl.value = selectedImage.url;
     }
   }
 
-  ///Pick Multiple Images from Media
+  /// Pick Multiple Images from Media
   void selectMultipleProductImages() async {
     final controller = Get.put(MediaController());
+
     final selectedImages = await controller.selectImagesFromMedia(
         multipleSelection: true, selectedUrls: additionalProductImageUrls);
 
     // Handle the Selected images
     if (selectedImages != null && selectedImages.isNotEmpty) {
-      additionalProductImageUrls.assignAll(selectedImages.map((e) => e.url));
+      additionalProductImageUrls.assignAll(selectedImages.map((image) => image.url));
     }
   }
 
-  ///Funtion to remove Product Image
+  /// Funtion to remove Product Image
   Future<void> removeImage(int index) async {
     additionalProductImageUrls.removeAt(index);
   }
