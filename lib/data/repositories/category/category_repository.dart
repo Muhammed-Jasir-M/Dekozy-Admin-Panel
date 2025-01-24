@@ -1,5 +1,6 @@
 import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/firebase_exceptions.dart';
+import 'package:aura_kart_admin_panel/utils/exceptions/format_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/platform_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
@@ -17,13 +18,30 @@ class CategoryRepository extends GetxController {
       final snapshot = await _db.collection("Categories").get();
       final result =
           snapshot.docs.map((doc) => CategoryModel.fromSnapshot(doc)).toList();
-      return result; 
+      return result;
     } on FirebaseException catch (e) {
       throw AFirebaseException(e.code).message;
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
       throw 'Something Went Wrong !! Please Try Again';
+    }
+  }
+
+  // Get all categories from the Categories collection
+  Future<void> deleteCategory(String categoryId) async {
+    try {
+
+      await _db.collection("Categories").doc(categoryId).delete();
+      
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something Went Wrong , Please Try Again';
     }
   }
 }

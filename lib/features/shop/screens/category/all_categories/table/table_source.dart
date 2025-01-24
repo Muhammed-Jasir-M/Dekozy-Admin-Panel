@@ -20,6 +20,8 @@ class CategoryRows extends DataTableSource {
         .firstWhereOrNull((item) => item.id == category.parentId);
 
     return DataRow2(
+      selected: controller.selectedRows[index],
+      onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
@@ -60,7 +62,7 @@ class CategoryRows extends DataTableSource {
           ATableActionButtons(
             onEditPressed: () =>
                 Get.toNamed(ARoutes.editCategory, arguments: category),
-            onDeletePressed: () {},
+            onDeletePressed: () => controller.confirmAndDeleteItem(category),
           ),
         ),
       ],
