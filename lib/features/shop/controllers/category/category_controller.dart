@@ -139,6 +139,25 @@ class CategoryController extends GetxController {
     allItems.remove(item);
     filteredItems.remove(item);
     selectedRows.assignAll(List.generate(
-        allItems.length, (index) => false)); // initialize slsected rows
+        allItems.length, (index) => false)); // initialize selected rows
   }
+ // method for adding an item from the lists
+  void addItemToLists(CategoryModel item) {
+    allItems.add(item);
+    filteredItems.add(item);
+    selectedRows.assignAll(List.generate(
+        allItems.length, (index) => false));  // initialize selected rows
+        filteredItems.refresh();
+  }
+  // method for updating an item from the lists
+  void updateItemFromList(CategoryModel item) {
+   final itemIndex =allItems.indexWhere((i)=>i==item);
+   final filteredItemIndex = filteredItems.indexWhere((i)=>i==item);
+
+   if(itemIndex !=-1)allItems[itemIndex]=item;
+  if (filteredItemIndex !=-1) filteredItems[itemIndex]=item;
+
+  filteredItems.refresh();
+  }
+
 }

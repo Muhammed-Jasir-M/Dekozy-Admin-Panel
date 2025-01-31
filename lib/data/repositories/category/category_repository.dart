@@ -27,8 +27,25 @@ class CategoryRepository extends GetxController {
       throw 'Something Went Wrong !! Please Try Again';
     }
   }
+  
+ // Creat a new category document in the 'Categoryies' collection 
+  Future<String> createCategory(CategoryModel category) async {
+    try {
 
-  // Get all categories from the Categories collection
+     final data = await _db.collection("Categories").add(category.toJson());
+      return data.id;
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something Went Wrong , Please Try Again';
+    }
+  }
+
+  // Delete an existing category document from the 'Categories' collection
   Future<void> deleteCategory(String categoryId) async {
     try {
 
@@ -44,4 +61,22 @@ class CategoryRepository extends GetxController {
       throw 'Something Went Wrong , Please Try Again';
     }
   }
+
+  // Creat a new category document in the 'Categoryies' collection 
+  Future<void> updateCategory(CategoryModel category) async {
+    try {
+
+   await _db.collection("Categories").doc(category.id).update(category.toJson());
+     
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something Went Wrong , Please Try Again';
+    }
+  }
+
 }
