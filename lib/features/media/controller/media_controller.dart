@@ -38,6 +38,7 @@ class MediaController extends GetxController {
   final RxList<ImageModel> allBrandImages = <ImageModel>[].obs;
   final RxList<ImageModel> allCategoryImages = <ImageModel>[].obs;
   final RxList<ImageModel> allUserImages = <ImageModel>[].obs;
+  final RxList<ImageModel> allArImages = <ImageModel>[].obs;
 
   final mediaRepository = MediaRepository();
 
@@ -63,6 +64,9 @@ class MediaController extends GetxController {
       } else if (selectedPath.value == MediaCategory.users &&
           allUserImages.isEmpty) {
         targetList = allUserImages;
+      } else if (selectedPath.value == MediaCategory.arproducts &&
+          allArImages.isEmpty) {
+        targetList = allArImages;
       }
 
       final images = await mediaRepository.fetchImagesFromDatabase(
@@ -98,6 +102,9 @@ class MediaController extends GetxController {
         targetList = allProductImages;
       } else if (selectedPath.value == MediaCategory.users) {
         targetList = allUserImages;
+      } else if (selectedPath.value == MediaCategory.arproducts &&
+          allArImages.isEmpty) {
+        targetList = allArImages;
       }
 
       final images = await mediaRepository.loadMoreImagesFromDatabase(
@@ -125,6 +132,8 @@ class MediaController extends GetxController {
 
     if (files.isNotEmpty) {
       for (var file in files) {
+        print('file: $file');
+
         // Retrieve file data as Uint8List
         final bytes = await dropzoneController.getFileData(file);
 
@@ -279,12 +288,15 @@ class MediaController extends GetxController {
       case MediaCategory.users:
         path = ATexts.usersStoragePath;
         break;
+      case MediaCategory.arproducts:
+        path = ATexts.arStoragePath;
+        break;
       default:
         path = 'Others';
     }
     return path;
-  } 
-  
+  }
+
   // Image Selection Bottom Sheet
   Future<List<ImageModel>?> selectImagesFromMedia({
     List<String>? selectedUrls,
@@ -314,7 +326,7 @@ class MediaController extends GetxController {
         ),
       ),
     );
-    
+
     return selectedImages;
   }
 
@@ -376,11 +388,14 @@ class MediaController extends GetxController {
         case MediaCategory.users:
           targetList = allUserImages;
           break;
+        case MediaCategory.arproducts:
+          targetList = allArImages;
+          break;
         default:
           return;
       }
 
-      /// Remove from list 
+      /// Remove from list
       targetList.remove(image);
       update();
 

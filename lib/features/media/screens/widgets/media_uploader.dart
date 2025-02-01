@@ -66,6 +66,7 @@ class MediaUploader extends StatelessWidget {
                                 final mimeType = await controller
                                     .dropzoneController
                                     .getFileMIME(ev);
+                                print('mime: $mimeType');
 
                                 final image = ImageModel(
                                   url: '',

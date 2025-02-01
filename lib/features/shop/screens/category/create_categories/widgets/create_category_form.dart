@@ -9,7 +9,6 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CreateCategoryForm extends StatelessWidget {

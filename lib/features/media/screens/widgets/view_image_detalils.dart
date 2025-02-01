@@ -10,14 +10,16 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 import '../../../../utils/constants/colors.dart';
 
 class ImagePopup extends StatelessWidget {
-  const ImagePopup({super.key, required this.image});
+  const ImagePopup({super.key, required this.image, required this.controller});
 
   // Image Model to display detailed info about it.
   final ImageModel image;
+  final MediaController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +42,32 @@ class ImagePopup extends StatelessWidget {
               SizedBox(
                 child: Stack(
                   children: [
-                    // Display image with Rounded Container
                     ARoundedContainer(
                       backgroundColor: AColors.primaryBackground,
-                      child: ARoundedImage(
-                        imageType: ImageType.network,
-                        image: image.url,
-                        applyImageRadius: true,
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        width: ADeviceUtils.isDesktopScreen(context)
-                            ? MediaQuery.of(context).size.width * 0.4
-                            : double.infinity,
-                      ),
+                      child: controller.selectedPath.value ==
+                              MediaCategory.arproducts
+                          ? SizedBox(
+                              width: ADeviceUtils.isDesktopScreen(context)
+                                  ? MediaQuery.of(context).size.width * 0.4
+                                  : double.infinity,
+                              height: MediaQuery.of(context).size.height * 0.7,
+                              child: ModelViewer(
+                                src: image.url,
+                                alt: image.filename,
+                                ar: false,
+                                autoRotate: true,
+                                cameraControls: true,
+                              ),
+                            )
+                          : ARoundedImage(
+                              imageType: ImageType.network,
+                              image: image.url,
+                              applyImageRadius: true,
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              width: ADeviceUtils.isDesktopScreen(context)
+                                  ? MediaQuery.of(context).size.width * 0.4
+                                  : double.infinity,
+                            ),
                     ),
 
                     // Close icon button positioned at the top-right corner
@@ -119,7 +135,8 @@ class ImagePopup extends StatelessWidget {
                   SizedBox(
                     width: 300,
                     child: TextButton(
-                      onPressed: () => MediaController.instance.removeCloudImageConfirmation(image),
+                      onPressed: () => MediaController.instance
+                          .removeCloudImageConfirmation(image),
                       child: const Text('Delete Image',
                           style: TextStyle(color: Colors.red)),
                     ),

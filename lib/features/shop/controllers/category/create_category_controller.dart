@@ -8,11 +8,9 @@ import 'package:aura_kart_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class CreateCategoryController extends GetxController {
-  static CreateCategoryController get Instance => Get.find();
+  static CreateCategoryController get instance => Get.find();
 
   final selectedParent = CategoryModel.empty().obs;
   final loading = false.obs;

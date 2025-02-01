@@ -12,6 +12,7 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 import '../../../../utils/constants/image_strings.dart';
 
@@ -23,7 +24,7 @@ class MediaContent extends StatelessWidget {
     this.alreadySelectedUrls,
     this.onImageSelected,
   });
-  
+
   final bool allowSelection;
   final bool allowMultipleSelection;
   final List<String>? alreadySelectedUrls;
@@ -116,15 +117,19 @@ class MediaContent extends StatelessWidget {
                       children: images
                           .map(
                             (image) => GestureDetector(
-                              onTap: () => Get.dialog(ImagePopup(image: image)),
+                              onTap: () => Get.dialog(ImagePopup(controller: controller, image: image)),
                               child: SizedBox(
                                 width: 140,
                                 height: 180,
                                 child: Column(
                                   children: [
                                     allowSelection
-                                        ? _buildListWithCheckBox(image)
-                                        : _buildSimpleList(image),
+                                        ? _buildListWithCheckBox(
+                                            controller, image)
+                                        : controller.selectedPath.value ==
+                                                MediaCategory.arproducts
+                                            ? _buildSimpleArList(image)
+                                            : _buildSimpleList(image),
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -193,6 +198,10 @@ class MediaContent extends StatelessWidget {
       images = controller.allUserImages
           .where((image) => image.url.isNotEmpty)
           .toList();
+    } else if (controller.selectedPath.value == MediaCategory.arproducts) {
+      images = controller.allArImages
+          .where((image) => image.url.isNotEmpty)
+          .toList();
     }
 
     return images;
@@ -211,30 +220,59 @@ class MediaContent extends StatelessWidget {
     );
   }
 
-  _buildSimpleList(ImageModel image) {
+  Widget _buildSimpleList(ImageModel image) {
     return ARoundedImage(
       width: 140,
       height: 140,
       padding: ASizes.sm,
-      imageType: ImageType.network,
       image: image.url,
+      imageType: ImageType.network,
       margin: ASizes.spaceBtwItems / 2,
       backgroundColor: AColors.primaryBackground,
     );
   }
 
-  Widget _buildListWithCheckBox(ImageModel image) {
+  Widget _buildSimpleArList(ImageModel image) {
+    return SizedBox(
+      width: 140,
+      height: 140,
+      child: ModelViewer(
+        src: image.url,
+        alt: image.filename,
+        ar: false,
+        autoRotate: true,
+        cameraControls: true,
+        backgroundColor: AColors.primaryBackground,
+      ),
+    );
+  }
+
+  Widget _buildListWithCheckBox(MediaController controller, ImageModel image) {
     return Stack(
       children: [
-        ARoundedImage(
-          width: 140,
-          height: 140,
-          padding: ASizes.sm,
-          image: image.url,
-          imageType: ImageType.network,
-          margin: ASizes.spaceBtwItems / 2,
-          backgroundColor: AColors.primaryBackground,
-        ),
+        // 3D Model or Image
+        controller.selectedPath.value == MediaCategory.arproducts
+            ? SizedBox(
+                width: 140,
+                height: 140,
+                child: ModelViewer(
+                  src: image.url,
+                  alt: image.filename,
+                  ar: false,
+                  autoRotate: true,
+                  cameraControls: true,
+                  backgroundColor: AColors.primaryBackground,
+                ),
+              )
+            : ARoundedImage(
+                width: 140,
+                height: 140,
+                padding: ASizes.sm,
+                image: image.url,
+                imageType: ImageType.network,
+                margin: ASizes.spaceBtwItems / 2,
+                backgroundColor: AColors.primaryBackground,
+              ),
         Positioned(
           top: ASizes.md,
           right: ASizes.md,
@@ -271,7 +309,6 @@ class MediaContent extends StatelessWidget {
   Widget buildAddSelectedImagesButton() {
     return Row(
       mainAxisSize: MainAxisSize.min,
-
       children: [
         // Close Button
         SizedBox(

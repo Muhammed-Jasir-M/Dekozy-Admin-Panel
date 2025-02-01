@@ -8,11 +8,9 @@ import 'package:aura_kart_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class EditCategoryController extends GetxController {
-  static EditCategoryController get Instance => Get.find();
+  static EditCategoryController get instance => Get.find();
 
   final selectedParent = CategoryModel.empty().obs;
   final loading = false.obs;
@@ -73,7 +71,6 @@ class EditCategoryController extends GetxController {
       ALoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     }
   }
-}
 
   /// Pick Thumbnail Image from Media
   void pickImage() async {
@@ -88,6 +85,7 @@ class EditCategoryController extends GetxController {
       imageURL.value = selectedImage.url;
     }
   }
+  
   // Method to reset field
   void resetFields() {
     selectedParent(CategoryModel.empty());
@@ -96,3 +94,4 @@ class EditCategoryController extends GetxController {
     name.clear();
     imageURL.value='';
   }
+}

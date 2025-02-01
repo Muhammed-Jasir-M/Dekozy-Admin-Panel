@@ -3,7 +3,6 @@ import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
