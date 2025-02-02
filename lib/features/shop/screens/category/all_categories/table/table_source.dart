@@ -62,7 +62,7 @@ class CategoryRows extends DataTableSource {
           ATableActionButtons(
             onEditPressed: () =>
                 Get.toNamed(ARoutes.editCategory, arguments: category),
-            onDeletePressed: () => controller.confirmAndDeleteItem(category),
+            onDeletePressed: () => controller.confrimAndDeleteItem(category),
           ),
         ),
       ],

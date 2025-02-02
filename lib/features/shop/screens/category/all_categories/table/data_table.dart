@@ -21,11 +21,14 @@ class CategoryTable extends StatelessWidget {
           sortColumnIndex: controller.sortColumnIndex.value,
           minWidth: 700,
           columns: [
-            DataColumn2(label: Text('Category'),onSort: (columnIndex, ascending) => controller.sortByName(columnIndex, ascending)),
-            DataColumn2(label: Text('Parent Category'),onSort: (columnIndex, ascending) => controller.sortByParentName(columnIndex, ascending)),
-            DataColumn2(label: Text('Featued')),
-            DataColumn2(label: Text('Date')),
-            DataColumn2(label: Text('Action'), fixedWidth: 100),
+            DataColumn2(
+              label:const Text('Category'),
+              onSort: (columnIndex, ascending) => controller.sortByName(columnIndex, ascending),
+              ),
+              const DataColumn2(label: Text('Parent Category')),
+              const DataColumn2(label: Text('Featured')),
+              const DataColumn2(label: Text('Date')),
+              const DataColumn2(label: Text('Action'), fixedWidth: 100),
           ],
           source: CategoryRows(),
         );

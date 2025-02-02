@@ -56,7 +56,7 @@ class EditCategoryController extends GetxController {
       await CategoryRepository.instance.updateCategory(category);
 
       // Update all data list
-      CategoryController.instance.updateItemFromList(category);
+      CategoryController.instance.updateItemforLists(category);
       //Reset form
       resetFields();
 

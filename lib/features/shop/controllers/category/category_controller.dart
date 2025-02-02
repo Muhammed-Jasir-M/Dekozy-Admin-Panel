@@ -1,162 +1,33 @@
+import 'package:aura_kart_admin_panel/data/abstract/base_data_table_controlle.dart';
 import 'package:aura_kart_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
-import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
-import 'package:aura_kart_admin_panel/utils/popups/full_screen_loader.dart';
-import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CategoryController extends GetxController {
+class CategoryController extends ABaseController<CategoryModel> {
   static CategoryController get instance => Get.find();
-
-  RxBool isLoading = true.obs;
-  RxList<CategoryModel> allItems = <CategoryModel>[].obs;
-  RxList<CategoryModel> filteredItems = <CategoryModel>[].obs;
-  RxList<bool> selectedRows = <bool>[].obs;
-
-  //Sorting
-  RxInt sortColumnIndex = 1.obs;
-  RxBool sortAscending = true.obs;
-
-  final searchTextController = TextEditingController();
 
   final _categoryRepository = Get.put(CategoryRepository());
 
   @override
-  void onInit() {
-    fetchData();
-    super.onInit();
+  bool containsSearchQuery(CategoryModel item, String query) {
+    return item.name.toLowerCase().contains(query.toLowerCase());
   }
 
-  Future<void> fetchData() async {
-    try {
-      isLoading.value = true;
-      List<CategoryModel> fetchedItems = [];
-      if (allItems.isEmpty) {
-        fetchedItems = await _categoryRepository.getAllCategories();
-      }
-      allItems.assignAll(fetchedItems);
-      filteredItems.assignAll(allItems);
-      selectedRows.assignAll(List.generate(allItems.length, (_) => false));
-
-      isLoading.value = false;
-    } catch (e) {
-      isLoading.value = false;
-      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-    }
+  @override
+  Future<void> deleteItem(CategoryModel item) async {
+    await _categoryRepository.deleteCategory(item.id);
   }
 
-  void sortByName(int columnIndex, bool ascending) {
-    sortColumnIndex.value = columnIndex;
-    sortAscending.value = ascending;
-    filteredItems.sort((a, b) {
-      if (ascending) {
-        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-      } else {
-        return b.name.toLowerCase().compareTo(a.name.toLowerCase());
-      }
-    });
+  @override
+  Future<List<CategoryModel>> fetchItems() async {
+    return await _categoryRepository.getAllCategories();
   }
 
-  sortByParentName(int columnIndex, bool ascending) {
-    sortColumnIndex.value = columnIndex;
-    sortAscending.value = ascending;
-    filteredItems.sort((a, b) {
-      if (ascending) {
-        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-      } else {
-        return b.name.toLowerCase().compareTo(a.name.toLowerCase());
-      }
-    });
+  //soring related code
+  void sortByName(int sortColumnIndex, bool ascending) {
+    sortByProperty(sortColumnIndex as int, ascending, (
+      CategoryModel category) => category.name.toLowerCase());
   }
-
-  searchQuery(String query) {
-    print(query);
-    filteredItems.assignAll(
-      allItems.where(
-          (item) => item.name.toLowerCase().contains(query.toLowerCase())),
-    );
-  }
-
-  confirmAndDeleteItem(CategoryModel category) {
-    // show a confrimation dialogue box
-    Get.defaultDialog(
-      title: 'Delete Item',
-      content: const Text('Are You sure You Want to delete this item ??'),
-      confirm: SizedBox(
-        width: 60,
-        child: ElevatedButton(
-          onPressed: () async => await deleteOnConfirm(category),
-          style: OutlinedButton.styleFrom(
-            padding:
-                const EdgeInsets.symmetric(vertical: ASizes.buttonHeight / 2),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ASizes.buttonRadius * 5)),
-          ),
-          child: const Text('OK'),
-        ),
-      ),
-      cancel: SizedBox(
-        width: 80,
-        child: OutlinedButton(
-          onPressed: () => Get.back(),
-          style: OutlinedButton.styleFrom(
-            padding:
-                const EdgeInsets.symmetric(vertical: ASizes.buttonHeight / 2),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ASizes.buttonRadius * 5)),
-          ),
-          child: const Text('Cancel'),
-        ),
-      ),
-    );
-  }
-
-  deleteOnConfirm(CategoryModel category) async {
-    try {
-      // remove the confirmation dialog
-      AFullScreenLoader.stopLoading();
-
-      // start the loader
-      AFullScreenLoader.popUpCircular();
-
-      // delete firestore data
-      await _categoryRepository.deleteCategory(category.id);
-
-      removeItemFromList(category);
-      AFullScreenLoader.stopLoading();
-      ALoaders.successSnackBar(
-          title: 'Item Deleted', message: 'Your item has been deleted');
-    } catch (e) {
-      AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Oopsie Doopsie!!', message: e.toString());
-    }
-  }
-
-  // method for removing an item from the lists
-  void removeItemFromList(CategoryModel item) {
-    allItems.remove(item);
-    filteredItems.remove(item);
-    selectedRows.assignAll(List.generate(
-        allItems.length, (index) => false)); // initialize selected rows
-  }
- // method for adding an item from the lists
-  void addItemToLists(CategoryModel item) {
-    allItems.add(item);
-    filteredItems.add(item);
-    selectedRows.assignAll(List.generate(
-        allItems.length, (index) => false));  // initialize selected rows
-        filteredItems.refresh();
-  }
-  // method for updating an item from the lists
-  void updateItemFromList(CategoryModel item) {
-   final itemIndex =allItems.indexWhere((i)=>i==item);
-   final filteredItemIndex = filteredItems.indexWhere((i)=>i==item);
-
-   if(itemIndex !=-1)allItems[itemIndex]=item;
-  if (filteredItemIndex !=-1) filteredItems[itemIndex]=item;
-
-  filteredItems.refresh();
-  }
-
 }
+  
+  
