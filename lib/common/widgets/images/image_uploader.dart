@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../icons/circular_icon.dart';
 import '../../../../../../common/widgets/images/circular_image.dart';

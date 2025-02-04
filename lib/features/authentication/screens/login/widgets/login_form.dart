@@ -5,7 +5,7 @@ import 'package:aura_kart_admin_panel/utils/constants/text_strings.dart';
 import 'package:aura_kart_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class ALoginForm extends StatelessWidget {
   const ALoginForm({super.key});

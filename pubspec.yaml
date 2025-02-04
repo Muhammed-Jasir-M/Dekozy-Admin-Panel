@@ -32,7 +32,7 @@ dependencies:
   flutter_dropzone: ^4.2.1
   flutter_typeahead: ^5.2.0
   multi_select_flutter: ^4.1.3
-  model_viewer_plus:
+  model_viewer_plus: ^1.9.1
 
   # Web Specific
   data_table_2: ^2.5.12
@@ -44,7 +44,7 @@ dependencies:
   universal_html: ^2.2.4
 
   # Icons
-  iconsax: ^0.0.8
+  iconsax_flutter: ^1.0.0
   cupertino_icons: ^1.0.8
 
   # State Management

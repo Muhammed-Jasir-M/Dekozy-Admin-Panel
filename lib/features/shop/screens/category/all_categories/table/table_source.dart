@@ -8,7 +8,7 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class CategoryRows extends DataTableSource {
   final controller = CategoryController.instance;
@@ -53,7 +53,7 @@ class CategoryRows extends DataTableSource {
         DataCell(Text(parentCategory != null ? parentCategory.name : '')),
         DataCell(
           category.isFeatured
-              ? const Icon(Iconsax.heart5, color: AColors.primary)
+              ? const Icon(Iconsax.heart, color: AColors.primary)
               : const Icon(Iconsax.heart),
         ),
         DataCell(

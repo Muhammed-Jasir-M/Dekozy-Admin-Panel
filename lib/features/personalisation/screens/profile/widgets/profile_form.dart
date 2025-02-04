@@ -2,7 +2,7 @@ import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_containe
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class ProfileForm extends StatelessWidget {
   const ProfileForm({super.key});

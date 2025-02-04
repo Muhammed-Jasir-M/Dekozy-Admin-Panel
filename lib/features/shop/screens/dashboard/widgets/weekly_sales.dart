@@ -78,7 +78,7 @@ class AWeekklySaleGraph extends StatelessWidget {
       bottomTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-          getTitlesWidget: (value, meta) {
+          getTitlesWidget: (double value, TitleMeta meta) {
             // map index to desired day of week
             final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -88,8 +88,9 @@ class AWeekklySaleGraph extends StatelessWidget {
             //get the day corresponding to the calculated index
             final day = days[index];
             return SideTitleWidget(
-              axisSide: AxisSide.bottom,
+              // side: AxisSide.bottom,
               space: 0,
+              meta: meta,
               child: Text(day),
             );
           },

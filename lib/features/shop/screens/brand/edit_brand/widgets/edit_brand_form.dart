@@ -3,7 +3,7 @@ import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_containe
 import 'package:aura_kart_admin_panel/common/widgets/images/image_uploader.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/brand_model.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../../../utils/constants/enums.dart';
 import '../../../../../../utils/constants/image_strings.dart';

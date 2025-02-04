@@ -3,7 +3,7 @@ import 'package:aura_kart_admin_panel/features/shop/screens/customer/customer_de
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class CustomerOrders extends StatelessWidget {
   const CustomerOrders({super.key});

@@ -11,7 +11,7 @@ import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 import '../../../../utils/constants/image_strings.dart';
