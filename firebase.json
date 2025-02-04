@@ -1,1 +1,37 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"aura-kart","appId":"1:754427206411:android:bccd4a7c3dfdc0119ae00e","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"aura-kart","configurations":{"android":"1:754427206411:android:bccd4a7c3dfdc0119ae00e","ios":"1:754427206411:ios:5c420f230d8ed6a39ae00e","web":"1:754427206411:web:6354a9e5de8ba4479ae00e"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "aura-kart",
+          "appId": "1:754427206411:android:bccd4a7c3dfdc0119ae00e",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "aura-kart",
+          "configurations": {
+            "android": "1:754427206411:android:bccd4a7c3dfdc0119ae00e",
+            "ios": "1:754427206411:ios:5c420f230d8ed6a39ae00e",
+            "web": "1:754427206411:web:6354a9e5de8ba4479ae00e"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

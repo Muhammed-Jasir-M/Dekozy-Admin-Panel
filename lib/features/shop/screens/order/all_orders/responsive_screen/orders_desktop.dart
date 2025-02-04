@@ -12,12 +12,10 @@ class OrdersDesktopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: SingleChildScrollView(
-        child: Padding(padding: 
-        EdgeInsets.all(ASizes.defaultSpace),
+        child: Padding(padding: EdgeInsets.all(ASizes.defaultSpace),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // Breadcrums 
             ABreadcrumbsWithHeading(heading: 'Orders', breadcrumbItems: ['Orders']),
             SizedBox(height: ASizes.spaceBtwSections,),

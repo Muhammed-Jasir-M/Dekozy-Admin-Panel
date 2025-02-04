@@ -25,7 +25,7 @@ class CategoryController extends ABaseController<CategoryModel> {
 
   //soring related code
   void sortByName(int sortColumnIndex, bool ascending) {
-    sortByProperty(sortColumnIndex as int, ascending, (
+    sortByProperty(sortColumnIndex, ascending, (
       CategoryModel category) => category.name.toLowerCase());
   }
 }
