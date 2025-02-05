@@ -97,7 +97,6 @@ class ImageModel {
       sizeBytes: response['bytes'] ?? 0,
       contentType: '${response['resource_type']}/${response['format']?? ''}',
       createdAt: DateTime.now(),
-      // createdAt: response['created_at'],
     );
   }
 }

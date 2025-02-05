@@ -240,8 +240,8 @@ class MediaContent extends StatelessWidget {
         src: image.url,
         alt: image.filename,
         ar: false,
-        autoRotate: true,
-        cameraControls: true,
+        autoRotate: false,
+        cameraControls: false,
         backgroundColor: AColors.primaryBackground,
       ),
     );
@@ -259,8 +259,8 @@ class MediaContent extends StatelessWidget {
                   src: image.url,
                   alt: image.filename,
                   ar: false,
-                  autoRotate: true,
-                  cameraControls: true,
+                  autoRotate: false,
+                  cameraControls: false,
                   backgroundColor: AColors.primaryBackground,
                 ),
               )

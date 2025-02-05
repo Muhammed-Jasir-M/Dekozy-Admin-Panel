@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:typed_data';
 
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
@@ -42,7 +40,12 @@ class MediaUploader extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             DropzoneView(
-                              // mime: const ['Image/jpeg', 'Image/png'],
+                              mime: const [
+                                'image/jpeg',
+                                'image/png',
+                                'model/gltf+json',
+                                'model/gltf-binary',
+                              ],
                               cursor: CursorType.Default,
                               operation: DragOperation.copy,
                               onCreated: (ctrl) =>
@@ -73,7 +76,9 @@ class MediaUploader extends StatelessWidget {
                                   folder: '',
                                   filename: filename,
                                   localImageToDisplay:
-                                      Uint8List.fromList(bytes),
+                                      mimeType.startsWith('image/')
+                                          ? Uint8List.fromList(bytes)
+                                          : null,
                                   contentType: mimeType,
                                 );
 
@@ -171,21 +176,47 @@ class MediaUploader extends StatelessWidget {
                           alignment: WrapAlignment.start,
                           spacing: ASizes.spaceBtwItems / 2,
                           runSpacing: ASizes.spaceBtwItems / 2,
-                          children: controller.selectedImagesToUpload
-                              .where(
-                                  (image) => image.localImageToDisplay != null)
-                              .map(
-                                (element) => ARoundedImage(
+                          children: controller.selectedImagesToUpload.map(
+                            (element) {
+                              if (element.contentType!.startsWith('image/')) {
+                                return ARoundedImage(
                                   width: 90,
                                   height: 90,
                                   padding: ASizes.sm,
                                   memoryImage: element.localImageToDisplay,
                                   backgroundColor: AColors.primaryBackground,
                                   imageType: ImageType.memory,
-                                ),
-                              )
-                              .toList(),
+                                );
+                              } else {
+                                return ARoundedContainer(
+                                  width: 90,
+                                  height: 90,
+                                  backgroundColor: AColors.primaryBackground,
+                                  padding: const EdgeInsets.all(ASizes.sm),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.threed_rotation,
+                                          size: 30, color: AColors.darkGrey),
+                                      const SizedBox(
+                                          height: ASizes.spaceBtwItems / 2),
+                                      Text(
+                                        element.filename,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                          ).toList(),
                         ),
+
                         const SizedBox(height: ASizes.spaceBtwSections),
 
                         /// Upload Button for Mobile

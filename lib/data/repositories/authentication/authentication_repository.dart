@@ -22,7 +22,7 @@ class AuthenticationRepository extends GetxController {
 
   @override
   void onReady() {
-    // // Redirect to the appropriate screen
+    // Redirect to the appropriate screen
     // screenRedirect();
 
     _auth.setPersistence(Persistence.LOCAL);
@@ -37,6 +37,7 @@ class AuthenticationRepository extends GetxController {
       // Navigate to the Home
       Get.offAllNamed(ARoutes.dashboard);
     } else {
+      // Navigate to Login
       Get.offAllNamed(ARoutes.login);
     }
   }
@@ -89,7 +90,7 @@ class AuthenticationRepository extends GetxController {
   // Logout User
   Future<void> logout() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await _auth.signOut();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;

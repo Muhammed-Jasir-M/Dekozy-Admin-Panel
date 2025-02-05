@@ -73,7 +73,7 @@ class AAppRoutes {
         page: () => const CreateBrandScreen(),
         middlewares: [ARoutesMiddleware()]),
     GetPage(
-        name: ARoutes.editBanner,
+        name: ARoutes.editBrand,
         page: () => const EditBrandScreen(),
         middlewares: [ARoutesMiddleware()]),
 
@@ -124,6 +124,7 @@ class AAppRoutes {
         name: ARoutes.profile,
         page: () => const ProfileScreen(),
         middlewares: [ARoutesMiddleware()]),
+        
     //Orders
     GetPage(
         name: ARoutes.orders,

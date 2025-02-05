@@ -8,9 +8,11 @@ class APIConstants {
   static String cloudinaryApiSecret = dotenv.env['CLOUDINARY_API_SECRET'] ?? '';
   static String cloudinaryCloudName = dotenv.env['CLOUDINARY_CLOUD_NAME'] ?? '';
 
-  static String cloudinaryBaseUrl =
-      'https://api.cloudinary.com/v1_1/${APIConstants.cloudinaryCloudName}/image/upload';
+  static getCloudinaryBaseUrl(String resourceType) {
+    return 'https://api.cloudinary.com/v1_1/${APIConstants.cloudinaryCloudName}/$resourceType/upload';
+  }
 
-  static String cloudinaryDeleteUrl =
-      'https://api.cloudinary.com/v1_1/${APIConstants.cloudinaryCloudName}/image/destroy';
+  static getCloudinaryDeleteUrl(String resourceType) {
+    return 'https://api.cloudinary.com/v1_1/${APIConstants.cloudinaryCloudName}/$resourceType/destroy';
+  }
 }

@@ -23,11 +23,13 @@ class ASidebar extends StatelessWidget {
           child: Column(
             children: [
               // Image
-              ACircularImage(
-                width: 100,
-                height: 100,
-                image: AImages.darkAppLogo,
-                backgroundColor: Colors.transparent,
+              Center(
+                child: ACircularImage(
+                  width: 120,
+                  height: 120,
+                  image: AImages.darkAppLogo,
+                  backgroundColor: Colors.transparent,
+                ),
               ),
               SizedBox(height: ASizes.spaceBtwSections),
 
@@ -44,6 +46,7 @@ class ASidebar extends StatelessWidget {
                           .bodySmall!
                           .apply(letterSpacingDelta: 1.2),
                     ),
+                    const SizedBox(height: ASizes.sm),
 
                     // Menu Items
                     const AMenuItem(
@@ -86,6 +89,7 @@ class ASidebar extends StatelessWidget {
                       icon: Iconsax.box,
                       itemName: 'Orders',
                     ),
+                    const SizedBox(height: ASizes.sm),
 
                     // Other Menu Items
                     Text(
@@ -95,6 +99,7 @@ class ASidebar extends StatelessWidget {
                           .bodySmall!
                           .apply(letterSpacingDelta: 1.2),
                     ),
+                    const SizedBox(height: ASizes.sm),
 
                     const AMenuItem(
                       route: ARoutes.profile,
@@ -106,7 +111,7 @@ class ASidebar extends StatelessWidget {
                       icon: Iconsax.setting,
                       itemName: 'Settings',
                     ),
-               
+
                     const AMenuItem(
                       route: 'logout',
                       icon: Iconsax.logout,

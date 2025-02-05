@@ -70,14 +70,12 @@ class MediaController extends GetxController {
       }
 
       final images = await mediaRepository.fetchImagesFromDatabase(
-          selectedPath.value, initialLoadingCount);
+        selectedPath.value,
+        initialLoadingCount,
+      );
       targetList.assignAll(images);
-
-      print("fetch images: $images");
-
       loading.value = false;
     } catch (e) {
-      print("Error during fetching: $e");
       loading.value = false;
       ALoaders.errorSnackBar(
           title: 'Oh Snap!',
@@ -112,13 +110,8 @@ class MediaController extends GetxController {
           initialLoadingCount,
           targetList.last.createdAt ?? DateTime.now());
       targetList.assignAll(images);
-
-      print("fetch images: $images");
-
       loading.value = false;
     } catch (e) {
-      print("Error during fetching: $e");
-
       loading.value = false;
       ALoaders.errorSnackBar(
           title: 'Oh Snap!',
@@ -127,13 +120,15 @@ class MediaController extends GetxController {
   }
 
   Future<void> selectLocalImages() async {
-    final files = await dropzoneController
-        .pickFiles(multiple: true, mime: ['image/jpeg', 'image/png']);
+    final files = await dropzoneController.pickFiles(multiple: true, mime: [
+      'image/jpeg',
+      'image/png',
+      'model/gltf+json',
+      'model/gltf-binary',
+    ]);
 
     if (files.isNotEmpty) {
       for (var file in files) {
-        print('file: $file');
-
         // Retrieve file data as Uint8List
         final bytes = await dropzoneController.getFileData(file);
 
@@ -213,7 +208,6 @@ class MediaController extends GetxController {
         var selectedImage = selectedImagesToUpload[i];
 
         final folderPath = "aurakart${getSelectedPath().toLowerCase()}";
-        print('folderpath: $folderPath');
 
         // Upload Image to Cloudinary
         final ImageModel uploadedImage =
