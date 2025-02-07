@@ -1,10 +1,11 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:aura_kart_admin_panel/utils/constants/api_constants.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../../features/media/models/image_model.dart';
 
 /// Helper functions for cloud-related operations.
 class ACloudHelperFunctions {
@@ -62,74 +63,90 @@ class ACloudHelperFunctions {
     return null;
   }
 
-  /// Upload an image to Cloudinary and get the download URL
-  static Future<String> uploadImageToCloudinary({
-    required File file,
+  /// Upload any Image using Uint8List
+  Future<ImageModel> uploadImageFileCloudinary({
+    required Uint8List fileData,
+    required String mimeType,
     required String folderPath,
     required String imageName,
   }) async {
     try {
-      if (file.path.isEmpty) throw 'Invalid file path';
+      String resourceType = mimeType.startsWith('image/') ? 'image' : 'raw';
 
-      final uri = Uri.parse(APIConstants.cloudinaryBaseUrl);
+      final uri = Uri.parse(APIConstants.getCloudinaryBaseUrl(resourceType));
 
       var request = http.MultipartRequest('POST', uri);
+
       request.fields['upload_preset'] = APIConstants.cloudinaryUploadPreset;
-      request.fields['resource_type'] = 'image';
+
+      request.fields['resource_type'] = resourceType;
+
       request.fields['folder'] = folderPath;
-      request.fields['public_id'] = imageName;
 
-      request.files.add(await http.MultipartFile.fromPath('file', file.path));
+      request.files.add(http.MultipartFile.fromBytes(
+        'file',
+        fileData,
+        filename: imageName,
+      ));
 
-      var response = await request.send();
+      // Send the request
+      final response = await request.send();
 
+      // Parse the response
       if (response.statusCode == 200) {
-        // Get Response
-        final responseString = await response.stream.bytesToString();
-        // Decode the response
-        final data = jsonDecode(responseString);
-        // Get the image URL
-        final String imageUrl = data['secure_url'];
-        return imageUrl;
+        final responseBody = await response.stream.bytesToString();
+        final jsonResponse = jsonDecode(responseBody);
+
+        print("Cloudinary Response: $jsonResponse");
+        print("Cloudinary: $mimeType");
+
+        // Create the ImageModel from the response
+        return ImageModel.fromCloudinaryResponse(
+          jsonResponse,
+          folderPath,
+          imageName,
+          mimeType,
+        );
       } else {
-        throw 'Failed to upload image';
+        throw Exception('Failed to upload image');
       }
     } catch (e) {
-      throw 'Something went wrong.';
+      throw e.toString();
     }
   }
 
-  //
-  static Future<void> deleteImageFromCloudinary(String publicId) async {
+  // Delete file from Cloudinary & corresponding document from Firebase
+  Future<void> deleteImageFileFromCloudinary(ImageModel image) async {
     try {
-      final uri = Uri.parse(APIConstants.cloudinaryDeleteUrl);
+      String resourceType = image.contentType == 'image' ? 'image' : 'raw';
 
-      // Create the authentication header
-      final authHeader =
-          'Basic ${base64Encode(utf8.encode('${APIConstants.cloudinaryApiKey}:${APIConstants.cloudinaryApiSecret}'))}';
+      final uri = Uri.parse(APIConstants.getCloudinaryDeleteUrl(resourceType));
 
-      // Send the delete request
-      final response = await http.post(
-        uri,
-        headers: {
-          'Authorization': authHeader,
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'public_id': publicId,
-        }),
-      );
+      final timestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      final publicId = image.publicId;
 
-      // Parse the response
-      final responseData = jsonDecode(response.body);
+      final signatureString =
+          'public_id=$publicId&timestamp=$timestamp${APIConstants.cloudinaryApiSecret}';
 
-      if (response.statusCode == 200 && responseData['result'] == 'ok') {
-        print('File deleted successfully from Cloudinary.');
+      final bytes = utf8.encode(signatureString);
+      final signature = sha1.convert(bytes).toString();
+
+      final response = await http.post(uri, body: {
+        'public_id': publicId,
+        'timestamp': timestamp.toString(),
+        'api_key': APIConstants.cloudinaryApiKey,
+        'signature': signature,
+      });
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print('Image deleted successfully from Cloudinary: $jsonResponse');
       } else {
-        throw 'Failed to delete file.';
+        throw Exception(
+            'Failed to delete image from Cloudinary: ${response.body}');
       }
     } catch (e) {
-      throw 'Error deleting file: $e';
+      throw e.toString();
     }
   }
 

@@ -316,7 +316,7 @@ class MediaContent extends StatelessWidget {
           child: OutlinedButton.icon(
             label: const Text('Close'),
             icon: const Icon(Iconsax.close_circle),
-            onPressed: () => Get.back,
+            onPressed: () => Get.back(),
           ),
         ),
         const SizedBox(width: ASizes.spaceBtwItems),

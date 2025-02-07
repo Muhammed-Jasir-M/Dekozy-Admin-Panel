@@ -13,15 +13,18 @@ class ImageModel {
   String mediaCategory;
   final String filename;
   final String? publicId;
-  final String? fullPath;
+  // final String? fullPath;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? mimeType;
   final String? contentType;
+  final String? format;
 
   // Not Mapped
   final File? file;
-  RxBool isSelected = false.obs;
   final Uint8List? localImageToDisplay;
+
+  RxBool isSelected = false.obs;
 
   /// Constructor
   ImageModel({
@@ -32,12 +35,14 @@ class ImageModel {
     this.publicId,
     this.sizeBytes,
     required this.filename,
-    this.fullPath,
+    // this.fullPath,
     this.createdAt,
     this.updatedAt,
     this.contentType,
     this.file,
     this.localImageToDisplay,
+    this.mimeType,
+    this.format,
   });
 
   /// Static function to create an empty user model.
@@ -54,10 +59,12 @@ class ImageModel {
       'publicId': publicId,
       'filename': filename,
       'sizeBytes': sizeBytes,
-      'fullPath': fullPath,
+      // 'fullPath': fullPath,
       'createdAt': createdAt?.toUtc(),
       'contentType': contentType,
       'mediaCategory': mediaCategory,
+      'mimeType': mimeType,
+      'format': format,
     };
   }
 
@@ -73,30 +80,34 @@ class ImageModel {
         folder: data['folder'] ?? '',
         publicId: data['publicId'] ?? '',
         filename: data['filename'] ?? '',
-        fullPath: data['fullPath'] ?? '',
+        // fullPath: data['fullPath'] ?? '',
         sizeBytes: data['sizeBytes'] ?? 0,
         createdAt:
             data.containsKey('createdAt') ? data['createdAt']?.toDate() : null,
         updatedAt:
             data.containsKey('updatedAt') ? data['updatedAt']?.toDate() : null,
         contentType: data['contentType'] ?? '',
-        mediaCategory: data['mediaCategory'],
+        mediaCategory: data['mediaCategory'] ?? '',
+        mimeType: data['mimeType'] ?? '',
+        format: data['format'] ?? '',
       );
     } else {
       return ImageModel.empty();
     }
   }
 
-  factory ImageModel.fromCloudinaryResponse(Map<String, dynamic> response, String folder , String imageName) {
+  factory ImageModel.fromCloudinaryResponse(Map<String, dynamic> response,
+      String folder, String imageName, mimeType) {
     return ImageModel(
       url: response['secure_url'] ?? '',
       publicId: response['public_id'] ?? '',
       folder: folder,
       filename: imageName,
-      fullPath: '${response['folder'] ?? ''}/${response['public_id'] ?? ''}',
       sizeBytes: response['bytes'] ?? 0,
-      contentType: '${response['resource_type']}/${response['format']?? ''}',
+      contentType: response['resource_type'] ?? '',
       createdAt: DateTime.now(),
+      format: response['format'] ?? '',
+      mimeType: mimeType ?? '',
     );
   }
 }

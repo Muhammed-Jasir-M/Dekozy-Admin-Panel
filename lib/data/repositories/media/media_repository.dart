@@ -26,9 +26,13 @@ class MediaRepository {
     required String imageName,
   }) async {
     try {
-      String resourceType = mimeType.startsWith('model/') ? 'raw' : 'image';
+      if (!mimeType.startsWith('image/') && !mimeType.startsWith('model/')) {
+        throw 'Invalid file type: $mimeType';      
+      }
+      
+      String resourceType = mimeType.startsWith('image/') ? 'image' : 'raw';
 
-      final uri = APIConstants.getCloudinaryBaseUrl(resourceType);
+      final uri = Uri.parse(APIConstants.getCloudinaryBaseUrl(resourceType));
 
       var request = http.MultipartRequest('POST', uri);
 
@@ -59,12 +63,14 @@ class MediaRepository {
         return ImageModel.fromCloudinaryResponse(
           jsonResponse,
           folderPath,
-          imageName,
+          imageName,   
+          mimeType,
         );
       } else {
         throw Exception('Failed to upload image');
       }
     } catch (e) {
+      print(e.toString());
       throw e.toString();
     }
   }
@@ -139,10 +145,7 @@ class MediaRepository {
   // Delete file from Cloudinary & corresponding document from Firebase
   Future<void> deleteImageFileFromCloudinary(ImageModel image) async {
     try {
-      String resourceType =
-          (image.contentType != null && image.contentType!.startsWith('image/'))
-              ? 'image'
-              : 'raw';
+      String resourceType = image.contentType == 'image' ? 'image' : 'raw';
 
       final uri = Uri.parse(APIConstants.getCloudinaryDeleteUrl(resourceType));
 

@@ -100,15 +100,16 @@ class MediaController extends GetxController {
         targetList = allProductImages;
       } else if (selectedPath.value == MediaCategory.users) {
         targetList = allUserImages;
-      } else if (selectedPath.value == MediaCategory.arproducts &&
-          allArImages.isEmpty) {
+      } else if (selectedPath.value == MediaCategory.arproducts) {
         targetList = allArImages;
       }
 
       final images = await mediaRepository.loadMoreImagesFromDatabase(
-          selectedPath.value,
-          initialLoadingCount,
-          targetList.last.createdAt ?? DateTime.now());
+        selectedPath.value,
+        initialLoadingCount,
+        targetList.isNotEmpty ? (targetList.last.createdAt ?? DateTime.now()) : DateTime.now(),
+      );
+
       targetList.assignAll(images);
       loading.value = false;
     } catch (e) {
@@ -123,6 +124,7 @@ class MediaController extends GetxController {
     final files = await dropzoneController.pickFiles(multiple: true, mime: [
       'image/jpeg',
       'image/png',
+      'image/webp',
       'model/gltf+json',
       'model/gltf-binary',
     ]);
@@ -198,6 +200,9 @@ class MediaController extends GetxController {
         case MediaCategory.users:
           targetList = allUserImages;
           break;
+        case MediaCategory.arproducts:
+          targetList = allArImages;
+          break;
         default:
           return;
       }
@@ -221,9 +226,7 @@ class MediaController extends GetxController {
         // Upload Image to Firestore
         uploadedImage.mediaCategory = selectedCategory.name;
         final id = await mediaRepository.uploadImageFileInDB(uploadedImage);
-
         uploadedImage.id = id;
-
         selectedImagesToUpload.removeAt(i);
         targetList.add(uploadedImage);
       }
@@ -233,6 +236,8 @@ class MediaController extends GetxController {
     } catch (e) {
       // Stop Loader in case of an error
       AFullScreenLoader.stopLoading();
+
+      print(e.toString());
 
       // Show a warning snak-bar for the error
       ALoaders.warningSnackBar(
@@ -394,6 +399,7 @@ class MediaController extends GetxController {
       update();
 
       AFullScreenLoader.stopLoading();
+      
       ALoaders.successSnackBar(
         title: 'Image Deleted',
         message: 'Image successfully deleted from your cloud storage',

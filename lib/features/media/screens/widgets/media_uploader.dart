@@ -43,6 +43,7 @@ class MediaUploader extends StatelessWidget {
                               mime: const [
                                 'image/jpeg',
                                 'image/png',
+                                'image/webp',
                                 'model/gltf+json',
                                 'model/gltf-binary',
                               ],
@@ -75,10 +76,7 @@ class MediaUploader extends StatelessWidget {
                                   url: '',
                                   folder: '',
                                   filename: filename,
-                                  localImageToDisplay:
-                                      mimeType.startsWith('image/')
-                                          ? Uint8List.fromList(bytes)
-                                          : null,
+                                  localImageToDisplay:Uint8List.fromList(bytes),
                                   contentType: mimeType,
                                 );
 
