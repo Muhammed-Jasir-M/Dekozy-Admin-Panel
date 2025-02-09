@@ -30,4 +30,4 @@ class CategoryController extends ABaseController<CategoryModel> {
   }
 }
   
-  
+   

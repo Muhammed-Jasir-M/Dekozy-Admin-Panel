@@ -1,5 +1,6 @@
 import 'package:aura_kart_admin_panel/common/widgets/icons/table_action_icon_buttons.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/brand/brand_controller.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
@@ -7,15 +8,18 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-
 import '../../../../../../utils/constants/colors.dart';
-import '../../../../../../utils/constants/image_strings.dart';
 import '../../../../../../utils/constants/sizes.dart';
 
 class BrandRows extends DataTableSource {
+  final controller = BrandController.Instance;
+
   @override
   DataRow? getRow(int index) {
+    final brand = controller.filteredItems[index];
     return DataRow2(
+      selected: controller.selectedRows[index],
+      onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
@@ -24,8 +28,8 @@ class BrandRows extends DataTableSource {
                 width: 50,
                 height: 50,
                 padding: ASizes.sm,
-                image: AImages.darkAppLogo,
-                imageType: ImageType.asset,
+                image: brand.image,
+                imageType: ImageType.network,
                 borderRadius: ASizes.borderRadiusMd,
                 backgroundColor: AColors.primaryBackground,
               ),
@@ -54,48 +58,25 @@ class BrandRows extends DataTableSource {
                 direction: ADeviceUtils.isMobileScreen(Get.context!)
                     ? Axis.vertical
                     : Axis.horizontal,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: ADeviceUtils.isMobileScreen(Get.context!)
-                          ? 0
-                          : ASizes.xs,
-                    ),
-                    child: const Chip(
-                        label: Text('Shoes'),
-                        padding: EdgeInsets.all(ASizes.xs)),
+                children: brand.brandCategories != null
+                ? brand.brandCategories!
+                .map((e) => Padding(
+                    padding: EdgeInsets.only(bottom: ADeviceUtils.isMobileScreen(Get.context!)? 0: ASizes.xs,),
+                    child:  Chip(label: Text(e.name),padding: EdgeInsets.all(ASizes.xs)),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: ADeviceUtils.isMobileScreen(Get.context!)
-                          ? 0
-                          : ASizes.xs,
-                    ),
-                    child: const Chip(
-                        label: Text('TrackSuits'),
-                        padding: EdgeInsets.all(ASizes.xs)),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: ADeviceUtils.isMobileScreen(Get.context!)
-                          ? 0
-                          : ASizes.xs,
-                    ),
-                    child: const Chip(
-                        label: Text('Joggers'),
-                        padding: EdgeInsets.all(ASizes.xs)),
-                  ),
-                ],
+                ).toList() : [const SizedBox()],
               ),
             ),
           ),
         ),
-        const DataCell(Icon(Iconsax.heart, color: AColors.primary)),
-        DataCell(Text(DateTime.now().toString())),
-        DataCell(ATableActionButtons(
-          onEditPressed: () => Get.toNamed(ARoutes.editBrand, arguments: ''),
-          onDeletePressed: () {},
-        )),
+        DataCell(brand.isFeatured ? const Icon(Iconsax.heart, color: AColors.primary) : const Icon(Iconsax.heart)),
+        DataCell(Text(brand.createdAt != null ? brand.formattedDate : '')),
+        DataCell(
+          ATableActionButtons(
+          onEditPressed: () => Get.toNamed(ARoutes.editBrand, arguments: brand),
+          onDeletePressed: () => controller.confrimAndDeleteItem(brand),
+         ),
+        ),
       ],
     );
   }
@@ -104,8 +85,8 @@ class BrandRows extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => 20;
+  int get rowCount => controller.filteredItems.length;
 
   @override
-  int get selectedRowCount => 0;
+  int get selectedRowCount => controller.selectedRows.where((selected) => selected).length;
 }

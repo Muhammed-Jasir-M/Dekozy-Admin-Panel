@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BrandCategoryModel {
+  String? id;
   final String brandId;
   final String categoryId;
 
   BrandCategoryModel({
+    required this.id,
     required this.brandId,
     required this.categoryId,
   });
@@ -18,8 +20,8 @@ class BrandCategoryModel {
 
   factory BrandCategoryModel.fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;
-
     return BrandCategoryModel(
+      id: snapshot.id,
       brandId: data['brandId'] as String,
       categoryId: data['categoryId'] as String,
     );

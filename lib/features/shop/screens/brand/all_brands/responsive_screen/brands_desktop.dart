@@ -1,10 +1,11 @@
 import 'package:aura_kart_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:aura_kart_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/brand/brand_controller.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../../../common/widgets/data_table/table_header.dart';
 import '../widgets/data_table.dart';
 
@@ -13,6 +14,7 @@ class BrandsDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BrandController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -32,11 +34,18 @@ class BrandsDesktopScreen extends StatelessWidget {
                     // Table header
                     ATableHeader(
                         buttonText: 'Create a new word',
-                        onPressed: () => Get.toNamed(ARoutes.createBrand)),
+                        onPressed: () => Get.toNamed(ARoutes.createBrand), 
+                        searchOnChanged: (query) => controller.searchQuery(query),
+                        ),
                     const SizedBox(height: ASizes.spaceBtwItems),
 
                     // Table
-                    const BrandsTable(),
+                    Obx(() {
+                      //show loader
+                      if (controller.isLoading.value)
+                        return const ALoaderAnimation();
+                      return const BrandTable();
+                    }),
                   ],
                 ),
               )

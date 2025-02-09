@@ -1,3 +1,4 @@
+import 'package:aura_kart_admin_panel/common/widgets/loaders/loader_animation.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/brand/all_brands/widgets/data_table.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,7 +37,13 @@ class BrandsMobileScreen extends StatelessWidget {
                     const SizedBox(height: ASizes.spaceBtwItems),
 
                     // Table
-                    const BrandsTable(),
+                    const BrandTable(),// Table
+                    Obx(() {
+                      //show loader
+                      if (controller.isLoading.value)
+                        return const ALoaderAnimation();
+                      return const BrandTable();
+                    }),
                   ],
                 ),
               )

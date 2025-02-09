@@ -6,7 +6,6 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-
 import '../widgets/media_content.dart';
 
 class MediaDesktopScreen extends StatelessWidget {
