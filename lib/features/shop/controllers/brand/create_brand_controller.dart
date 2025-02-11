@@ -1,13 +1,15 @@
 import 'package:aura_kart_admin_panel/data/repositories/brands/brand_repository.dart';
 import 'package:aura_kart_admin_panel/features/media/controller/media_controller.dart';
 import 'package:aura_kart_admin_panel/features/media/models/image_model.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/brand/brand_controller.dart';
+import 'package:aura_kart_admin_panel/features/shop/models/brand_category_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/brand_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
 import 'package:aura_kart_admin_panel/utils/helpers/network_manager.dart';
 import 'package:aura_kart_admin_panel/utils/popups/full_screen_loader.dart';
+import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class CreateBrandController extends GetxController {
   static CreateBrandController get instance => Get.find();
@@ -64,31 +66,55 @@ class CreateBrandController extends GetxController {
         return;
       }
 
-      // form validation 
-      if(!formKey.currentState!.validate()){
+      // form validation
+      if (!formKey.currentState!.validate()) {
         AFullScreenLoader.stopLoading();
         return;
       }
 
       // map data
       final newRecord = BrandModel(
-      id: '',
-      productsCount: 0,
-      image: imageURL.value,
-      name: name.text.trim(),
-      createdAt: DateTime.now(),
-      isFeatured: isFeatured.value,
-    );
+        id: '',
+        productsCount: 0,
+        image: imageURL.value,
+        name: name.text.trim(),
+        createdAt: DateTime.now(),
+        isFeatured: isFeatured.value,
+      );
 
-     // call reposotory to create new brand
-     newRecord.id = await BrandRepository.instance.createBrand(newRecord);
+      // call reposotory to create new brand
+      newRecord.id = await BrandRepository.instance.createBrand(newRecord);
 
+      // register brand categorues if any
+      if (selectedCategories.isNotEmpty) {
+        if (newRecord.id.isEmpty)
+          throw 'Error storing relational data. try again';
 
-     // register brand categorues if any
-     if (selectedCategories.isNotEmpty) {
-      if (newRecord.id.isEmpty) throw 'Error storing relational data. try again';
-     }
+        // loop selected brand categories
+        for (var category in selectedCategories) {
+          // map data
+          final brandCategory = BrandCategoryModel(brandId: newRecord.id, categoryId: category.id, id: '');
+          await BrandRepository.instance.createBrandCategory(brandCategory);
+        }
+        newRecord.brandCategories ??= [];
+        newRecord.brandCategories!.addAll(selectedCategories);
+      }
 
+      // update all data list
+      BrandController.instance.addItemToLists(newRecord);
+
+      //reset formPcreate
+      resetFields();
+
+      // removce loader
+      AFullScreenLoader.stopLoading();
+
+      // succes  messege and redirect
+      ALoaders.successSnackBar(
+          title: 'Congratulations', message: 'New Record has been added');
+    } catch (e) {
+      AFullScreenLoader.stopLoading();
+      ALoaders.errorSnackBar(title: 'Uh Oh ', message: e.toString());
     }
   }
 }

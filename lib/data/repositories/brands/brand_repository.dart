@@ -54,7 +54,7 @@ class BrandRepository extends GetxController {
   }
 
   //get specific brand categories for aa given brand id
-  Future<List<BrandCategoryModel>> getCategoriesSpecificBrand(
+  Future<List<BrandCategoryModel>> getCategoriesOfSpecificBrand(
       String brandId) async {
     try {
       final brandCatgeoryQuery = await _db
@@ -127,25 +127,52 @@ class BrandRepository extends GetxController {
   //  delete an existing document and its associated brand categories
   Future<void> deleteBrand(BrandModel brand) async {
     try {
-        await _db.runTransaction((transaction) async {
-            final brandRef = _db.collection("Brands").doc(brand.id);
-            final brandSnap = await transaction.get(brandRef);
+      await _db.runTransaction((transaction) async {
+        final brandRef = _db.collection("Brands").doc(brand.id);
+        final brandSnap = await transaction.get(brandRef);
 
-            if(!brandSnap.exists) {
-                throw Exception('Brand not found');
-            }
-
-            final brandCatgoriesSnapshot = await _db.collection('Brandcategory').where('brandId', isEqualTo: brand.id).get();
-            final brandCategories = brandCatgoriesSnapshot.docs.map((e) => BrandCategoryModel.fromSnapshot(e));
-
-            if (brandCategories.isNotEmpty) {
-                for (var brandCategory in brandCategories) {
-                    transaction.delete(_db.collection('BrandCategory').doc(brandCategory.id));
-                }
-            }
-            transaction.delete(brandRef);
+        if (!brandSnap.exists) {
+          throw Exception('Brand not found');
         }
-        );
+
+        final brandCatgoriesSnapshot = await _db
+            .collection('Brandcategory')
+            .where('brandId', isEqualTo: brand.id)
+            .get();
+        final brandCategories = brandCatgoriesSnapshot.docs
+            .map((e) => BrandCategoryModel.fromSnapshot(e));
+
+        if (brandCategories.isNotEmpty) {
+          for (var brandCategory in brandCategories) {
+            transaction
+                .delete(_db.collection('BrandCategory').doc(brandCategory.id));
+          }
+        }
+        transaction.delete(brandRef);
+      });
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong , please try again';
+    }
+  }
+
+  // delete a brand document in the 'Brand Category' Collecion
+  Future<void> deleteBrandCategory(String brandCategoryId) async {
+    try {
+      await _db.collection("BrandCategory").doc(brandCategoryId).delete();
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong , please try again';
     }
   }
 }

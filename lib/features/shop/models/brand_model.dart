@@ -21,7 +21,7 @@ class BrandModel {
     required this.name,
     this.isFeatured = false,
     this.productsCount,
-    this.createdAt,
+    this.createdAt, 
     this.updatedAt,
     this.brandCategories,
   });

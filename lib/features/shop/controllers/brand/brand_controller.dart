@@ -5,7 +5,7 @@ import 'package:aura_kart_admin_panel/features/shop/models/brand_model.dart';
 import 'package:get/get.dart';
 
 class BrandController extends ABaseController<BrandModel> {
-  static BrandController get Instance => Get.find();
+  static BrandController get instance => Get.find();
 
   final _brandRepository = Get.put(BrandRepository());
   final categorycontroller = Get.put(CategoryController());
@@ -43,8 +43,8 @@ class BrandController extends ABaseController<BrandModel> {
   }
 
   @override
-  Future<void> deleteItem(BrandModel item) {
-    throw UnimplementedError();
+  Future<void> deleteItem(BrandModel item) async {
+    await _brandRepository. deleteBrand(item);
   }
 
   void sortByName(int sortColumnIndex, bool ascending) {

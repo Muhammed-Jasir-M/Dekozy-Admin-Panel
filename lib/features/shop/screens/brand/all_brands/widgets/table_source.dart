@@ -12,7 +12,7 @@ import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/sizes.dart';
 
 class BrandRows extends DataTableSource {
-  final controller = BrandController.Instance;
+  final controller = BrandController.instance;
 
   @override
   DataRow? getRow(int index) {
