@@ -1,6 +1,6 @@
 class ATexts {
   // Admin Default Credentials
-  static const String adminEmail = "support@aurakart.com";
+  static const String adminEmail = "mjasir150@gmail.com";
   static const String adminPassword = "Admin@123";
 
   // Storage Paths

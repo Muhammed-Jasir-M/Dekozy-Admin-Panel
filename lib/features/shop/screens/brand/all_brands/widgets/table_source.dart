@@ -69,7 +69,7 @@ class BrandRows extends DataTableSource {
             ),
           ),
         ),
-        DataCell(brand.isFeatured ? const Icon(Iconsax.heart, color: AColors.primary) : const Icon(Iconsax.heart)),
+        DataCell(brand.isFeatured! ? const Icon(Iconsax.heart, color: AColors.primary) : const Icon(Iconsax.heart)),
         DataCell(Text(brand.createdAt != null ? brand.formattedDate : '')),
         DataCell(
           ATableActionButtons(

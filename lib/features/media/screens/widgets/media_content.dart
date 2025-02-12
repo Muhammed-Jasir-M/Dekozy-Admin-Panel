@@ -117,19 +117,17 @@ class MediaContent extends StatelessWidget {
                       children: images
                           .map(
                             (image) => GestureDetector(
-                              onTap: () => Get.dialog(ImagePopup(controller: controller, image: image)),
+                              onTap: () => Get.dialog(ImagePopup(image: image)),
                               child: SizedBox(
                                 width: 140,
                                 height: 180,
                                 child: Column(
                                   children: [
                                     allowSelection
-                                        ? _buildListWithCheckBox(
-                                            controller, image)
-                                        : controller.selectedPath.value ==
-                                                MediaCategory.arproducts
-                                            ? _buildSimpleArList(image)
-                                            : _buildSimpleList(image),
+                                        ? _buildListWithCheckBox(image)
+                                        : image.contentType == 'image'
+                                            ? _buildSimpleList(image)
+                                            : _buildSimpleArList(image),
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -240,31 +238,19 @@ class MediaContent extends StatelessWidget {
         src: image.url,
         alt: image.filename,
         ar: false,
-        autoRotate: false,
+        autoRotate: true,
         cameraControls: false,
         backgroundColor: AColors.primaryBackground,
       ),
     );
   }
 
-  Widget _buildListWithCheckBox(MediaController controller, ImageModel image) {
+  Widget _buildListWithCheckBox(ImageModel image) {
     return Stack(
       children: [
         // 3D Model or Image
-        controller.selectedPath.value == MediaCategory.arproducts
-            ? SizedBox(
-                width: 140,
-                height: 140,
-                child: ModelViewer(
-                  src: image.url,
-                  alt: image.filename,
-                  ar: false,
-                  autoRotate: false,
-                  cameraControls: false,
-                  backgroundColor: AColors.primaryBackground,
-                ),
-              )
-            : ARoundedImage(
+        image.contentType == 'image'
+            ? ARoundedImage(
                 width: 140,
                 height: 140,
                 padding: ASizes.sm,
@@ -272,6 +258,18 @@ class MediaContent extends StatelessWidget {
                 imageType: ImageType.network,
                 margin: ASizes.spaceBtwItems / 2,
                 backgroundColor: AColors.primaryBackground,
+              )
+            : SizedBox(
+                width: 140,
+                height: 140,
+                child: ModelViewer(
+                  src: image.url,
+                  alt: image.filename,
+                  ar: false,
+                  autoRotate: true,
+                  cameraControls: false,
+                  backgroundColor: AColors.primaryBackground,
+                ),
               ),
         Positioned(
           top: ASizes.md,

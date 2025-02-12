@@ -20,8 +20,9 @@ class BrandController extends ABaseController<BrandModel> {
         await _brandRepository.getAllBrandCategories();
 
     // fetch all categories is data does not already exists
-    if (categorycontroller.allItems.isNotEmpty)
+    if (categorycontroller.allItems.isNotEmpty) {
       await categorycontroller.fetchItems();
+    }
 
     // loop all brands and fetch categories of each
     for (var brand in fetchedBrands) {

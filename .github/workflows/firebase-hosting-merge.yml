@@ -12,11 +12,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          flutter-version: '3.27.1'
+          channel: 'stable'
+          cache: true       
 
       - name: Install Dependencies
         run: flutter pub get
@@ -26,6 +30,12 @@ jobs:
           echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" > .env
           echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env
           echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env
+
+      - name: Verify environment variables
+        run: |
+          echo $CLOUDINARY_CLOUD_NAME
+          echo $CLOUDINARY_API_KEY
+          echo $CLOUDINARY_API_SECRET
 
       - name: Build Web App
         run: flutter build web --release

@@ -19,10 +19,10 @@ class UserModel {
     this.id,
     this.firstName = '',
     this.lastName = '',
-    this.phoneNumber = '',
-    this.profilePicture = '',
     this.username = '',
     required this.email,
+    this.phoneNumber = '',
+    this.profilePicture = '',
     this.role = AppRole.user,
     this.createdAt,
     this.updatedAt,
@@ -55,19 +55,20 @@ class UserModel {
   // Factory method to create a UserModel form a Firebase document snapshot.
   factory UserModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
-      final data = document.data()!;
+
+    final data = document.data();
+    if (data != null) {
       return UserModel(
         id: document.id,
         firstName: data.containsKey('FirstName') ? data['FirstName'] ?? '' : '',
         lastName: data.containsKey('LastName') ? data['LastName'] ?? '' : '',
+        username: data.containsKey('UserName') ? data['Username'] ?? '' : '',
+        email: data.containsKey('Email') ? data['Email'] ?? '' : '',
         phoneNumber:
             data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
         profilePicture: data.containsKey('ProfilePicture')
             ? data['ProfilePicture'] ?? ''
             : '',
-        username: data.containsKey('UserName') ? data['Username'] ?? '' : '',
-        email: data.containsKey('Email') ? data['Email'] ?? '' : '',
         role: data.containsKey('Role')
             ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString()
                 ? AppRole.admin

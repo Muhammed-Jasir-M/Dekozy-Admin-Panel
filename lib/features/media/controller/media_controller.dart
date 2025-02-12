@@ -409,4 +409,6 @@ class MediaController extends GetxController {
       ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
+
+  
 }

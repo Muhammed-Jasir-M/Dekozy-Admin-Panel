@@ -6,7 +6,7 @@ class BrandCategoryModel {
   final String categoryId;
 
   BrandCategoryModel({
-    required this.id,
+    this.id,
     required this.brandId,
     required this.categoryId,
   });

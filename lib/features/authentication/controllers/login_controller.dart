@@ -21,6 +21,7 @@ class LoginController extends GetxController {
 
   final email = TextEditingController();
   final password = TextEditingController();
+
   final loginFormKey = GlobalKey<FormState>();
 
   @override
@@ -30,52 +31,53 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  /// Handless email and password sign in process
+  /// Handles Email and Password SignIn process
   Future<void> emailAndPasswordSignIn() async {
     try {
-      //Start Loading
+      // Start Loading
       AFullScreenLoader.openLoadingDialog(
         'Logging you in... ',
         AImages.docerAnimation,
       );
 
-      //Check internet Connectivity
+      // Check internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AFullScreenLoader.stopLoading();
         return;
       }
 
-      //Form Validation
+      // Form Validation
       if (!loginFormKey.currentState!.validate()) {
         AFullScreenLoader.stopLoading();
         return;
       }
 
-      //Save data if remember me is selected
+      // Save data if Remember Me is selected
       if (rememberMe.value) {
         localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
         localStorage.write('REMEMBER_ME_PASSWORD', password.text.trim());
       }
 
-      //Login user email & password authentication
+      // Login user email & password authentication
       await AuthenticationRepository.instance.loginWithEmailAndPassword(
         email.text.trim(),
         password.text.trim(),
       );
 
-      //Fetch user using email & password Authentication
+      // Fetch user using email & password Authentication
       final user = await UserController.instance.fetchUserDetails();
 
       // Remove Loader
       AFullScreenLoader.stopLoading();
 
-      //if user is not admin,logout and return
+      // if user is not admin, logout and return
       if (user.role != AppRole.admin) {
         await AuthenticationRepository.instance.logout();
+
         ALoaders.errorSnackBar(
           title: 'Not Authorized',
-          message: 'You are not authorized or do have access.contact Admin',
+          message: 'You are not authorized or Don\'t have access. Contact Admin',
         );
       } else {
         // Redirect
@@ -83,20 +85,20 @@ class LoginController extends GetxController {
       }
     } catch (e) {
       AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 
-  /// Handles registration of admin user
+  /// Handles Registration of Admin
   Future<void> registerAdmin() async {
     try {
-      //Start Loading
+      // Start Loading
       AFullScreenLoader.openLoadingDialog(
         'Registering Admin Account',
         AImages.docerAnimation,
       );
 
-      //Check internet Connectivity
+      // Check internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AFullScreenLoader.stopLoading();
@@ -109,24 +111,36 @@ class LoginController extends GetxController {
         ATexts.adminPassword,
       );
 
+      // Create admin record in the Firestore
       final userRepository = Get.put(UserRepository());
       await userRepository.createUser(
         UserModel(
           id: AuthenticationRepository.instance.authUser!.uid,
-          firstName: 'CwT',
+          firstName: 'Aura',
           lastName: 'Admin',
           email: ATexts.adminEmail,
           role: AppRole.admin,
           createdAt: DateTime.now(),
         ),
       );
+
       // Remove Loader
       AFullScreenLoader.stopLoading();
+
+      // Show success message
+      ALoaders.successSnackBar(
+        title: 'Registration Successful',
+        message: 'Admin Account Created Successfully',
+      );
+
       // Redirect
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
+      // Remove Loader
       AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+
+      // Show error message
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 }

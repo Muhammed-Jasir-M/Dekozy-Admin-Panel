@@ -30,9 +30,11 @@ class AAppRoutes {
   static final List<GetPage> pages = [
     // Login
     GetPage(name: ARoutes.login, page: () => const LoginScreen()),
+
     // ForgetPassword
     GetPage(
         name: ARoutes.forgetPassword, page: () => const ForgetPasswordScreen()),
+        
     // ResetPassword
     GetPage(
         name: ARoutes.resetPassword, page: () => const ResetPasswordScreen()),

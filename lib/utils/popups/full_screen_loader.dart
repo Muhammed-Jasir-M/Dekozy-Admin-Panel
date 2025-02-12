@@ -27,11 +27,15 @@ class AFullScreenLoader {
               : AColors.white,
           width: double.infinity,
           height: double.infinity,
-          child: Column(
-            children: [
-              const SizedBox(height: 250), // Adjust the spacing as needed
-              AAnimationLoaderWidget(text: text, animation: animation),
-            ],
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  // const SizedBox(height: 200),
+                  AAnimationLoaderWidget(text: text, animation: animation),
+                ],
+              ),
+            ),
           ),
         ),
       ),

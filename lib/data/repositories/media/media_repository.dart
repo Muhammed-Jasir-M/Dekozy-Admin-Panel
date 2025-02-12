@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:aura_kart_admin_panel/features/media/models/image_model.dart';
+import 'package:aura_kart_admin_panel/utils/exceptions/cloudinary_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,9 +28,9 @@ class MediaRepository {
   }) async {
     try {
       if (!mimeType.startsWith('image/') && !mimeType.startsWith('model/')) {
-        throw 'Invalid file type: $mimeType';      
+        throw 'Invalid file type: $mimeType';
       }
-      
+
       String resourceType = mimeType.startsWith('image/') ? 'image' : 'raw';
 
       final uri = Uri.parse(APIConstants.getCloudinaryBaseUrl(resourceType));
@@ -63,12 +64,17 @@ class MediaRepository {
         return ImageModel.fromCloudinaryResponse(
           jsonResponse,
           folderPath,
-          imageName,   
+          imageName,
           mimeType,
         );
       } else {
+        final error = await response.stream.bytesToString();
+        print('error: $error');
+        print('error: ${response.statusCode} -- ${response.reasonPhrase}');
         throw Exception('Failed to upload image');
       }
+    } on ACloudinaryException catch (e) {
+      throw e.message;
     } catch (e) {
       print(e.toString());
       throw e.toString();
@@ -145,7 +151,7 @@ class MediaRepository {
   // Delete file from Cloudinary & corresponding document from Firebase
   Future<void> deleteImageFileFromCloudinary(ImageModel image) async {
     try {
-      String resourceType = image.contentType == 'image' ? 'image' : 'raw';
+      String resourceType = image.contentType!;
 
       final uri = Uri.parse(APIConstants.getCloudinaryDeleteUrl(resourceType));
 
@@ -172,9 +178,10 @@ class MediaRepository {
         throw Exception(
             'Failed to delete image from Cloudinary: ${response.body}');
       }
-    } on PlatformException catch (e) {
-      throw APlatformException(e.code).message;
+    } on ACloudinaryException catch (e) {
+      throw e.message;
     } catch (e) {
+      print(e.toString());
       throw e.toString();
     }
   }

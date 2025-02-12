@@ -1,7 +1,6 @@
 import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
 import 'package:aura_kart_admin_panel/utils/formatters/formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:universal_html/html.dart';
 
 class BrandModel {
   String id;
@@ -56,6 +55,10 @@ class BrandModel {
       image: data['Image'] ?? '',
       isFeatured: data['IsFeatured'] ?? false,
       productsCount: int.parse((data['ProductsCount'] ?? 0).toString()),
+      createdAt:
+          data.containsKey('CreatedAt') ? data['CreatedAt']?.toDate() : null,
+      updatedAt:
+          data.containsKey('UpdatedAt') ? data['UpdatedAt']?.toDate() : null,
     );
   }
 
@@ -80,20 +83,5 @@ class BrandModel {
     } else {
       return BrandModel.empty();
     }
-  }
-
-  // map json oriented jdocument snapshot from firebae to usermodel
-  factory BrandModel.fromJson(Map<String, dynamic> dopcument) {
-    final data = document;
-    if (data.isEmpty) return BrandModel.empty();
-    return BrandModel(
-      id: data['Id'] ?? '',
-      name: data['Name'] ?? '',
-      image: data["Image"] ?? '',
-      isFeatured: data['ISFeatured'] ?? '',
-      productsCount.int.parse((data['ProductsCount']?? 0).toString()),
-      createdAt: data.containsKey('CreatedAt') ? data['CreatedAt']?.toDate() :null,
-      updatedAt: data.containsKey('UpdatedAt') ? data['UpdatedAt']?.toDate() :null,
-    );
   }
 }

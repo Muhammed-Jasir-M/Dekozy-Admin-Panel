@@ -1,5 +1,4 @@
 import 'package:aura_kart_admin_panel/features/authentication/screens/login/login.dart';
-import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/firebase_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/format_exceptions.dart';
@@ -7,6 +6,8 @@ import 'package:aura_kart_admin_panel/utils/exceptions/platform_exceptions.dart'
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import '../../../routes/routes.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -22,9 +23,6 @@ class AuthenticationRepository extends GetxController {
 
   @override
   void onReady() {
-    // Redirect to the appropriate screen
-    // screenRedirect();
-
     _auth.setPersistence(Persistence.LOCAL);
   }
 
@@ -44,7 +42,9 @@ class AuthenticationRepository extends GetxController {
 
   // Login
   Future<UserCredential> loginWithEmailAndPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -63,10 +63,14 @@ class AuthenticationRepository extends GetxController {
 
   // Register
   Future<UserCredential> registerWithEmailAndPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     try {
       return await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -79,13 +83,63 @@ class AuthenticationRepository extends GetxController {
       throw 'Something went wrong.please try again';
     }
   }
-  // Register User By Admin
 
-  // Email Verification
+  /// [Email Verification] - Mail Verification
+  Future<void> sendEmailVerification() async {
+    try {
+      await _auth.currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      throw AFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
-  // Forget Password
+  /// [Email Authentiaction] - Forget Password
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw AFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
-  // Re Authenticate User
+  /// [Re Auntheticate] - Re Authenticate User
+  Future<void> reAuthenticateWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      /// Create a credential
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: password);
+
+      /// Re Authenticate User
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      throw AFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
   // Logout User
   Future<void> logout() async {
@@ -105,5 +159,20 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  // Delete User
-}
+  /// [Delete User] - Remove user Auth and FireBase Account
+  Future<void> deleteAccount() async {
+    try {
+      // await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+      // await _auth.currentUser?.delete();
+    } on FirebaseAuthException catch (e) {
+      throw AFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }}

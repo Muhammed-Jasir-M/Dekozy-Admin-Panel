@@ -53,8 +53,9 @@ class EditBrandController extends GetxController {
   // pick thumbnail images from media
   void pickImage() async {
     final controller = Get.put(MediaController());
+
     List<ImageModel>? selectedImages =
-        await controller.SelectedImagesFromMedia();
+        await controller.selectImagesFromMedia();
 
     // handle the selected images
     if (selectedImages != null && selectedImages.isNotEmpty) {
@@ -66,7 +67,7 @@ class EditBrandController extends GetxController {
   }
 
   // register the brand
-  Future<void> updateBrand(BrandModel) async {
+  Future<void> updateBrand(BrandModel brand) async {
     try {
       // start loading
       AFullScreenLoader.popUpCircular();
@@ -79,7 +80,7 @@ class EditBrandController extends GetxController {
       }
 
       // form validation
-      if (!formKey.currentState!.widget()) {
+      if (!formKey.currentState!.validate()) {
         AFullScreenLoader.stopLoading();
         return;
       }
@@ -109,8 +110,6 @@ class EditBrandController extends GetxController {
       // update all data in list
       BrandController.instance.updateItemforLists(brand);
 
-  
-
       // remove loaders
       AFullScreenLoader.stopLoading();
 
@@ -119,7 +118,7 @@ class EditBrandController extends GetxController {
           title: 'Congratulations', message: 'your record has been updated');
     } catch (e) {
       AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Uh Oh', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 

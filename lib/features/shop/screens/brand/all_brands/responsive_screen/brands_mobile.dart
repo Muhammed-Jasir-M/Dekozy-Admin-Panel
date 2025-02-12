@@ -8,12 +8,15 @@ import '../../../../../../common/widgets/containers/rounded_container.dart';
 import '../../../../../../common/widgets/data_table/table_header.dart';
 import '../../../../../../routes/routes.dart';
 import '../../../../../../utils/constants/sizes.dart';
+import '../../../../controllers/brand/brand_controller.dart';
 
 class BrandsMobileScreen extends StatelessWidget {
   const BrandsMobileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BrandController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -37,11 +40,12 @@ class BrandsMobileScreen extends StatelessWidget {
                     const SizedBox(height: ASizes.spaceBtwItems),
 
                     // Table
-                    const BrandTable(),// Table
+                    const BrandTable(), // Table
                     Obx(() {
                       //show loader
-                      if (controller.isLoading.value)
+                      if (controller.isLoading.value) {
                         return const ALoaderAnimation();
+                      }
                       return const BrandTable();
                     }),
                   ],

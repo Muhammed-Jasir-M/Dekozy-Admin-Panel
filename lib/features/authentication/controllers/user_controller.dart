@@ -17,7 +17,7 @@ class UserController extends GetxController {
     super.onInit();
   }
 
-  ///Fetch user details from the repository
+  /// Fetch user details from the repository
   Future<UserModel> fetchUserDetails() async {
     try {
       loading.value = true;

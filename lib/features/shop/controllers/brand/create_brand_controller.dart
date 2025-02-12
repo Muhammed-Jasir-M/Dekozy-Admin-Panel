@@ -68,53 +68,58 @@ class CreateBrandController extends GetxController {
 
       // form validation
       if (!formKey.currentState!.validate()) {
-        AFullScreenLoader.stopLoading();
-        return;
-      }
-
-      // map data
-      final newRecord = BrandModel(
-        id: '',
-        productsCount: 0,
-        image: imageURL.value,
-        name: name.text.trim(),
-        createdAt: DateTime.now(),
-        isFeatured: isFeatured.value,
-      );
-
-      // call reposotory to create new brand
-      newRecord.id = await BrandRepository.instance.createBrand(newRecord);
-
-      // register brand categorues if any
-      if (selectedCategories.isNotEmpty) {
-        if (newRecord.id.isEmpty)
-          throw 'Error storing relational data. try again';
-
-        // loop selected brand categories
-        for (var category in selectedCategories) {
-          // map data
-          final brandCategory = BrandCategoryModel(brandId: newRecord.id, categoryId: category.id, id: '');
-          await BrandRepository.instance.createBrandCategory(brandCategory);
+        // form validation
+        if (!formKey.currentState!.validate()) {
+          AFullScreenLoader.stopLoading();
+          return;
         }
-        newRecord.brandCategories ??= [];
-        newRecord.brandCategories!.addAll(selectedCategories);
+
+        // map data
+        final newRecord = BrandModel(
+          id: '',
+          productsCount: 0,
+          image: imageURL.value,
+          name: name.text.trim(),
+          createdAt: DateTime.now(),
+          isFeatured: isFeatured.value,
+        );
+
+        // call reposotory to create new brand
+        newRecord.id = await BrandRepository.instance.createBrand(newRecord);
+
+        // register brand categorues if any
+        if (selectedCategories.isNotEmpty) {
+          if (newRecord.id.isEmpty) {
+            throw 'Error storing relational data. try again';
+          }
+
+          // loop selected brand categories
+          for (var category in selectedCategories) {
+            // map data
+            final brandCategory = BrandCategoryModel(
+                brandId: newRecord.id, categoryId: category.id, id: '');
+            await BrandRepository.instance.createBrandCategory(brandCategory);
+          }
+          newRecord.brandCategories ??= [];
+          newRecord.brandCategories!.addAll(selectedCategories);
+        }
+
+        // update all data list
+        BrandController.instance.addItemToLists(newRecord);
+
+        //reset formPcreate
+        resetFields();
+
+        // removce loader
+        AFullScreenLoader.stopLoading();
+
+        // succes  messege and redirect
+        ALoaders.successSnackBar(
+            title: 'Congratulations', message: 'New Record has been added');
       }
-
-      // update all data list
-      BrandController.instance.addItemToLists(newRecord);
-
-      //reset formPcreate
-      resetFields();
-
-      // removce loader
-      AFullScreenLoader.stopLoading();
-
-      // succes  messege and redirect
-      ALoaders.successSnackBar(
-          title: 'Congratulations', message: 'New Record has been added');
     } catch (e) {
       AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Uh Oh ', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 }

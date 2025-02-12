@@ -5,7 +5,6 @@ import 'package:aura_kart_admin_panel/utils/exceptions/format_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/platform_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -45,8 +44,7 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      if (kDebugMode) print('Something Went Wrong: $e');
-      throw 'Something went wrong.$e';
+      throw 'Something went wrong. $e';
     }
   }
 }

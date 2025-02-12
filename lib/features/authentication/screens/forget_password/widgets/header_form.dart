@@ -1,15 +1,19 @@
-import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/text_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
+import '../../../../../utils/validators/validation.dart';
+import '../../../controllers/forget_password_controller.dart';
+
 class HeaderAndForm extends StatelessWidget {
   const HeaderAndForm({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ForgetPasswordController());
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -27,23 +31,24 @@ class HeaderAndForm extends StatelessWidget {
 
         /// Form
         Form(
+          key: controller.forgetPasswordFormKey,
           child: TextFormField(
-            decoration: InputDecoration(
-              labelText: ATexts.email,
+            controller: controller.email,
+            validator: AValidator.validateEmail,
+            decoration: const InputDecoration(
               prefixIcon: Icon(Iconsax.direct_right),
+              labelText: ATexts.email,
             ),
           ),
         ),
+
         SizedBox(height: ASizes.spaceBtwSections),
 
         /// Submit button
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () => Get.toNamed(
-              ARoutes.resetPassword,
-              parameters: {'email': 'some@gmail.com'},
-            ),
+            onPressed: () => controller.sendPasswordResetEmail(),
             child: Text(ATexts.submit),
           ),
         ),

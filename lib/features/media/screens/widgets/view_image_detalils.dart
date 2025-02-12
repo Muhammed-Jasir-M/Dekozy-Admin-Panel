@@ -15,11 +15,10 @@ import 'package:model_viewer_plus/model_viewer_plus.dart';
 import '../../../../utils/constants/colors.dart';
 
 class ImagePopup extends StatelessWidget {
-  const ImagePopup({super.key, required this.image, required this.controller});
+  const ImagePopup({super.key, required this.image});
 
   // Image Model to display detailed info about it.
   final ImageModel image;
-  final MediaController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -44,22 +43,8 @@ class ImagePopup extends StatelessWidget {
                   children: [
                     ARoundedContainer(
                       backgroundColor: AColors.primaryBackground,
-                      child: controller.selectedPath.value ==
-                              MediaCategory.arproducts
-                          ? SizedBox(
-                              width: ADeviceUtils.isDesktopScreen(context)
-                                  ? MediaQuery.of(context).size.width * 0.4
-                                  : double.infinity,
-                              height: MediaQuery.of(context).size.height * 0.7,
-                              child: ModelViewer(
-                                src: image.url,
-                                alt: image.filename,
-                                ar: false,
-                                autoRotate: true,
-                                cameraControls: true,
-                              ),
-                            )
-                          : ARoundedImage(
+                      child: image.contentType == 'image'
+                          ? ARoundedImage(
                               imageType: ImageType.network,
                               image: image.url,
                               applyImageRadius: true,
@@ -67,6 +52,19 @@ class ImagePopup extends StatelessWidget {
                               width: ADeviceUtils.isDesktopScreen(context)
                                   ? MediaQuery.of(context).size.width * 0.4
                                   : double.infinity,
+                            )
+                          : SizedBox(
+                              width: ADeviceUtils.isDesktopScreen(context)
+                                  ? MediaQuery.of(context).size.width * 0.4
+                                  : double.infinity,
+                              height: MediaQuery.of(context).size.height * 0.7,
+                              child: ModelViewer(
+                                src: image.url,
+                                alt: image.filename,
+                                ar: true,
+                                autoRotate: true,
+                                cameraControls: true,
+                              ),
                             ),
                     ),
 
