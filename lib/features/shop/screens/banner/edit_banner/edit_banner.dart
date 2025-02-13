@@ -11,6 +11,7 @@ class EditBannerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final banner = Get.arguments;
+    
     return ASiteTemplate(
       desktop: EditBannerDesktopScreen(banner: banner),
       tablet: EditBannerTabletScreen(banner: banner),

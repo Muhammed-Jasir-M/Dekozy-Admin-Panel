@@ -298,11 +298,9 @@ class MediaController extends GetxController {
 
   // Image Selection Bottom Sheet
   Future<List<ImageModel>?> selectImagesFromMedia({
-    List<String>? selectedUrls,
-    bool allowSelection = true,
-    bool multipleSelection = false,
-  }) async {
+    List<String>? selectedUrls,bool allowSelection = true,bool multipleSelection = false,}) async {
     showImagesUploaderSection.value = true;
+    
     List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(
       isScrollControlled: true,
       backgroundColor: AColors.primaryBackground,
