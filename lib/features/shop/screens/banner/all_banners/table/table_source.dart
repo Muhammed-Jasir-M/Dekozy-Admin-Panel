@@ -13,9 +13,15 @@ import '../../../../../../utils/constants/sizes.dart';
 import '../../../../models/banner_model.dart';
 
 class BannersRows extends DataTableSource {
+  final controller = BannerController.instance;
+
   @override
   DataRow? getRow(int index) {
+    final banner = controller.selectedRows[index];
     return DataRow2(
+      selected: controller.selectedRows[index],
+      onTap: () => Get.toNamed(ARoutes.editBanner, arguments: banner),
+      onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           ARoundedImage(
@@ -28,16 +34,12 @@ class BannersRows extends DataTableSource {
             backgroundColor: AColors.primaryBackground,
           ),
         ),
-        DataCell(Text('Shop')),
-        DataCell(Icon(Iconsax.eye, color: AColors.primary)),
+        DataCell(Text(controller.formatRoute(banner.targetScreen))),
+        DataCell(banner.active ? const Icon(Iconsax.eye, color: AColors.primary) : const Icon(Iconsax.eye_slash_copy)),
         DataCell(
           ATableActionButtons(
-            onEditPressed: () => Get.toNamed(
-              ARoutes.editBanner,
-              arguments:
-                  BannerModel(imageUrl: '', targetScreen: '', active: false),
-            ),
-            onDeletePressed: (){},
+            onEditPressed: () => Get.toNamed(ARoutes.editBanner,arguments: banner),
+            onDeletePressed: => controller.confrimAndDeleteItem(banner),
           ),
         )
       ],
