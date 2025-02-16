@@ -51,18 +51,18 @@ class SettingsForm extends StatelessWidget {
                     child: TextFormField(
                       decoration: const InputDecoration(
                         hintText: 'Shipping Cost',
-                        label: Text('Shipping Cost (\$)'),
+                        label: Text('Shipping Cost (\u{20B9})'),
                         prefixIcon: Icon(Iconsax.ship),
                       ),
                     ),
                   ),
                   const SizedBox(width: ASizes.spaceBtwItems),
-                  // Free Shipping Cost 
+                  // Free Shipping Cost
                   Expanded(
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        hintText: 'Free Shipping After (\$)',
-                        label: Text('Free Shipping Threshold (\$)'),
+                        hintText: 'Free Shipping After (\u{20B9})',
+                        label: Text('Free Shipping Threshold (\u{20B9})'),
                         prefixIcon: Icon(Iconsax.ship),
                       ),
                     ),
@@ -75,7 +75,9 @@ class SettingsForm extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () {}, child: const Text('Update App Settings')),
+                  onPressed: () {},
+                  child: const Text('Update App Settings'),
+                ),
               ),
             ],
           )),

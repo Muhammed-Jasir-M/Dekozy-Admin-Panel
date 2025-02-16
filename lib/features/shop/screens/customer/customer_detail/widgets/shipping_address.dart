@@ -14,7 +14,8 @@ class ShippingAddress extends StatelessWidget {
           Text('Shipping Address',
               style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: ASizes.spaceBtwSections),
-          //Meta Table
+
+          // Meta Data
           Row(
             children: [
               const SizedBox(width: 120, child: Text('Name')),
@@ -26,9 +27,7 @@ class ShippingAddress extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: ASizes.spaceBtwItems,
-          ),
+          const SizedBox(height: ASizes.spaceBtwItems),
 
           Row(
             children: [
@@ -36,14 +35,13 @@ class ShippingAddress extends StatelessWidget {
               const Text(':'),
               const SizedBox(width: ASizes.spaceBtwItems / 2),
               Expanded(
-                child: Text('Karinchappadi',
+                child: Text('India',
                     style: Theme.of(context).textTheme.titleMedium),
               ),
             ],
           ),
-          const SizedBox(
-            height: ASizes.spaceBtwItems,
-          ),
+          const SizedBox(height: ASizes.spaceBtwItems),
+
           Row(
             children: [
               const SizedBox(width: 120, child: Text('Phone Number')),
@@ -55,23 +53,20 @@ class ShippingAddress extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: ASizes.spaceBtwItems,
-          ),
+          const SizedBox(height: ASizes.spaceBtwItems),
+
           Row(
             children: [
               const SizedBox(width: 120, child: Text('Address')),
               const Text(':'),
               const SizedBox(width: ASizes.spaceBtwItems / 2),
               Expanded(
-                child: Text('Karinchappadi,Newyork,United States',
+                child: Text('Karinchappadi, Newyork, United States',
                     style: Theme.of(context).textTheme.titleMedium),
               ),
             ],
           ),
-          const SizedBox(
-            height: ASizes.spaceBtwItems,
-          ),
+          const SizedBox(height: ASizes.spaceBtwItems),
         ],
       ),
     );

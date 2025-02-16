@@ -32,6 +32,7 @@ class ProductTitleAndDescription extends StatelessWidget {
               height: 300,
               child: TextFormField(
                 expands: true,
+                maxLines: null,
                 textAlign: TextAlign.start,
                 keyboardType: TextInputType.multiline,
                 textAlignVertical: TextAlignVertical.top,

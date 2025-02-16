@@ -14,6 +14,7 @@ class OrderRows extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     final order = DashboardController.orders[index];
+
     return DataRow2(
         onTap: () => Get.toNamed(ARoutes.orderDetails, arguments: order),
         selected: false,
@@ -29,7 +30,7 @@ class OrderRows extends DataTableSource {
             ),
           ),
           DataCell(Text(order.formattedOrderDate)),
-          DataCell(Text('${order.items?.length} Items')),
+          DataCell(Text('${order.items!.length} Items')),
           DataCell(
             ARoundedContainer(
               radius: ASizes.cardRadiusSm,
@@ -38,14 +39,22 @@ class OrderRows extends DataTableSource {
               backgroundColor:
                   AHelperFunctions.getOrderStatusColor(order.status)
                       .withValues(alpha: 0.1),
+              child: Text(
+                order.status.name.capitalize.toString(),
+                style: TextStyle(
+                    color: AHelperFunctions.getOrderStatusColor(order.status)),
+              ),
             ),
           ),
-          DataCell(Text('\$${order.totalAmount}')),
+          DataCell(Text('\u{20B9}${order.totalAmount}')),
           DataCell(ATableActionButtons(
             view: true,
             edit: false,
-            onViewPressed: () => Get.toNamed(ARoutes.orderDetails,
-                arguments: order, parameters: {'orderId': order.id}),
+            onViewPressed: () => Get.toNamed(
+              ARoutes.orderDetails,
+              arguments: order,
+              parameters: {'orderId': order.id},
+            ),
             onDeletePressed: () {},
           ))
         ]);

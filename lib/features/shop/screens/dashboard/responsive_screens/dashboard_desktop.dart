@@ -12,34 +12,16 @@ class DashboardDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final controller = Get.put(ProductImageController());
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: EdgeInsets.all(ASizes.defaultSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Heading
               Text('Dashboard',
                   style: Theme.of(context).textTheme.headlineLarge),
-                            const SizedBox(height: ASizes.spaceBtwSections),
-              // const SizedBox(height: ASizes.spaceBtwItems),
-
-              //               Row(
-              //                 children: [
-              //                   ElevatedButton(
-              //                     onPressed: () => controller.selectThumbnailImage(),
-              //                     child: Text('Select Single Image')),
-              //                   const SizedBox(height: ASizes.spaceBtwSections),
-              //                   ElevatedButton(
-              //                     onPressed: () => controller.selectMultipleProductImages(),
-              //                     child: Text('Select Multiple Single Images')),
-              //                 ],
-              //               ),
-
-              
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Cards
@@ -48,17 +30,16 @@ class DashboardDesktopScreen extends StatelessWidget {
                   Expanded(
                     child: ADashboardCard(
                       title: 'Sales Total',
-                      subTitle: '\$365',
+                      subTitle: '\u{20B9}365',
                       stats: 25,
                     ),
                   ),
                   SizedBox(width: ASizes.spaceBtwItems),
                   Expanded(
                     child: ADashboardCard(
-                      title: 'Average order value',
-                      subTitle: '\$25',
-                      stats: 15,
-                    ),
+                        title: 'Average Order Value',
+                        subTitle: '\u{20B9}25',
+                        stats: 15),
                   ),
                   SizedBox(width: ASizes.spaceBtwItems),
                   Expanded(
@@ -78,7 +59,6 @@ class DashboardDesktopScreen extends StatelessWidget {
                   ),
                 ],
               ),
-
               const SizedBox(height: ASizes.spaceBtwSections),
 
               /// Graphs
@@ -99,13 +79,11 @@ class DashboardDesktopScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Recent orders',
+                                'Recent Orders',
                                 style:
                                     Theme.of(context).textTheme.headlineSmall,
                               ),
-                              const SizedBox(
-                                height: ASizes.spaceBtwSections,
-                              ),
+                              const SizedBox(height: ASizes.spaceBtwSections),
                               const DashboardOrderTable(),
                             ],
                           ),

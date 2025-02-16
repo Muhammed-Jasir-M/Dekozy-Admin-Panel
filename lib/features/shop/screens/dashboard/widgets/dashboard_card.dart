@@ -6,20 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class ADashboardCard extends StatelessWidget {
-  const ADashboardCard(
-      {super.key,
-      required this.title,
-      required this.subTitle,
-      this.icon = Iconsax.arrow_up_3,
-      this.color = AColors.success,
-      required this.stats,
-      this.onTap});
+  const ADashboardCard({
+    super.key,
+    required this.title,
+    required this.subTitle,
+    this.icon = Iconsax.arrow_up_3,
+    this.color = AColors.success,
+    required this.stats,
+    this.onTap,
+  });
 
   final String title, subTitle;
   final IconData icon;
   final Color color;
   final int stats;
   final void Function()? onTap;
+
   @override
   Widget build(BuildContext context) {
     return ARoundedContainer(
@@ -27,9 +29,10 @@ class ADashboardCard extends StatelessWidget {
       padding: const EdgeInsets.all(ASizes.lg),
       child: Column(
         children: [
-          ///Heading
+          /// Heading
           ASectionHeading(title: title, textColor: AColors.textSecondary),
           const SizedBox(height: ASizes.spaceBtwSections),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -39,7 +42,7 @@ class ADashboardCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  ///Indicator
+                  /// Indicator
                   SizedBox(
                     child: Row(
                       children: [
@@ -47,8 +50,10 @@ class ADashboardCard extends StatelessWidget {
                         Text(
                           '$stats%',
                           style: Theme.of(context).textTheme.titleLarge!.apply(
-                              color: color, overflow: TextOverflow.ellipsis),
-                        )
+                                color: color,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                        ),
                       ],
                     ),
                   ),
@@ -61,7 +66,7 @@ class ADashboardCard extends StatelessWidget {
                     ),
                   )
                 ],
-              )
+              ),
             ],
           ),
         ],

@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class BannerModel {
   String? id;
   String imageUrl;
-  final String targetScreen;
-  final bool active;
+  late final String targetScreen;
+  late final bool active;
 
   BannerModel(
       {this.id,

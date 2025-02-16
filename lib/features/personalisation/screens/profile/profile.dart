@@ -1,7 +1,7 @@
 import 'package:aura_kart_admin_panel/common/widgets/layouts/templates/site_layout.dart';
-import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/responsive_screen/profile_desktop.dart';
-import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/responsive_screen/profile_mobile.dart';
-import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/responsive_screen/profile_tablet.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/responsive_screens/profile_desktop.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/responsive_screens/profile_mobile.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/responsive_screens/profile_tablet.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {

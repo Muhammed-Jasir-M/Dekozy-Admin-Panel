@@ -21,6 +21,7 @@ class EditBrandForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(EditBrandController());
     controller.init(brand);
+
     return ARoundedContainer(
       width: 500,
       padding: const EdgeInsets.all(ASizes.defaultSpace),
@@ -44,32 +45,34 @@ class EditBrandForm extends StatelessWidget {
                 prefixIcon: Icon(Iconsax.category),
               ),
             ),
-
             const SizedBox(height: ASizes.spaceBtwInputFields),
 
             // Categories
-            Text('Select Categories',style: Theme.of(context).textTheme.titleMedium),
+            Text('Select Categories',
+                style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: ASizes.spaceBtwInputFields / 2),
             Obx(
               () => Wrap(
                 spacing: ASizes.sm,
-               children: CategoryController.instance.allItems
-               .map(
-                (element) => Padding(
-                  padding: const EdgeInsets.only(bottom: ASizes.sm),
-                  child: AChoiceChip(
-                    text: element.name,
-                   selected: controller.selectedCategories.contains(element),
-                   onSelected: (value) => controller.toggleSelection(element),
-                   ),
-                   ),
-               )
-               .toList(),
+                children: CategoryController.instance.allItems
+                    .map(
+                      (element) => Padding(
+                        padding: const EdgeInsets.only(bottom: ASizes.sm),
+                        child: AChoiceChip(
+                          text: element.name,
+                          selected:
+                              controller.selectedCategories.contains(element),
+                          onSelected: (value) =>
+                              controller.toggleSelection(element),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields * 2),
 
-            // Image Uploader & Featured Checkbox
+            // Image Uploader
             Obx(
               () => AImageUploader(
                 width: 80,
@@ -84,16 +87,21 @@ class EditBrandForm extends StatelessWidget {
             // Checkbox
             Obx(
               () => CheckboxMenuButton(
-                  value: controller.isFeatured.value,
-                  onChanged: (value) => controller.isFeatured.value = value ?? false,
-                  child: const Text('Featured')),
+                value: controller.isFeatured.value,
+                onChanged: (value) =>
+                    controller.isFeatured.value = value ?? false,
+                child: const Text('Featured'),
+              ),
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields * 2),
 
-            // Button
+            // Update Button
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(onPressed: () => controller.updateBrand(brand), child: const Text('Update')),
+              child: ElevatedButton(
+                onPressed: () => controller.updateBrand(brand),
+                child: const Text('Update'),
+              ),
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields * 2),
           ],

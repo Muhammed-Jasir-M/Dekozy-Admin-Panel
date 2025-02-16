@@ -42,7 +42,7 @@ class CustomerRows extends DataTableSource {
           ),
         ),
         const DataCell(Text('aurakart@gmail.com')),
-        const DataCell(Text('+34-5435-423435')),
+        const DataCell(Text('+91 95862-58425')),
         DataCell(Text(DateTime.now().toString())),
         DataCell(
           ATableActionButtons(
@@ -59,8 +59,10 @@ class CustomerRows extends DataTableSource {
 
   @override
   bool get isRowCountApproximate => false;
+
   @override
   int get rowCount => 10;
+  
   @override
   int get selectedRowCount => 0;
 }

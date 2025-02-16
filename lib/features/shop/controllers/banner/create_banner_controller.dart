@@ -1,5 +1,4 @@
 
-
 import 'dart:math';
 
 import 'package:aura_kart_admin_panel/features/media/controller/media_controller.dart';
@@ -13,13 +12,15 @@ import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../data/repositories/banners/banner_repository.dart';
+
 class CreateBannerController extends GetxController{
-  static CreateBannerController get instance = Get.find();
+  static CreateBannerController get instance => Get.find();
 
   final imageURL = ''.obs;
   final loading = false.obs;
   final isActive = false.obs;
-  final RxString targetScreem = AppScreens.allAppScreenItems[0].obs
+  final RxString targetScreen = AppScreens.allAppScreenItems[0].obs;
   final formkey = GlobalKey<FormState>();
    
   // pick thuumbnail image from media

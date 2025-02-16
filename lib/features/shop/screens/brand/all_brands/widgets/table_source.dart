@@ -17,9 +17,11 @@ class BrandRows extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     final brand = controller.filteredItems[index];
+
     return DataRow2(
       selected: controller.selectedRows[index],
-      onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
+      onSelectChanged: (value) =>
+          controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
@@ -36,7 +38,7 @@ class BrandRows extends DataTableSource {
               const SizedBox(width: ASizes.spaceBtwItems),
               Expanded(
                 child: Text(
-                  'Adidas',
+                  brand.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(Get.context!)
@@ -59,23 +61,40 @@ class BrandRows extends DataTableSource {
                     ? Axis.vertical
                     : Axis.horizontal,
                 children: brand.brandCategories != null
-                ? brand.brandCategories!
-                .map((e) => Padding(
-                    padding: EdgeInsets.only(bottom: ADeviceUtils.isMobileScreen(Get.context!)? 0: ASizes.xs,),
-                    child:  Chip(label: Text(e.name),padding: EdgeInsets.all(ASizes.xs)),
-                  ),
-                ).toList() : [const SizedBox()],
+                    ? brand.brandCategories!
+                        .map(
+                          (e) => Padding(
+                            padding: EdgeInsets.only(
+                              bottom: ADeviceUtils.isMobileScreen(Get.context!)
+                                  ? 0
+                                  : ASizes.xs,
+                            ),
+                            child: Chip(
+                              label: Text(e.name),
+                              padding: EdgeInsets.all(ASizes.xs),
+                            ),
+                          ),
+                        )
+                        .toList()
+                    : [
+                        const SizedBox(),
+                      ],
               ),
             ),
           ),
         ),
-        DataCell(brand.isFeatured! ? const Icon(Iconsax.heart, color: AColors.primary) : const Icon(Iconsax.heart)),
+        DataCell(
+          brand.isFeatured!
+              ? const Icon(Iconsax.heart, color: AColors.primary)
+              : const Icon(Iconsax.heart),
+        ),
         DataCell(Text(brand.createdAt != null ? brand.formattedDate : '')),
         DataCell(
           ATableActionButtons(
-          onEditPressed: () => Get.toNamed(ARoutes.editBrand, arguments: brand),
-          onDeletePressed: () => controller.confrimAndDeleteItem(brand),
-         ),
+            onEditPressed: () =>
+                Get.toNamed(ARoutes.editBrand, arguments: brand),
+            onDeletePressed: () => controller.confrimAndDeleteItem(brand),
+          ),
         ),
       ],
     );
@@ -88,5 +107,6 @@ class BrandRows extends DataTableSource {
   int get rowCount => controller.filteredItems.length;
 
   @override
-  int get selectedRowCount => controller.selectedRows.where((selected) => selected).length;
+  int get selectedRowCount =>
+      controller.selectedRows.where((selected) => selected).length;
 }

@@ -73,7 +73,9 @@ class MediaController extends GetxController {
         selectedPath.value,
         initialLoadingCount,
       );
+
       targetList.assignAll(images);
+
       loading.value = false;
     } catch (e) {
       loading.value = false;
@@ -107,46 +109,63 @@ class MediaController extends GetxController {
       final images = await mediaRepository.loadMoreImagesFromDatabase(
         selectedPath.value,
         initialLoadingCount,
-        targetList.isNotEmpty ? (targetList.last.createdAt ?? DateTime.now()) : DateTime.now(),
+        targetList.last.createdAt ?? DateTime.now(),
       );
 
-      targetList.assignAll(images);
+      targetList.addAll(images);
+
       loading.value = false;
     } catch (e) {
       loading.value = false;
       ALoaders.errorSnackBar(
-          title: 'Oh Snap!',
-          message: 'Unable to fetch Images, Something went wrong. Try again');
+        title: 'Oh Snap!',
+        message: 'Unable to fetch more Images, Something went wrong. Try again',
+      );
     }
   }
 
+  // Select Local Images on Button Click
   Future<void> selectLocalImages() async {
-    final files = await dropzoneController.pickFiles(multiple: true, mime: [
-      'image/jpeg',
-      'image/png',
-      'image/webp',
-      'model/gltf+json',
-      'model/gltf-binary',
-    ]);
+    final files = await dropzoneController.pickFiles(
+      multiple: true,
+      mime: [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'model/gltf+json',
+        'model/gltf-binary',
+      ],
+    );
 
     if (files.isNotEmpty) {
       for (var file in files) {
-        // Retrieve file data as Uint8List
-        final bytes = await dropzoneController.getFileData(file);
+        final size = await dropzoneController.getFileSize(file);
 
-        // Extract file metadata
-        final filename = await dropzoneController.getFilename(file);
-        final mimeType = await dropzoneController.getFileMIME(file);
+        const maxSize = 10 * 1024 * 1024; // 10MB
+        
+        if (size > maxSize) {
+          ALoaders.warningSnackBar(
+            title: 'File Too Large',
+            message: 'Please select files under 10MB',
+          );
+        } else {
+          // Retrieve file data as Uint8List
+          final bytes = await dropzoneController.getFileData(file);
 
-        final image = ImageModel(
-          url: '',
-          folder: '',
-          filename: filename,
-          localImageToDisplay: Uint8List.fromList(bytes),
-          contentType: mimeType,
-        );
+          // Extract file metadata
+          final filename = await dropzoneController.getFilename(file);
+          final mimeType = await dropzoneController.getFileMIME(file);
 
-        selectedImagesToUpload.add(image);
+          final image = ImageModel(
+            url: '',
+            folder: '',
+            filename: filename,
+            contentType: mimeType,
+            localImageToDisplay: Uint8List.fromList(bytes),
+          );
+
+          selectedImagesToUpload.add(image);
+        }
       }
     }
   }
@@ -154,8 +173,9 @@ class MediaController extends GetxController {
   void uploadImagesConfirmation() {
     if (selectedPath.value == MediaCategory.folders) {
       ALoaders.warningSnackBar(
-          title: 'Select Folder',
-          message: 'Please select the Folder in Order to upload the Images.');
+        title: 'Select Folder',
+        message: 'Please select the Folder in order to upload the Images.',
+      );
       return;
     }
 
@@ -226,7 +246,9 @@ class MediaController extends GetxController {
         // Upload Image to Firestore
         uploadedImage.mediaCategory = selectedCategory.name;
         final id = await mediaRepository.uploadImageFileInDB(uploadedImage);
+
         uploadedImage.id = id;
+
         selectedImagesToUpload.removeAt(i);
         targetList.add(uploadedImage);
       }
@@ -242,7 +264,7 @@ class MediaController extends GetxController {
       // Show a warning snak-bar for the error
       ALoaders.warningSnackBar(
         title: 'Error Uploading Images',
-        message: 'Something went wrong while uploading your images,',
+        message: 'Something went wrong while uploading your Images,',
       );
     }
   }
@@ -258,8 +280,11 @@ class MediaController extends GetxController {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(AImages.uploadingImageIllustration,
-                  height: 300, width: 300),
+              Image.asset(
+                AImages.uploadingImageIllustration,
+                height: 300,
+                width: 300,
+              ),
               const SizedBox(height: ASizes.spaceBtwItems),
               const Text('Sit Tight, Your Images are Uploading...'),
             ],
@@ -294,37 +319,6 @@ class MediaController extends GetxController {
         path = 'Others';
     }
     return path;
-  }
-
-  // Image Selection Bottom Sheet
-  Future<List<ImageModel>?> selectImagesFromMedia({
-    List<String>? selectedUrls,bool allowSelection = true,bool multipleSelection = false,}) async {
-    showImagesUploaderSection.value = true;
-    
-    List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(
-      isScrollControlled: true,
-      backgroundColor: AColors.primaryBackground,
-      FractionallySizedBox(
-        heightFactor: 1,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(ASizes.defaultSpace),
-            child: Column(
-              children: [
-                const MediaUploader(),
-                MediaContent(
-                  allowSelection: allowSelection,
-                  alreadySelectedUrls: selectedUrls ?? [],
-                  allowMultipleSelection: multipleSelection,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-
-    return selectedImages;
   }
 
   /// Popup confirmation to remove cloud image
@@ -397,7 +391,7 @@ class MediaController extends GetxController {
       update();
 
       AFullScreenLoader.stopLoading();
-      
+
       ALoaders.successSnackBar(
         title: 'Image Deleted',
         message: 'Image successfully deleted from your cloud storage',
@@ -408,5 +402,37 @@ class MediaController extends GetxController {
     }
   }
 
-  
+  // Image Selection Bottom Sheet
+  Future<List<ImageModel>?> selectImagesFromMedia({
+    List<String>? selectedUrls,
+    bool allowSelection = true,
+    bool multipleSelection = false,
+  }) async {
+    showImagesUploaderSection.value = true;
+
+    List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(
+      isScrollControlled: true,
+      backgroundColor: AColors.primaryBackground,
+      FractionallySizedBox(
+        heightFactor: 1,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(ASizes.defaultSpace),
+            child: Column(
+              children: [
+                const MediaUploader(),
+                MediaContent(
+                  allowSelection: allowSelection,
+                  alreadySelectedUrls: selectedUrls ?? [],
+                  allowMultipleSelection: multipleSelection,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    return selectedImages;
+  }
 }

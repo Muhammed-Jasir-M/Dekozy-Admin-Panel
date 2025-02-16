@@ -14,32 +14,36 @@ class ProductsDesktopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child:Padding(padding: const EdgeInsets.all(ASizes.defaultSpace),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Breadcrumbs
-            ABreadcrumbsWithHeading(heading: 'Products', breadcrumbItems: ['Products']),
-            SizedBox(height: ASizes.spaceBtwSections,),
-
-            // Table Body
-            ARoundedContainer(
+        child: Padding(
+          padding: const EdgeInsets.all(ASizes.defaultSpace),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-            // Table Header
-            ATableHeader(buttonText: 'Add Product',onPressed: () => Get.toNamed(ARoutes.createProduct), ),
-             SizedBox(height: ASizes.spaceBtwItems,),
-             // Table
-            const ProductsTable(),
+              // Breadcrumbs
+              ABreadcrumbsWithHeading(
+                  heading: 'Products', breadcrumbItems: ['Products']),
+              SizedBox(height: ASizes.spaceBtwSections),
 
+              // Table Body
+              ARoundedContainer(
+                child: Column(
+                  children: [
+                    // Table Header
+                    ATableHeader(
+                      buttonText: 'Add Product',
+                      onPressed: () => Get.toNamed(ARoutes.createProduct),
+                    ),
+
+                    SizedBox(height: ASizes.spaceBtwItems),
+
+                    // Table
+                    const ProductsTable(),
+                  ],
+                ),
+              ),
             ],
           ),
-            ),
-          ],
         ),
-        ),
-
       ),
     );
   }

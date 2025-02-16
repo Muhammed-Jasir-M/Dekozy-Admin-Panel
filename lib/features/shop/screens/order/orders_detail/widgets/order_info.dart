@@ -9,7 +9,9 @@ import 'package:get/get.dart';
 
 class OrderInfo extends StatelessWidget {
   const OrderInfo({super.key, required this.order});
+
   final OrderModel order;
+
   @override
   Widget build(BuildContext context) {
     return ARoundedContainer(
@@ -21,9 +23,7 @@ class OrderInfo extends StatelessWidget {
             'Order Information',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          const SizedBox(
-            height: ASizes.spaceBtwSections,
-          ),
+          const SizedBox(height: ASizes.spaceBtwSections),
           Row(
             children: [
               Expanded(
@@ -41,7 +41,7 @@ class OrderInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Items'),
-                    Text('${order.items?.length} Items',
+                    Text('${order.items!.length} Items',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ],
                 ),
@@ -61,19 +61,22 @@ class OrderInfo extends StatelessWidget {
                               .withValues(alpha: 0.1),
                       child: DropdownButton<OrderStatus>(
                         padding: EdgeInsets.symmetric(vertical: 0),
-                        value: OrderStatus.pending,
+                        value: order.status,
                         onChanged: (OrderStatus? newValue) {},
-                        items: OrderStatus.values.map((OrderStatus status) {
-                          return DropdownMenuItem<OrderStatus>(
-                            value: status,
-                            child: Text(
-                              status.name.capitalize.toString(),
-                              style: TextStyle(
+                        items: OrderStatus.values.map(
+                          (OrderStatus status) {
+                            return DropdownMenuItem<OrderStatus>(
+                              value: status,
+                              child: Text(
+                                status.name.capitalize.toString(),
+                                style: TextStyle(
                                   color: AHelperFunctions.getOrderStatusColor(
-                                      order.status)),
-                            ),
-                          );
-                        }).toList(),
+                                      order.status),
+                                ),
+                              ),
+                            );
+                          },
+                        ).toList(),
                       ),
                     ),
                   ],
@@ -84,7 +87,7 @@ class OrderInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Total'),
-                    Text('\$${order.totalAmount} Total',
+                    Text('\u{20B9}${order.totalAmount}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ],
                 ),

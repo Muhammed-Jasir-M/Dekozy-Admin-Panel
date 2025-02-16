@@ -89,6 +89,8 @@ class ProductAdditionalImages extends StatelessWidget {
   // Widget to Display Empty List Placeholder
   Widget emptyList() {
     return ListView.separated(
+      itemCount: 6,
+      scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) => const ARoundedContainer(
         backgroundColor: AColors.primaryBackground,
         width: 80,
@@ -96,14 +98,14 @@ class ProductAdditionalImages extends StatelessWidget {
       ),
       separatorBuilder: (context, index) =>
           const SizedBox(width: ASizes.spaceBtwItems / 2),
-      itemCount: 6,
-      scrollDirection: Axis.horizontal,
     );
   }
 
   // Widget to Display Uploaded Images
   Widget uploadedImages() {
     return ListView.separated(
+      itemCount: additionalProductImagesURLs.length,
+      scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         final image = additionalProductImagesURLs[index];
         return AImageUploader(
@@ -121,8 +123,6 @@ class ProductAdditionalImages extends StatelessWidget {
       },
       separatorBuilder: (context, index) =>
           const SizedBox(width: ASizes.spaceBtwItems / 2),
-      itemCount: additionalProductImagesURLs.length,
-      scrollDirection: Axis.horizontal,
     );
   }
 }

@@ -10,7 +10,9 @@ import '../../../../../../utils/constants/colors.dart';
 
 class CustomerInfo extends StatelessWidget {
   const CustomerInfo({super.key, required this.customer});
+
   final UserModel customer;
+
   @override
   Widget build(BuildContext context) {
     return ARoundedContainer(
@@ -18,10 +20,11 @@ class CustomerInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Customer Information',
+          Text('Customer Info',
               style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: ASizes.spaceBtwSections),
-          //Personal Info Card
+
+          // Personal Info Card
           Row(
             children: [
               const ARoundedImage(
@@ -35,66 +38,68 @@ class CustomerInfo extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('Nihal',
-                        style: Theme.of(context).textTheme.titleLarge,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1),
-                    const Text('support@aurakart.com',
-                        overflow: TextOverflow.ellipsis, maxLines: 1),
+                    Text(
+                      'Nihal',
+                      style: Theme.of(context).textTheme.titleLarge,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    const Text(
+                      'support@aurakart.com',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-          //Meta Data
+
+          // Meta Data
           Row(
             children: [
               const SizedBox(width: 120, child: Text('UserName')),
               const Text(':'),
               const SizedBox(width: ASizes.spaceBtwItems / 2),
               Expanded(
-                  child: Text('nihal',
-                      style: Theme.of(context).textTheme.titleMedium)),
+                child: Text('nihal',
+                    style: Theme.of(context).textTheme.titleMedium),
+              ),
             ],
           ),
           const SizedBox(height: ASizes.spaceBtwItems),
+
           Row(
             children: [
               const SizedBox(width: 120, child: Text('Country')),
               const Text(':'),
               const SizedBox(width: ASizes.spaceBtwItems / 2),
               Expanded(
-                  child: Text('Karinchappadi',
-                      style: Theme.of(context).textTheme.titleMedium)),
+                child: Text('India',
+                    style: Theme.of(context).textTheme.titleMedium),
+              ),
             ],
           ),
           const SizedBox(height: ASizes.spaceBtwItems),
+
           Row(
             children: [
               const SizedBox(width: 120, child: Text('Phone Number')),
               const Text(':'),
               const SizedBox(width: ASizes.spaceBtwItems / 2),
               Expanded(
-                  child: Text('7327293893',
-                      style: Theme.of(context).textTheme.titleMedium)),
+                child: Text('7327293893',
+                    style: Theme.of(context).textTheme.titleMedium),
+              ),
             ],
           ),
           const SizedBox(height: ASizes.spaceBtwItems),
-          Row(
-            children: [
-              const SizedBox(width: 120, child: Text('UserName')),
-              const Text(':'),
-              const SizedBox(width: ASizes.spaceBtwItems / 2),
-              Expanded(
-                  child: Text('Karinchappadi',
-                      style: Theme.of(context).textTheme.titleMedium)),
-            ],
-          ),
-          const SizedBox(height: ASizes.spaceBtwItems),
-          //Divider
+
+          // Divider
           const Divider(),
           const SizedBox(height: ASizes.spaceBtwItems),
-          //Additional details
+
+          // Additional Details
           Row(
             children: [
               Expanded(
@@ -115,14 +120,15 @@ class CustomerInfo extends StatelessWidget {
                   children: [
                     Text('Average Order Value',
                         style: Theme.of(context).textTheme.titleLarge),
-                    const Text('\$465'),
+                    const Text('\u{20B9}465'),
                   ],
                 ),
               ),
             ],
           ),
           const SizedBox(height: ASizes.spaceBtwItems),
-          //Additional details continuation
+
+          // Additional Details Cont
           Row(
             children: [
               Expanded(
@@ -132,7 +138,7 @@ class CustomerInfo extends StatelessWidget {
                   children: [
                     Text('Registerd',
                         style: Theme.of(context).textTheme.titleLarge),
-                    const Text('17/5/2020 at 12:35'),
+                    Text(customer.formattedDate),
                   ],
                 ),
               ),

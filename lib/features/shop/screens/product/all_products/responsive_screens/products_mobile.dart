@@ -15,32 +15,36 @@ class ProductsMobileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child:Padding(padding: const EdgeInsets.all(ASizes.defaultSpace),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Breadcrumbs
-            const ABreadcrumbsWithHeading(heading: 'Products', breadcrumbItems: ['Products']),
-            const SizedBox(height: ASizes.spaceBtwSections,),
-
-            // Table Body
-            ARoundedContainer(
+        child: Padding(
+          padding: const EdgeInsets.all(ASizes.defaultSpace),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-            // Table Header
-            ATableHeader(buttonText: 'Add Product',onPressed: () => Get.toNamed(ARoutes.createProduct), ),
-             const SizedBox(height: ASizes.spaceBtwItems,),
-             // Table
-            const ProductsTable(),
+              // Breadcrumbs
+              const ABreadcrumbsWithHeading(
+                  heading: 'Products', breadcrumbItems: ['Products']),
+              const SizedBox(height: ASizes.spaceBtwSections),
 
+              // Table Body
+              ARoundedContainer(
+                child: Column(
+                  children: [
+                    // Table Header
+                    ATableHeader(
+                      buttonText: 'Add Product',
+                      onPressed: () => Get.toNamed(ARoutes.createProduct),
+                    ),
+
+                    const SizedBox(height: ASizes.spaceBtwItems),
+
+                    // Table
+                    const ProductsTable(),
+                  ],
+                ),
+              ),
             ],
           ),
-            ),
-          ],
         ),
-        ),
-
       ),
     );
   }

@@ -14,10 +14,12 @@ class OrderModel {
   final AddressModel? address;
   final DateTime? deliveryDate;
   final List<CartItemModel>? items;
+  final String docId;
 
   OrderModel({
     required this.id,
     this.userId = '',
+    this.docId = '',
     required this.status,
     required this.totalAmount,
     required this.orderDate,
@@ -28,14 +30,19 @@ class OrderModel {
   });
 
   String get formattedOrderDate => AHelperFunctions.getFormattedDate(orderDate);
+
   String get formattedDeliveryDate => deliveryDate != null
       ? AHelperFunctions.getFormattedDate(deliveryDate!)
       : '';
+
   String get orderStatusText => status == OrderStatus.delivered
       ? 'Delivered'
       : status == OrderStatus.shipped
           ? 'Shipment on the way'
           : 'Processing';
+
+  /// Static function to create an empty model
+  static OrderModel empty() => OrderModel(id: '', status: OrderStatus.pending, totalAmount: 0, orderDate: DateTime.now());
 
   Map<String, dynamic> toJson() {
     return {

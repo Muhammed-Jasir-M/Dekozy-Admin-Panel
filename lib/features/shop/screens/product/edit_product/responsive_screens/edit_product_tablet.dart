@@ -91,7 +91,6 @@ class EditProductTabletScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   const SizedBox(width: ASizes.defaultSpace),
 
                   // Sidebar
@@ -107,13 +106,18 @@ class EditProductTabletScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('All Product Images', style: Theme.of(context).textTheme.headlineSmall),
+                              Text(
+                                'All Product Images',
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
                               const SizedBox(height: ASizes.spaceBtwItems),
                               ProductAdditionalImages(
-                                additionalProductImagesURLs: RxList<String>.empty(),
+                                additionalProductImagesURLs:
+                                    RxList<String>.empty(),
                                 onTapToAddImages: () {},
-                                onTapToRemoveImage: (index){}
-                              )
+                                onTapToRemoveImage: (index) {},
+                              ),
                             ],
                           ),
                         ),
@@ -130,7 +134,6 @@ class EditProductTabletScreen extends StatelessWidget {
                         // Product Visibility
                         const ProductVisibilityWidget(),
                         const SizedBox(height: ASizes.spaceBtwSections),
-
                       ],
                     ),
                   ),

@@ -28,12 +28,36 @@ class ProductsRows extends DataTableSource {
                 borderRadius: ASizes.borderRadiusMd,
                 backgroundColor: AColors.primaryBackground,
               ),
-              const SizedBox(
-                width: ASizes.spaceBtwItems,
-              ),
+              const SizedBox(width: ASizes.spaceBtwItems),
               Flexible(
                 child: Text(
                   'Product Title',
+                  style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(
+                        color: AColors.primary,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        DataCell(Text('256')),
+        DataCell(
+          Row(
+            children: [
+              ARoundedImage(
+                width: 35,
+                height: 35,
+                padding: ASizes.xs,
+                image: AImages.applePay,
+                imageType: ImageType.asset,
+                borderRadius: ASizes.borderRadiusMd,
+                backgroundColor: AColors.primaryBackground,
+              ),
+              const SizedBox(width: ASizes.spaceBtwItems),
+              Flexible(
+                child: Text(
+                  'Nike',
                   style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(
                       color: AColors.primary, overflow: TextOverflow.ellipsis),
                 ),
@@ -41,32 +65,7 @@ class ProductsRows extends DataTableSource {
             ],
           ),
         ),
-        DataCell(Text('256')),
-        // Brand
-        DataCell(Row(
-          children: [
-            ARoundedImage(
-              width: 35,
-              height: 35,
-              padding: ASizes.xs,
-              image: AImages.applePay,
-              imageType: ImageType.asset,
-              borderRadius: ASizes.borderRadiusMd,
-              backgroundColor: AColors.primaryBackground,
-            ),
-            const SizedBox(
-              width: ASizes.spaceBtwItems,
-            ),
-            Flexible(
-              child: Text(
-                'Nike',
-                style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(
-                    color: AColors.primary, overflow: TextOverflow.ellipsis),
-              ),
-            )
-          ],
-        )),
-        const DataCell(Text('\$99.9')),
+        const DataCell(Text('\u{20B9}99.9')),
         DataCell(Text(DateTime.now().toString())),
         DataCell(
           ATableActionButtons(

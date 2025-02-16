@@ -25,6 +25,7 @@ class EditBannerDesktopScreen extends StatelessWidget {
                 heading: 'Update Banner',
                 breadcrumbItems: [ARoutes.banners, 'Update Banner'],
               ),
+
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Form

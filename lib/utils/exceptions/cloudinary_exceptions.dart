@@ -29,6 +29,12 @@ class ACloudinaryException implements Exception {
         return 'The asset type does not match the expected format. Please verify the resource type.';
       case 'transformation_error':
         return 'There was an error processing the requested transformation.';
+      case 'rate_limit_exceeded':
+        return 'API rate limit exceeded. Please try again later.';
+      case 'invalid_signature':
+        return 'Invalid signature provided. Please check your API secret.';
+      case 'invalid_credentials':
+        return 'Invalid credentials. Please check your Cloudinary configuration.';
       default:
         return 'An unexpected Cloudinary error occurred. Please try again later.';
     }

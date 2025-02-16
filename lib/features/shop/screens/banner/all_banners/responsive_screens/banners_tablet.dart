@@ -22,7 +22,9 @@ class BannersTabletScreen extends StatelessWidget {
             children: [
               // Breadcrumbs
               const ABreadcrumbsWithHeading(
-                  heading: 'Banners', breadcrumbItems: ['Banners']),
+                heading: 'Banners',
+                breadcrumbItems: ['Banners'],
+              ),
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body
@@ -31,8 +33,10 @@ class BannersTabletScreen extends StatelessWidget {
                   children: [
                     // Table Header
                     ATableHeader(
-                        buttonText: 'Create New Banner',
-                        onPressed: () => Get.toNamed(ARoutes.createBanner)),
+                      buttonText: 'Create New Banner',
+                      onPressed: () => Get.toNamed(ARoutes.createBanner),
+                    ),
+                    
                     const SizedBox(height: ASizes.spaceBtwItems),
 
                     // Table

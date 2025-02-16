@@ -16,14 +16,13 @@ class ImageModel {
   // final String? fullPath;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final String? mimeType;
   final String? contentType;
+  final String? mimeType;
   final String? format;
 
   // Not Mapped
   final File? file;
   final Uint8List? localImageToDisplay;
-
   RxBool isSelected = false.obs;
 
   /// Constructor
@@ -96,8 +95,13 @@ class ImageModel {
     }
   }
 
-  factory ImageModel.fromCloudinaryResponse(Map<String, dynamic> response,
-      String folder, String imageName, mimeType) {
+  // Map Cloudinary Storage Data
+  factory ImageModel.fromCloudinaryResponse(
+    Map<String, dynamic> response,
+    String folder,
+    String imageName,
+    mimeType,
+  ) {
     return ImageModel(
       url: response['secure_url'] ?? '',
       publicId: response['public_id'] ?? '',
@@ -105,7 +109,7 @@ class ImageModel {
       filename: imageName,
       sizeBytes: response['bytes'] ?? 0,
       contentType: response['resource_type'] ?? '',
-      createdAt: DateTime.now(),
+      createdAt: response['created_at'] ?? DateTime.now(),
       format: response['format'] ?? '',
       mimeType: mimeType ?? '',
     );

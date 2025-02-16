@@ -23,11 +23,7 @@ class OrderTransaction extends StatelessWidget {
         children: [
           Text('Transactions',
               style: Theme.of(context).textTheme.headlineMedium),
-          SizedBox(
-            height: ASizes.spaceBtwSections,
-          ),
-
-          // Adjust as per your needs
+          SizedBox(height: ASizes.spaceBtwSections),
           Row(
             children: [
               Expanded(
@@ -44,35 +40,40 @@ class OrderTransaction extends StatelessWidget {
                         children: [
                           Text('Payment via ${order.paymentMethod.capitalize}',
                               style: Theme.of(context).textTheme.titleLarge),
-                          //Adjust your Payment Method Fee if any
-                          Text('${order.paymentMethod.capitalize} fee \$25',
+                          // Adjust your Payment Method Fee if any
+                          Text(
+                              '${order.paymentMethod.capitalize} fee \u{20B9}25',
                               style: Theme.of(context).textTheme.labelMedium),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
               Expanded(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Date', style: Theme.of(context).textTheme.labelMedium),
-                  Text('April 21, 2025',
-                      style: Theme.of(context).textTheme.bodyLarge),
-                ],
-              )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Date',
+                        style: Theme.of(context).textTheme.labelMedium),
+                    Text('April 21, 2025',
+                        style: Theme.of(context).textTheme.bodyLarge),
+                  ],
+                ),
+              ),
               Expanded(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Total', style: Theme.of(context).textTheme.labelMedium),
-                  Text('\$${order.totalAmount}',
-                      style: Theme.of(context).textTheme.bodyLarge),
-                ],
-              ))
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Total',
+                        style: Theme.of(context).textTheme.labelMedium),
+                    Text('\u{20B9}${order.totalAmount}',
+                        style: Theme.of(context).textTheme.bodyLarge),
+                  ],
+                ),
+              )
             ],
-          )
+          ),
         ],
       ),
     );

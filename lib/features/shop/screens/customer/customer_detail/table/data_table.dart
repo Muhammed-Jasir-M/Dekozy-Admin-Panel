@@ -14,12 +14,13 @@ class CustomerOrderTable extends StatelessWidget {
       tableHeight: 640,
       dataRowHeight: kMinInteractiveDimension,
       columns: [
-        const DataColumn2(label: Text('Order Id')),
+        const DataColumn2(label: Text('Order ID')),
         const DataColumn2(label: Text('Date')),
         const DataColumn2(label: Text('Items')),
         DataColumn2(
-            label: Text('Status'),
-            fixedWidth: ADeviceUtils.isMobileScreen(context) ? 100 : null),
+          label: Text('Status'),
+          fixedWidth: ADeviceUtils.isMobileScreen(context) ? 100 : null,
+        ),
         const DataColumn2(label: Text('Amount'), numeric: true),
       ],
       source: CustomerOrderRows(),

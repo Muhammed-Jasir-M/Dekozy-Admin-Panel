@@ -97,9 +97,6 @@ class ACloudHelperFunctions {
         final responseBody = await response.stream.bytesToString();
         final jsonResponse = jsonDecode(responseBody);
 
-        print("Cloudinary Response: $jsonResponse");
-        print("Cloudinary: $mimeType");
-
         // Create the ImageModel from the response
         return ImageModel.fromCloudinaryResponse(
           jsonResponse,

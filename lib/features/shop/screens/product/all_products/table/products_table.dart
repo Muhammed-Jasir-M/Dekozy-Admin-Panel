@@ -12,13 +12,17 @@ class ProductsTable extends StatelessWidget {
     return APaginatedDataTable(
       minWidth: 1000,
       columns: [
-        DataColumn2(label: Text('Product'),
-        fixedWidth: !ADeviceUtils.isDesktopScreen(context) ? 300 : 400,),
+        DataColumn2(
+          label: Text('Product'),
+          fixedWidth: !ADeviceUtils.isDesktopScreen(context) ? 300 : 400,
+        ),
         DataColumn2(label: Text('Stock')),
         DataColumn2(label: Text('Brand')),
         DataColumn2(label: Text('Price')),
         DataColumn2(label: Text('Date')),
-        DataColumn2(label: Text('Action'),fixedWidth: 100),
-      ], source: ProductsRows(),);
+        DataColumn2(label: Text('Action'), fixedWidth: 100),
+      ],
+      source: ProductsRows(),
+    );
   }
 }

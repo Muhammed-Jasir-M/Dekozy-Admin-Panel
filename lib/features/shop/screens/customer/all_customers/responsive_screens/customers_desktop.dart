@@ -17,18 +17,19 @@ class CustomersDesktopScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //BreadCrumb
+              // BreadCrumbs
               ABreadcrumbsWithHeading(
                   heading: 'Customer', breadcrumbItems: ['Customers']),
+              SizedBox(height: ASizes.spaceBtwSections),
+
               ARoundedContainer(
                 child: Column(
                   children: [
-                    //Table Header
-                    ATableHeader(
-                      showLeftWidget: false,
-                    ),
+                    // Table Header
+                    ATableHeader(showLeftWidget: false),
                     SizedBox(height: ASizes.spaceBtwItems),
-                    //Table
+
+                    // Table
                     CustomerTable(),
                   ],
                 ),

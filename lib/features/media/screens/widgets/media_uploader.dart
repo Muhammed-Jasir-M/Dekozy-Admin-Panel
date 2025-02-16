@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/popups/loaders.dart';
 import '../../models/image_model.dart';
 
 class MediaUploader extends StatelessWidget {
@@ -51,42 +52,50 @@ class MediaUploader extends StatelessWidget {
                               operation: DragOperation.copy,
                               onCreated: (ctrl) =>
                                   controller.dropzoneController = ctrl,
-                              onLoaded: () => print('Zone Loaded'),
+                              onDropFile: (DropzoneFileInterface file) async {
+                                final size = await controller.dropzoneController
+                                    .getFileSize(file);
+
+                                const maxSize = 10 * 1024 * 1024; // 10MB
+                                if (size > maxSize) {
+                                  ALoaders.warningSnackBar(
+                                    title: 'File Too Large',
+                                    message: 'Please select files under 10MB',
+                                  );
+                                } else {
+                                  // Retrieve file data as Uint8List
+                                  final bytes = await controller
+                                      .dropzoneController
+                                      .getFileData(file);
+
+                                  // Extract file metadata
+                                  final filename = await controller
+                                      .dropzoneController
+                                      .getFilename(file);
+                                  final mimeType = await controller
+                                      .dropzoneController
+                                      .getFileMIME(file);
+
+                                  final image = ImageModel(
+                                    url: '',
+                                    folder: '',
+                                    filename: filename,
+                                    contentType: mimeType,
+                                    localImageToDisplay:
+                                        Uint8List.fromList(bytes),
+                                  );
+
+                                  controller.selectedImagesToUpload.add(image);
+                                }
+                              },
                               onError: (ev) => print('Zone error: $ev'),
+                              onLoaded: () => print('Zone Loaded'),
                               onHover: () => print('Zone hovered'),
                               onLeave: () => print('Zone left'),
                               onDropInvalid: (ev) =>
                                   print('Zone invalid MIME : $ev'),
-                              onDropFile: (DropzoneFileInterface ev) async {
-                                // Retrieve file data as Uint8List
-                                final bytes = await controller
-                                    .dropzoneController
-                                    .getFileData(ev);
-
-                                // Extract file metadata
-                                final filename = await controller
-                                    .dropzoneController
-                                    .getFilename(ev);
-                                final mimeType = await controller
-                                    .dropzoneController
-                                    .getFileMIME(ev);
-                                print('mime: $mimeType');
-
-                                final image = ImageModel(
-                                  url: '',
-                                  folder: '',
-                                  filename: filename,
-                                  localImageToDisplay:Uint8List.fromList(bytes),
-                                  contentType: mimeType,
-                                );
-
-                                controller.selectedImagesToUpload.add(image);
-                              },
-                              onDropString: (String s) => print('Drop: $s'),
                               onDropFiles: (files) =>
                                   print('Zone drop multiple files: $files'),
-                              onDropStrings: (strings) =>
-                                  print('Zone drop strings multiple: $strings'),
                             ),
 
                             // Drop Zone Content
@@ -144,7 +153,7 @@ class MediaUploader extends StatelessWidget {
                               ],
                             ),
 
-                            /// Upload & Remove buttons
+                            /// Upload & Remove All buttons
                             Row(
                               children: [
                                 TextButton(
@@ -181,9 +190,9 @@ class MediaUploader extends StatelessWidget {
                                   width: 90,
                                   height: 90,
                                   padding: ASizes.sm,
+                                  imageType: ImageType.memory,
                                   memoryImage: element.localImageToDisplay,
                                   backgroundColor: AColors.primaryBackground,
-                                  imageType: ImageType.memory,
                                 );
                               } else {
                                 return ARoundedContainer(

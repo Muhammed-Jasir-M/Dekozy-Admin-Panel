@@ -44,7 +44,7 @@ class ATableHeader extends StatelessWidget {
             controller: searchController,
             onChanged: searchOnChanged,
             decoration: const InputDecoration(
-              hintText: 'Search Here...',
+              hintText: 'Search here...',
               prefixIcon: Icon(Iconsax.search_normal),
             ),
           ),

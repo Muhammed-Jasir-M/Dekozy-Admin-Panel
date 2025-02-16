@@ -9,7 +9,7 @@ class CategoryTable extends StatelessWidget {
   const CategoryTable({super.key});
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     final controller = Get.put(CategoryController());
     return Obx(
       () {
@@ -22,13 +22,14 @@ class CategoryTable extends StatelessWidget {
           minWidth: 700,
           columns: [
             DataColumn2(
-              label:const Text('Category'),
-              onSort: (columnIndex, ascending) => controller.sortByName(columnIndex, ascending),
-              ),
-              const DataColumn2(label: Text('Parent Category')),
-              const DataColumn2(label: Text('Featured')),
-              const DataColumn2(label: Text('Date')),
-              const DataColumn2(label: Text('Action'), fixedWidth: 100),
+              label: const Text('Category'),
+              onSort: (columnIndex, ascending) =>
+                  controller.sortByName(columnIndex, ascending)
+            ),
+            const DataColumn2(label: Text('Parent Category')),
+            const DataColumn2(label: Text('Featured')),
+            const DataColumn2(label: Text('Date')),
+            const DataColumn2(label: Text('Action'), fixedWidth: 100),
           ],
           source: CategoryRows(),
         );

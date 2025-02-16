@@ -40,12 +40,12 @@ class CreateProductMobileScreen extends StatelessWidget {
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Create Product
-              Row(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const ProductTitleAndDescription(),
                   const SizedBox(height: ASizes.spaceBtwSections),
-                                    
+
                   // Stock & Pricing
                   ARoundedContainer(
                     child: Column(
@@ -54,20 +54,18 @@ class CreateProductMobileScreen extends StatelessWidget {
                         // Heading
                         Text(
                           'Stock & Pricing',
-                          style:
-                              Theme.of(context).textTheme.headlineSmall,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         const SizedBox(height: ASizes.spaceBtwItems),
-                                    
+
                         // Product Type
                         const ProductTypeWidget(),
-                        const SizedBox(
-                            height: ASizes.spaceBtwInputFields),
-                                    
+                        const SizedBox(height: ASizes.spaceBtwInputFields),
+
                         // Stock
                         const ProductStockAndPricing(),
                         const SizedBox(height: ASizes.spaceBtwSections),
-                                    
+
                         // Attributes
                         const ProductAttributes(),
                         const SizedBox(height: ASizes.spaceBtwSections),
@@ -75,41 +73,41 @@ class CreateProductMobileScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: ASizes.spaceBtwSections),
-                                    
+
                   // Variations
                   const ProductVariations(),
-
                   const SizedBox(width: ASizes.defaultSpace),
 
-                  // Sidebar
+                  // Product Thumbnail Image
                   const ProductThumbnailImage(),
                   const SizedBox(height: ASizes.spaceBtwSections),
-                                    
+
                   // Product Images
                   ARoundedContainer(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('All Product Images', style: Theme.of(context).textTheme.headlineSmall),
+                        Text('All Product Images',
+                            style: Theme.of(context).textTheme.headlineSmall),
                         const SizedBox(height: ASizes.spaceBtwItems),
                         ProductAdditionalImages(
                           additionalProductImagesURLs: RxList<String>.empty(),
                           onTapToAddImages: () {},
-                          onTapToRemoveImage: (index){}
-                        )
+                          onTapToRemoveImage: (index) {},
+                        ),
                       ],
                     ),
                   ),
                   const SizedBox(height: ASizes.spaceBtwSections),
-                                    
+
                   // Product Brand
                   const ProductBrand(),
                   const SizedBox(height: ASizes.spaceBtwSections),
-                                    
+
                   // Product Categories
                   const ProductCategories(),
                   const SizedBox(height: ASizes.spaceBtwSections),
-                                    
+
                   // Product Visibility
                   const ProductVisibilityWidget(),
                   const SizedBox(height: ASizes.spaceBtwSections),

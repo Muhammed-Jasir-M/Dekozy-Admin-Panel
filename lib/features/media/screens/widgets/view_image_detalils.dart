@@ -37,10 +37,10 @@ class ImagePopup extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Display the image with an option to close the dialog.
               SizedBox(
                 child: Stack(
                   children: [
+                    // Display the image with an option to close the dialog.
                     ARoundedContainer(
                       backgroundColor: AColors.primaryBackground,
                       child: image.contentType == 'image'
@@ -57,7 +57,7 @@ class ImagePopup extends StatelessWidget {
                               width: ADeviceUtils.isDesktopScreen(context)
                                   ? MediaQuery.of(context).size.width * 0.4
                                   : double.infinity,
-                              height: MediaQuery.of(context).size.height * 0.7,
+                              height: MediaQuery.of(context).size.height * 0.6,
                               child: ModelViewer(
                                 src: image.url,
                                 alt: image.filename,
@@ -76,7 +76,7 @@ class ImagePopup extends StatelessWidget {
                         onPressed: () => Get.back(),
                         icon: const Icon(Iconsax.close_circle),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -121,7 +121,7 @@ class ImagePopup extends StatelessWidget {
                       },
                       child: const Text('Copy URL'),
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: ASizes.spaceBtwSections),
@@ -135,12 +135,14 @@ class ImagePopup extends StatelessWidget {
                     child: TextButton(
                       onPressed: () => MediaController.instance
                           .removeCloudImageConfirmation(image),
-                      child: const Text('Delete Image',
-                          style: TextStyle(color: Colors.red)),
+                      child: const Text(
+                        'Delete Image',
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ),
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),

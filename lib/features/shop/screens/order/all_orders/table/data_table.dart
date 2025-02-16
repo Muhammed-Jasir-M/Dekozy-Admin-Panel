@@ -12,12 +12,13 @@ class OrderTable extends StatelessWidget {
     return APaginatedDataTable(
       minWidth: 700,
       columns: [
-        DataColumn2(label: Text('Oredr ID')),
+        DataColumn2(label: Text('Order ID')),
         DataColumn2(label: Text('Date')),
         DataColumn2(label: Text('Items')),
         DataColumn2(
-            label: Text('Status'),
-            fixedWidth: ADeviceUtils.isMobileScreen(context) ? 120 : null),
+          label: Text('Status'),
+          fixedWidth: ADeviceUtils.isMobileScreen(context) ? 120 : null,
+        ),
         DataColumn2(label: Text('Amount')),
         DataColumn2(label: Text('Action'), fixedWidth: 100),
       ],

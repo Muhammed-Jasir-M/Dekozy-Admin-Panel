@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:aura_kart_admin_panel/features/media/models/image_model.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/cloudinary_exceptions.dart';
@@ -11,7 +12,6 @@ import 'package:http/http.dart' as http;
 import '../../../utils/constants/api_constants.dart';
 import '../../../utils/constants/enums.dart';
 import '../../../utils/exceptions/firebase_auth_exceptions.dart';
-import '../../../utils/exceptions/format_exceptions.dart';
 import '../../../utils/exceptions/platform_exceptions.dart';
 
 class MediaRepository {
@@ -27,10 +27,6 @@ class MediaRepository {
     required String imageName,
   }) async {
     try {
-      if (!mimeType.startsWith('image/') && !mimeType.startsWith('model/')) {
-        throw 'Invalid file type: $mimeType';
-      }
-
       String resourceType = mimeType.startsWith('image/') ? 'image' : 'raw';
 
       final uri = Uri.parse(APIConstants.getCloudinaryBaseUrl(resourceType));
@@ -74,7 +70,8 @@ class MediaRepository {
         throw Exception('Failed to upload image');
       }
     } on ACloudinaryException catch (e) {
-      throw e.message;
+      print(e.toString());
+      throw ACloudinaryException(e.code).message;
     } catch (e) {
       print(e.toString());
       throw e.toString();
@@ -87,8 +84,8 @@ class MediaRepository {
       return data.id;
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
-    } on FormatException catch (_) {
-      throw const AFormatException();
+    } on SocketException catch (e) {
+      throw e.message;
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
@@ -98,7 +95,9 @@ class MediaRepository {
 
   // Fetch Images from Firestore based on media category & load count
   Future<List<ImageModel>> fetchImagesFromDatabase(
-      MediaCategory mediaCategory, int loadCount) async {
+    MediaCategory mediaCategory,
+    int loadCount,
+  ) async {
     try {
       final querySnapshot = await _db
           .collection('Images')
@@ -110,8 +109,8 @@ class MediaRepository {
       return querySnapshot.docs.map((e) => ImageModel.fromSnapshot(e)).toList();
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
-    } on FormatException catch (_) {
-      throw const AFormatException();
+    } on SocketException catch (e) {
+      throw e.message;
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
@@ -138,8 +137,8 @@ class MediaRepository {
       return querySnapshot.docs.map((e) => ImageModel.fromSnapshot(e)).toList();
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
-    } on FormatException catch (_) {
-      throw const AFormatException();
+    } on SocketException catch (e) {
+      throw e.message;
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
@@ -179,7 +178,7 @@ class MediaRepository {
             'Failed to delete image from Cloudinary: ${response.body}');
       }
     } on ACloudinaryException catch (e) {
-      throw e.message;
+      throw ACloudinaryException(e.code).message;
     } catch (e) {
       print(e.toString());
       throw e.toString();
@@ -192,8 +191,8 @@ class MediaRepository {
       await _db.collection("Images").doc(image.id).delete();
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
-    } on FormatException catch (_) {
-      throw const AFormatException();
+    } on SocketException catch (e) {
+      throw e.message;
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {

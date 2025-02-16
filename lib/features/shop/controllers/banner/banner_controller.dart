@@ -1,12 +1,12 @@
 import 'package:aura_kart_admin_panel/data/abstract/base_data_table_controlle.dart';
-import 'package:aura_kart_admin_panel/data/repositories/banners/banners_repository.dart';
+import 'package:aura_kart_admin_panel/data/repositories/banners/banner_repository.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/banner_model.dart';
 import 'package:get/get.dart';
 
 class BannerController extends ABaseController<BannerModel> {
   static BannerController get instance => Get.find();
 
-  final _bannerRepository = Get.put(BannersRepository());
+  final _bannerRepository = Get.put(BannerRepository());
 
   @override
   Future<void> deleteItem(BannerModel item) async {
@@ -19,7 +19,7 @@ class BannerController extends ABaseController<BannerModel> {
   }
 
   // method for formatting a route string
-  String formatRouote(String route) {
+  String formatRoute(String route) {
     if (route.isEmpty) return '';
 
     // remove the loading '/'

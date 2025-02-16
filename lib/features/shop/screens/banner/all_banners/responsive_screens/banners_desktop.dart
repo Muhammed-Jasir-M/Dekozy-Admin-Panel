@@ -16,6 +16,7 @@ class BannersDesktopScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(BannerController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -30,7 +31,7 @@ class BannersDesktopScreen extends StatelessWidget {
 
               // Table Body
               Obx(() {
-                // show nloader
+                // Show Loader
                 if (controller.isLoading.value) return const ALoaderAnimation();
 
                 return ARoundedContainer(
@@ -38,8 +39,9 @@ class BannersDesktopScreen extends StatelessWidget {
                     children: [
                       // Table Header
                       ATableHeader(
-                           buttonText: 'Create New Banner',
-                          onPressed: () => Get.toNamed(ARoutes.createBanner)),
+                        buttonText: 'Create New Banner',
+                        onPressed: () => Get.toNamed(ARoutes.createBanner),
+                      ),
                       const SizedBox(height: ASizes.spaceBtwItems),
 
                       // Table

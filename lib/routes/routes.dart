@@ -1,6 +1,6 @@
 class ARoutes {
   static const login = '/login';
-  static const forgetPassword = '/fogot-password/';
+  static const forgetPassword = '/fogot-password';
   static const resetPassword = '/reset-password';
   static const dashboard = '/dashboard';
   static const media = '/media';
@@ -18,7 +18,7 @@ class ARoutes {
   static const editBanner = '/editBanner';
 
   static const products = '/products';
-  static const createProduct = '/createProducts';
+  static const createProduct = '/createProduct';
   static const editProduct = '/editProduct';
 
   static const customers = '/customers';
@@ -39,7 +39,7 @@ class ARoutes {
     brands,
     banners,
     products,
-    customers, 
+    customers,
     orders,
     settings,
     profile,

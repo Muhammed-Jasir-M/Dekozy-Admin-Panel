@@ -11,6 +11,7 @@ class OrderCustomer extends StatelessWidget {
   const OrderCustomer({super.key, required this.order});
 
   final OrderModel order;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,31 +23,45 @@ class OrderCustomer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Customer' , style: Theme.of(context).textTheme.headlineMedium),
-              SizedBox(height: ASizes.spaceBtwSections,),
+              Text('Customer',
+                  style: Theme.of(context).textTheme.headlineMedium),
+              SizedBox(
+                height: ASizes.spaceBtwSections,
+              ),
               Row(
                 children: [
                   ARoundedImage(
                     padding: 0,
                     backgroundColor: AColors.primaryBackground,
                     image: AImages.user,
-                    imageType: ImageType.asset,),
-                    SizedBox(width: ASizes.spaceBtwItems,),
-                    Expanded(child: Column(
+                    imageType: ImageType.asset,
+                  ),
+                  SizedBox(width: ASizes.spaceBtwItems),
+                  Expanded(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Aurakart', style:  Theme.of(context).textTheme.titleLarge, overflow: TextOverflow.ellipsis,maxLines: 1,),
-                        Text('support@aurakart.com', overflow: TextOverflow.ellipsis,maxLines: 1,),
-
+                        Text(
+                          'Aurakart',
+                          style: Theme.of(context).textTheme.titleLarge,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        Text(
+                          'support@aurakart.com',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ],
-                    ))
+                    ),
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),
-        SizedBox(height: ASizes.spaceBtwSections,),
+        SizedBox(height: ASizes.spaceBtwSections),
 
         // Contact Info
         SizedBox(
@@ -56,21 +71,32 @@ class OrderCustomer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Contact Person', style:  Theme.of(context).textTheme.headlineMedium,),
-                SizedBox(height: ASizes.spaceBtwSections,),
-                  Text('Aurakart', style:  Theme.of(context).textTheme.titleSmall,),
-                SizedBox(height: ASizes.spaceBtwItems / 2,),
-                  Text('support@aurakart.com', style:  Theme.of(context).textTheme.titleSmall,),
-                SizedBox(height: ASizes.spaceBtwItems / 2,),
-                  Text('(+91) ***** *****', style:  Theme.of(context).textTheme.titleSmall,),
-                
+                Text(
+                  'Contact Person',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                SizedBox(height: ASizes.spaceBtwSections),
+                Text(
+                  'Aurakart',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                SizedBox(height: ASizes.spaceBtwItems / 2),
+                Text(
+                  'support@aurakart.com',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                SizedBox(height: ASizes.spaceBtwItems / 2),
+                Text(
+                  '(+91) 9587435987',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
               ],
             ),
           ),
         ),
-        SizedBox(height: ASizes.spaceBtwSections,),
+        SizedBox(height: ASizes.spaceBtwSections),
 
-        // Contact Info
+        // Shipping Info
         SizedBox(
           width: double.infinity,
           child: ARoundedContainer(
@@ -78,17 +104,27 @@ class OrderCustomer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Shipping Address', style:  Theme.of(context).textTheme.headlineMedium,),
-                SizedBox(height: ASizes.spaceBtwSections,),
-                  Text('Tiamoor Sikander LTD', style:  Theme.of(context).textTheme.titleSmall,),
-                SizedBox(height: ASizes.spaceBtwItems / 2,),
-                Text('61 Bridge Street, Kington, United Kingdom', style: Theme.of(context).textTheme.titleSmall,)
+                Text(
+                  'Shipping Address',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                SizedBox(height: ASizes.spaceBtwSections),
+                Text(
+                  'Aura kart LTD',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                SizedBox(height: ASizes.spaceBtwItems / 2),
+                Text(
+                  '61 Bridge Street, Kington, United Kingdom',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
               ],
             ),
           ),
         ),
-        SizedBox(height: ASizes.spaceBtwSections,),
-          // Contact Info: Adjust this address as per your needs
+        SizedBox(height: ASizes.spaceBtwSections),
+
+        // Billing Info
         SizedBox(
           width: double.infinity,
           child: ARoundedContainer(
@@ -96,16 +132,25 @@ class OrderCustomer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Billing Address', style:  Theme.of(context).textTheme.headlineMedium,),
-                SizedBox(height: ASizes.spaceBtwSections,),
-                  Text('Tiamoor Sikander LTD', style:  Theme.of(context).textTheme.titleSmall,),
-                SizedBox(height: ASizes.spaceBtwItems / 2,),
-                Text('61 Bridge Street, Kington, United Kingdom', style: Theme.of(context).textTheme.titleSmall,)
+                Text(
+                  'Billing Address',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                SizedBox(height: ASizes.spaceBtwSections),
+                Text(
+                  'Aura kart LTD',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                SizedBox(height: ASizes.spaceBtwItems / 2),
+                Text(
+                  '61 Bridge Street, Kington, United Kingdom',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
               ],
             ),
           ),
         ),
-         SizedBox(height: ASizes.spaceBtwSections),
+        SizedBox(height: ASizes.spaceBtwSections),
       ],
     );
   }

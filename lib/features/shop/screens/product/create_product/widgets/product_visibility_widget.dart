@@ -35,7 +35,7 @@ class ProductVisibilityWidget extends StatelessWidget {
     return RadioMenuButton(
       value: value,
       groupValue: ProductVisibility.published,
-      onChanged: (selecction) {},
+      onChanged: (selection) {},
       child: Text(label),
     );
   }

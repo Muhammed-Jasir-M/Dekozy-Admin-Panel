@@ -15,7 +15,7 @@ class DashboardMobileScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: EdgeInsets.all(ASizes.defaultSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -27,13 +27,13 @@ class DashboardMobileScreen extends StatelessWidget {
               // Cards
               ADashboardCard(
                 title: 'Sales Total',
-                subTitle: '\$365',
+                subTitle: '\u{20B9}365',
                 stats: 25,
               ),
               SizedBox(height: ASizes.spaceBtwItems),
               ADashboardCard(
                 title: 'Average order value',
-                subTitle: '\$25',
+                subTitle: '\u{20B9}25',
                 stats: 15,
               ),
               SizedBox(height: ASizes.spaceBtwItems),
@@ -51,12 +51,10 @@ class DashboardMobileScreen extends StatelessWidget {
 
               const SizedBox(height: ASizes.spaceBtwSections),
 
-              /// Graphs
               /// Bar Graph
               AWeekklySaleGraph(),
               const SizedBox(height: ASizes.spaceBtwSections),
 
-              /// Orders
               /// Orders
               ARoundedContainer(
                 child: Column(
@@ -66,9 +64,7 @@ class DashboardMobileScreen extends StatelessWidget {
                       'Recent orders',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    const SizedBox(
-                      height: ASizes.spaceBtwSections,
-                    ),
+                    const SizedBox(height: ASizes.spaceBtwSections),
                     const DashboardOrderTable(),
                   ],
                 ),

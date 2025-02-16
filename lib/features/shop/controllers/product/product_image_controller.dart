@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class ProductImageController extends GetxController {
   static ProductImageController get instance => Get.find();
 
-  // Rx observable for the selected thumbnail images
+  // Rx Observable for the selected thumbnail images
   Rx<String?> selectedThumbnailImageUrl = Rx<String?>(null);
 
   // Lists to store additional product Images
@@ -31,11 +31,14 @@ class ProductImageController extends GetxController {
     final controller = Get.put(MediaController());
 
     final selectedImages = await controller.selectImagesFromMedia(
-        multipleSelection: true, selectedUrls: additionalProductImageUrls);
+      multipleSelection: true,
+      selectedUrls: additionalProductImageUrls,
+    );
 
     // Handle the Selected images
     if (selectedImages != null && selectedImages.isNotEmpty) {
-      additionalProductImageUrls.assignAll(selectedImages.map((image) => image.url));
+      additionalProductImageUrls
+          .assignAll(selectedImages.map((image) => image.url));
     }
   }
 

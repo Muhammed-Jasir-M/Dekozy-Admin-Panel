@@ -13,11 +13,15 @@ class BrandTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(BrandController());
+
     return Obx(() {
       Text(controller.filteredItems.length.toString());
       Text(controller.selectedRows.length.toString());
 
-      final lgTable = controller.filteredItems.any((element) => element.brandCategories != null && element.brandCategories!.length > 2);
+      final lgTable = controller.filteredItems.any((element) =>
+          element.brandCategories != null &&
+          element.brandCategories!.length > 2);
+
       return APaginatedDataTable(
         minWidth: 700,
         tableHeight: lgTable ? 96 * 11.5 : 760,
@@ -30,9 +34,18 @@ class BrandTable extends StatelessWidget {
             fixedWidth: ADeviceUtils.isMobileScreen(Get.context!) ? null : 200,
           ),
           const DataColumn2(label: Text('Categories')),
-          DataColumn2(label: const Text('Featured'),fixedWidth:ADeviceUtils.isMobileScreen(Get.context!) ? null : 100),
-          DataColumn2(label: const Text('Date'),fixedWidth:ADeviceUtils.isMobileScreen(Get.context!) ? null : 200),
-          DataColumn2(label: const Text('Action'),fixedWidth:ADeviceUtils.isMobileScreen(Get.context!) ? null : 100),
+          DataColumn2(
+            label: const Text('Featured'),
+            fixedWidth: ADeviceUtils.isMobileScreen(Get.context!) ? null : 100,
+          ),
+          DataColumn2(
+            label: const Text('Date'),
+            fixedWidth: ADeviceUtils.isMobileScreen(Get.context!) ? null : 200,
+          ),
+          DataColumn2(
+            label: const Text('Action'),
+            fixedWidth: ADeviceUtils.isMobileScreen(Get.context!) ? null : 100,
+          ),
         ],
         source: BrandRows(),
       );

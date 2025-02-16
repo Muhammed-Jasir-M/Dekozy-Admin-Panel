@@ -1,4 +1,3 @@
-import 'package:aura_kart_admin_panel/data/repositories/banners/banners_repository.dart';
 import 'package:aura_kart_admin_panel/features/media/controller/media_controller.dart';
 import 'package:aura_kart_admin_panel/features/media/models/image_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/banner/banner_controller.dart';
@@ -9,15 +8,17 @@ import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../data/repositories/banners/banner_repository.dart';
+
 class EditBannerController extends GetxController {
   static EditBannerController get instance => Get.find();
 
   final imageURL = ''.obs;
   final loading = false.obs;
   final isActive = false.obs;
-  final targetScreen = ''.obs;
+  RxString targetScreen = ''.obs;
   final formKey = GlobalKey<FormState>();
-  final repository = Get.put(BannersRepository());
+  final repository = Get.put(BannerRepository());
 
   // init data
   void init(BannerModel banner) {

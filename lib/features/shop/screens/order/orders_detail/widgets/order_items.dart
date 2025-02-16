@@ -11,14 +11,17 @@ import 'package:flutter/material.dart';
 
 class OrderItems extends StatelessWidget {
   const OrderItems({super.key, required this.order});
+
   final OrderModel order;
 
   @override
   Widget build(BuildContext context) {
-    final subTotal = order.items?.fold(
-        0.0,
-        (previousValue, element) =>
-            previousValue + (element.price * element.quantity));
+    final subTotal = order.items!.fold(
+      0.0,
+      (previousValue, element) =>
+          previousValue + (element.price * element.quantity),
+    );
+
     return ARoundedContainer(
       padding: const EdgeInsets.all(ASizes.defaultSpace),
       child: Column(
@@ -27,8 +30,7 @@ class OrderItems extends StatelessWidget {
           Text('Items', style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: ASizes.spaceBtwSections),
 
-// Items
-
+          // Items
           ListView.separated(
             shrinkWrap: true,
             itemCount: order.items!.length,
@@ -37,6 +39,7 @@ class OrderItems extends StatelessWidget {
                 const SizedBox(height: ASizes.spaceBtwItems),
             itemBuilder: (_, index) {
               final item = order.items?[index];
+
               return Row(
                 children: [
                   Expanded(
@@ -61,9 +64,13 @@ class OrderItems extends StatelessWidget {
                                 maxLines: 1,
                               ),
                               if (item.selectedVariation != null)
-                                Text(item.selectedVariation!.entries
-                                    .map((e) => ('${e.key}: ${e.value}'))
-                                    .toString())
+                                Text(
+                                  item.selectedVariation!.entries
+                                      .map(
+                                        (e) => ('${e.key}: ${e.value}'),
+                                      )
+                                      .toString(),
+                                ),
                             ],
                           ),
                         ),
@@ -72,9 +79,10 @@ class OrderItems extends StatelessWidget {
                   ),
                   const SizedBox(width: ASizes.spaceBtwItems),
                   SizedBox(
-                      width: ASizes.xl * 2,
-                      child: Text('\$${item.price.toStringAsFixed(1)}',
-                          style: Theme.of(context).textTheme.bodyLarge)),
+                    width: ASizes.xl * 2,
+                    child: Text('\u{20B9}${item.price.toStringAsFixed(1)}',
+                        style: Theme.of(context).textTheme.bodyLarge),
+                  ),
                   SizedBox(
                     width: ADeviceUtils.isMobileScreen(context)
                         ? ASizes.xl * 1.4
@@ -86,7 +94,8 @@ class OrderItems extends StatelessWidget {
                     width: ADeviceUtils.isMobileScreen(context)
                         ? ASizes.xl * 1.4
                         : ASizes.xl * 2,
-                    child: Text('\$${(item.price * item.quantity).toStringAsFixed(2)}',
+                    child: Text(
+                        '\u{20B9}${(item.price * item.quantity).toStringAsFixed(2)}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ),
                 ],
@@ -95,8 +104,7 @@ class OrderItems extends StatelessWidget {
           ),
           const SizedBox(height: ASizes.spaceBtwSections),
 
-// Items Total
-
+          // Items Total
           ARoundedContainer(
             padding: const EdgeInsets.all(ASizes.defaultSpace),
             backgroundColor: AColors.primaryBackground,
@@ -107,7 +115,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Subtotal',
                         style: Theme.of(context).textTheme.titleLarge),
-                    Text('\$$subTotal',
+                    Text('\u{20B9}$subTotal',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
@@ -117,7 +125,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Discount',
                         style: Theme.of(context).textTheme.titleLarge),
-                    Text('\$0.00',
+                    Text('\u{20B9}0.00',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
@@ -128,7 +136,7 @@ class OrderItems extends StatelessWidget {
                     Text('Shipping',
                         style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\$${APricingCalculator.calculateShippingCost(subTotal!, '')}',
+                      '\u{20B9}${APricingCalculator.calculateShippingCost(subTotal, '')}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
@@ -139,7 +147,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Tax', style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\$${APricingCalculator.calculateTax(subTotal, '')}',
+                      '\u{20B9}${APricingCalculator.calculateTax(subTotal, '')}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
@@ -153,7 +161,7 @@ class OrderItems extends StatelessWidget {
                     Text('Total',
                         style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\$${APricingCalculator.calculateTotalPrice(subTotal, '')}',
+                      '\u{20B9}${APricingCalculator.calculateTotalPrice(subTotal, '')}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],

@@ -21,16 +21,16 @@ class ImageAndMeta extends StatelessWidget {
             children: [
               // User image
               AImageUploader(
-                  right: 10,
-                  bottom: 20,
-                  left: null,
-                  width: 200,
-                  height: 200,
-                  circular: true,
-                  icon: Iconsax.camera,
-                  imageType: ImageType.asset,
-                  image: AImages.user,
-                ),
+                right: 10,
+                bottom: 20,
+                left: null,
+                width: 200,
+                height: 200,
+                circular: true,
+                icon: Iconsax.camera,
+                imageType: ImageType.asset,
+                image: AImages.user,
+              ),
               const SizedBox(height: ASizes.spaceBtwItems),
 
               Text('AURAKART',

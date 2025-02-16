@@ -65,7 +65,7 @@ class AOrderStatusPieChart extends StatelessWidget {
               final OrderStatus status = entry.key;
               final int count = entry.value;
               final totalAmount = controller.totalAmounts[status] ?? 0;
-          
+
               return DataRow(
                 cells: [
                   DataCell(
@@ -77,12 +77,16 @@ class AOrderStatusPieChart extends StatelessWidget {
                           backgroundColor:
                               AHelperFunctions.getOrderStatusColor(status),
                         ),
-                        Expanded(child: Text(' ${controller.getOrderStatusName(status)}')),
+                        Expanded(
+                          child: Text(
+                            ' ${controller.getOrderStatusName(status)}',
+                          ),
+                        ),
                       ],
                     ),
                   ),
                   DataCell(Text(count.toString())),
-                  DataCell(Text('\u{20B9} ${totalAmount.toStringAsFixed(2)}')),
+                  DataCell(Text('\u{20B9}${totalAmount.toStringAsFixed(1)}')),
                 ],
               );
             }).toList(),

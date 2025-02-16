@@ -9,51 +9,56 @@ import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../../../utils/constants/colors.dart';
-import '../../../../../../utils/constants/image_strings.dart';
 import '../../../../../../utils/constants/sizes.dart';
-
 
 class BannersRows extends DataTableSource {
   final controller = BannerController.instance;
 
   @override
   DataRow? getRow(int index) {
-    final banner = controller.selectedRows[index];
+    final banner = controller.filteredItems[index];
+    
     return DataRow2(
       selected: controller.selectedRows[index],
       onTap: () => Get.toNamed(ARoutes.editBanner, arguments: banner),
-      onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
+      onSelectChanged: (value) =>
+          controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           ARoundedImage(
             width: 180,
             height: 100,
             padding: ASizes.sm,
-            image: AImages.darkAppLogo,
-            imageType: ImageType.asset,
+            image: banner.imageUrl,
+            imageType: ImageType.network,
             borderRadius: ASizes.borderRadiusMd,
             backgroundColor: AColors.primaryBackground,
           ),
         ),
         DataCell(Text(controller.formatRoute(banner.targetScreen))),
-        DataCell(banner.active ? const Icon(Iconsax.eye, color: AColors.primary) : const Icon(Iconsax.eye_slash_copy)),
+        DataCell(
+          banner.active
+              ? const Icon(Iconsax.eye, color: AColors.primary)
+              : const Icon(Iconsax.eye_slash_copy),
+        ),
         DataCell(
           ATableActionButtons(
-            onEditPressed: () => Get.toNamed(ARoutes.editBanner,arguments: banner),
+            onEditPressed: () =>
+                Get.toNamed(ARoutes.editBanner, arguments: banner),
             onDeletePressed: () => controller.confrimAndDeleteItem(banner),
           ),
-        )
+        ),
       ],
     );
   }
-  
+
   @override
   bool get isRowCountApproximate => false;
-  
+
   @override
   int get rowCount => controller.filteredItems.length;
-  
-  @override
-  int get selectedRowCount => controller.selectedRows.where((selected) => selected).length;
-}
 
+  @override
+  int get selectedRowCount =>
+      controller.selectedRows.where((selected) => selected).length;
+}

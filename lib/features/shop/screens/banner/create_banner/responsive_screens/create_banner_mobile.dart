@@ -19,9 +19,10 @@ class CreateBannerMobileScreen extends StatelessWidget {
               // Breadcrumbs
               ABreadcrumbsWithHeading(
                 returnToPreviousScreen: true,
-                heading: 'Create Banner',
+                heading: 'Create New Banner',
                 breadcrumbItems: [ARoutes.banners, 'Create Banner'],
               ),
+
               SizedBox(height: ASizes.spaceBtwSections),
 
               // Form

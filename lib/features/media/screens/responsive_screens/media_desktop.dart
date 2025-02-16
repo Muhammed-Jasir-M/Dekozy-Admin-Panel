@@ -1,7 +1,6 @@
 import 'package:aura_kart_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:aura_kart_admin_panel/features/media/controller/media_controller.dart';
 import 'package:aura_kart_admin_panel/features/media/screens/widgets/media_uploader.dart';
-import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,8 +28,7 @@ class MediaDesktopScreen extends StatelessWidget {
                 children: [
                   // Breadcrumbs
                   const ABreadcrumbsWithHeading(
-                      heading: 'Media',
-                      breadcrumbItems: [ARoutes.login, 'Media Screen']),
+                      heading: 'Media', breadcrumbItems: ['Media Screen']),
 
                   // Toggle  Images Section Button
                   SizedBox(
@@ -51,7 +49,9 @@ class MediaDesktopScreen extends StatelessWidget {
 
               /// Media Content
               MediaContent(
-                  allowSelection: false, allowMultipleSelection: false),
+                allowSelection: false,
+                allowMultipleSelection: false,
+              ),
             ],
           ),
         ),

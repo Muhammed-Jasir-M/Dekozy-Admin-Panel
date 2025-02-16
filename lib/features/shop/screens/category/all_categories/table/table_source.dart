@@ -21,7 +21,8 @@ class CategoryRows extends DataTableSource {
 
     return DataRow2(
       selected: controller.selectedRows[index],
-      onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
+      onSelectChanged: (value) =>
+          controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
@@ -46,7 +47,7 @@ class CategoryRows extends DataTableSource {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-              )
+              ),
             ],
           ),
         ),

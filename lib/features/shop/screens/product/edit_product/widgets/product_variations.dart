@@ -33,11 +33,11 @@ class ProductVariations extends StatelessWidget {
 
           // Variations List
           ListView.separated(
+            shrinkWrap: true,
+            itemCount: 2,
             itemBuilder: (_, index) => _buildVariationTile(),
             separatorBuilder: (_, __) =>
                 const SizedBox(height: ASizes.spaceBtwItems),
-            itemCount: 2,
-            shrinkWrap: true,
           ),
 
           // No variation Message
@@ -56,7 +56,7 @@ class ProductVariations extends StatelessWidget {
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(ASizes.borderRadiusLg)),
-      title: const Text('Color: Green'),
+      title: const Text('Color: Green, Size: Small'),
       children: [
         // Upload Variation Image
         Obx(
@@ -121,7 +121,9 @@ class ProductVariations extends StatelessWidget {
             labelText: 'Description',
             hintText: 'Add description of this variation...',
           ),
-        )
+        ),
+
+        const SizedBox(height: ASizes.spaceBtwSections),
       ],
     );
   }

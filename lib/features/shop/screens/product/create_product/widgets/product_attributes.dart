@@ -122,6 +122,8 @@ class ProductAttributes extends StatelessWidget {
   ListView buildAttributesList(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
+      itemCount: 3,
+      separatorBuilder: (_, __) => const SizedBox(height: ASizes.spaceBtwItems),
       itemBuilder: (_, index) => Container(
         decoration: BoxDecoration(
           color: AColors.white,
@@ -136,8 +138,6 @@ class ProductAttributes extends StatelessWidget {
           ),
         ),
       ),
-      separatorBuilder: (_, __) => const SizedBox(height: ASizes.spaceBtwItems),
-      itemCount: 3,
     );
   }
 

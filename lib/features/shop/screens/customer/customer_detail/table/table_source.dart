@@ -13,22 +13,29 @@ class CustomerOrderRows extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     final order = OrderModel(
-        id: 'id',
-        status: OrderStatus.shipped,
-        totalAmount: 234,
-        orderDate: DateTime.now());
+      id: 'id',
+      status: OrderStatus.shipped,
+      totalAmount: 234,
+      orderDate: DateTime.now(),
+    );
+
     const totalAmount = '2453';
+
     return DataRow2(
       selected: false,
       onTap: () => Get.toNamed(ARoutes.orderDetails, arguments: order),
       cells: [
-        DataCell(Text(order.id,
+        DataCell(
+          Text(
+            order.id,
             style: Theme.of(Get.context!)
                 .textTheme
                 .bodyLarge!
-                .apply(color: AColors.primary))),
+                .apply(color: AColors.primary),
+          ),
+        ),
         DataCell(Text(order.formattedOrderDate)),
-        const DataCell(Text('${5}Items')),
+        const DataCell(Text('${5} Items')),
         DataCell(
           ARoundedContainer(
             radius: ASizes.cardRadiusSm,
@@ -43,7 +50,7 @@ class CustomerOrderRows extends DataTableSource {
             ),
           ),
         ),
-        const DataCell(Text('\$$totalAmount')),
+        const DataCell(Text('\u{20B9}$totalAmount')),
       ],
     );
   }
@@ -52,7 +59,7 @@ class CustomerOrderRows extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => 0;
+  int get rowCount => 5;
 
   @override
   int get selectedRowCount => 0;

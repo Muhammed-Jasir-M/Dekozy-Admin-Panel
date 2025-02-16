@@ -19,32 +19,24 @@ class CustomerDetailMobileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //Breadcrumbs
+              // Breadcrumbs
               const ABreadcrumbsWithHeading(
                 returnToPreviousScreen: true,
                 heading: 'Nihal',
                 breadcrumbItems: [ARoutes.customers, 'Details'],
               ),
               const SizedBox(height: ASizes.spaceBtwSections),
-              //Body
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //Customer Information on Left side
-                  Column(
-                    children: [
-                      //Customer  Info
-                      CustomerInfo(customer: customer),
-                      const SizedBox(height: ASizes.spaceBtwSections),
-                      //Shipping Adress
-                      const ShippingAddress(),
-                    ],
-                  ),
-                  SizedBox(width: ASizes.spaceBtwSections),
-                  //Right Side Customer Orders
-                  const CustomerOrders()
-                ],
-              ),
+
+              // Customer Info
+              CustomerInfo(customer: customer),
+              const SizedBox(height: ASizes.spaceBtwSections),
+
+              // Shipping Adress
+              const ShippingAddress(),
+              SizedBox(width: ASizes.spaceBtwSections),
+
+              // Customer Orders
+              const CustomerOrders(),
             ],
           ),
         ),

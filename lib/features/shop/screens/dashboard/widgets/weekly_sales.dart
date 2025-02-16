@@ -18,11 +18,12 @@ class AWeekklySaleGraph extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Heading
           Text('Weekly Sales',
               style: Theme.of(context).textTheme.headlineSmall),
           const SizedBox(height: ASizes.spaceBtwSections),
 
-          //graph
+          // Graph
           SizedBox(
             height: 400,
             child: BarChart(
@@ -36,7 +37,7 @@ class AWeekklySaleGraph extends StatelessWidget {
                 gridData: const FlGridData(
                   show: true,
                   drawHorizontalLine: true,
-                  drawVerticalLine: false,
+                  drawVerticalLine: true,
                   horizontalInterval: 200,
                 ),
                 barGroups: controller.weeklySales
@@ -47,7 +48,7 @@ class AWeekklySaleGraph extends StatelessWidget {
                         x: entry.key,
                         barRods: [
                           BarChartRodData(
-                            width: 10,
+                            width: 30,
                             toY: entry.value,
                             color: AColors.primary,
                             borderRadius: BorderRadius.circular(ASizes.sm),
@@ -59,7 +60,8 @@ class AWeekklySaleGraph extends StatelessWidget {
                 groupsSpace: ASizes.spaceBtwItems,
                 barTouchData: BarTouchData(
                   touchTooltipData: BarTouchTooltipData(
-                      getTooltipColor: (_) => AColors.secondary),
+                    getTooltipColor: (_) => AColors.secondary,
+                  ),
                   touchCallback: ADeviceUtils.isDesktopScreen(context)
                       ? (barTouchEvent, barTouchResponse) {}
                       : null,
@@ -79,16 +81,16 @@ class AWeekklySaleGraph extends StatelessWidget {
         sideTitles: SideTitles(
           showTitles: true,
           getTitlesWidget: (double value, TitleMeta meta) {
-            // map index to desired day of week
+            // Map index to desired day of week
             final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-            //calculate the index and ensure it wraps around for the correct day
+            // Calculate the index and ensure it wraps around for the correct day
             final index = value.toInt() % days.length;
 
-            //get the day corresponding to the calculated index
+            // Get the day corresponding to the calculated index
             final day = days[index];
+
             return SideTitleWidget(
-              // side: AxisSide.bottom,
               space: 0,
               meta: meta,
               child: Text(day),
@@ -97,11 +99,12 @@ class AWeekklySaleGraph extends StatelessWidget {
         ),
       ),
       leftTitles: const AxisTitles(
-          sideTitles: SideTitles(
-        showTitles: true,
-        interval: 200,
-        reservedSize: 50,
-      )),
+        sideTitles: SideTitles(
+          showTitles: true,
+          interval: 200,
+          reservedSize: 50,
+        ),
+      ),
       rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
       topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
     );

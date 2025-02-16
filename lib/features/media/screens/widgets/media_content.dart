@@ -22,19 +22,19 @@ class MediaContent extends StatelessWidget {
     required this.allowSelection,
     required this.allowMultipleSelection,
     this.alreadySelectedUrls,
-    this.onImageSelected,
+    this.onImagesSelected,
   });
 
   final bool allowSelection;
   final bool allowMultipleSelection;
   final List<String>? alreadySelectedUrls;
   final List<ImageModel> selectedImages = [];
-  final Function(List<ImageModel> selectesImag0es)? onImageSelected;
+  final Function(List<ImageModel> selectedImages)? onImagesSelected;
 
   @override
   Widget build(BuildContext context) {
-    bool loadedpreviousScreen = false;
     final controller = MediaController.instance;
+    bool loadedPreviousSelection = false;
 
     return ARoundedContainer(
       child: Column(
@@ -47,7 +47,7 @@ class MediaContent extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'Select Folder',
+                    'Media Folders',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(width: ASizes.spaceBtwItems),
@@ -73,9 +73,8 @@ class MediaContent extends StatelessWidget {
               List<ImageModel> images = _getSelectedFolderImages(controller);
 
               // Load Selected Images from the already Selected Images only once otherwise
-              // on Obx() rebuild UI first images will be selected then will auto un check.
-
-              if (!loadedpreviousScreen) {
+              // on Obx() rebuild UI first images will be selected then will auto unCheck.
+              if (!loadedPreviousSelection) {
                 if (alreadySelectedUrls != null &&
                     alreadySelectedUrls!.isNotEmpty) {
                   // Convert alreadySelectedUrls to a set for faster lookup
@@ -95,7 +94,7 @@ class MediaContent extends StatelessWidget {
                     image.isSelected.value = false;
                   }
                 }
-                loadedpreviousScreen = true;
+                loadedPreviousSelection = true;
               }
 
               // Loader
@@ -111,42 +110,43 @@ class MediaContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Wrap(
-                      alignment: WrapAlignment.start,
-                      spacing: ASizes.spaceBtwItems / 2,
-                      runSpacing: ASizes.spaceBtwItems / 2,
-                      children: images
-                          .map(
-                            (image) => GestureDetector(
-                              onTap: () => Get.dialog(ImagePopup(image: image)),
-                              child: SizedBox(
-                                width: 140,
-                                height: 180,
-                                child: Column(
-                                  children: [
-                                    allowSelection
-                                        ? _buildListWithCheckBox(image)
-                                        : image.contentType == 'image'
-                                            ? _buildSimpleList(image)
-                                            : _buildSimpleArList(image),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: ASizes.sm),
-                                        child: Text(
-                                          image.filename,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                    alignment: WrapAlignment.start,
+                    spacing: ASizes.spaceBtwItems / 2,
+                    runSpacing: ASizes.spaceBtwItems / 2,
+                    children: images
+                        .map(
+                          (image) => GestureDetector(
+                            onTap: () => Get.dialog(ImagePopup(image: image)),
+                            child: SizedBox(
+                              width: 140,
+                              height: 180,
+                              child: Column(
+                                children: [
+                                  allowSelection
+                                      ? _buildListWithCheckBox(image)
+                                      : image.contentType == 'image'
+                                          ? _buildSimpleList(image)
+                                          : _buildSimpleArList(image),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: ASizes.sm),
+                                      child: Text(
+                                        image.filename,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                          )
-                          .toList()),
+                          ),
+                        )
+                        .toList(),
+                  ),
 
-                  // Load More Media Button
+                  // Load More Media Button - Show when all images loaded
                   if (!controller.loading.value)
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -176,6 +176,7 @@ class MediaContent extends StatelessWidget {
 
   List<ImageModel> _getSelectedFolderImages(MediaController controller) {
     List<ImageModel> images = [];
+
     if (controller.selectedPath.value == MediaCategory.banners) {
       images = controller.allBannerImages
           .where((image) => image.url.isNotEmpty)
@@ -209,10 +210,10 @@ class MediaContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: ASizes.lg * 3),
       child: AAnimationLoaderWidget(
-        text: 'Select your Desired Folder',
-        animation: AImages.packageAnimation,
         width: 300,
         height: 300,
+        text: 'Select your Desired Folder',
+        animation: AImages.packageAnimation,
         style: Theme.of(context).textTheme.titleLarge,
       ),
     );
@@ -280,6 +281,7 @@ class MediaContent extends StatelessWidget {
               onChanged: (selected) {
                 if (selected != null) {
                   image.isSelected.value = selected;
+
                   if (selected) {
                     if (!allowMultipleSelection) {
                       // If multiple selection is not allowed, uncheck other checkboxes
@@ -288,6 +290,7 @@ class MediaContent extends StatelessWidget {
                           otherImage.isSelected.value = false;
                         }
                       }
+
                       selectedImages.clear();
                     }
 

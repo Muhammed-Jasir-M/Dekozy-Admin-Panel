@@ -7,6 +7,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class CustomerOrders extends StatelessWidget {
   const CustomerOrders({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ARoundedContainer(
@@ -23,13 +24,14 @@ class CustomerOrders extends StatelessWidget {
                   children: [
                     const TextSpan(text: 'Total Spent'),
                     TextSpan(
-                        text: '\$484',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .apply(color: AColors.primary)),
+                      text: '\u{20B9}484',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .apply(color: AColors.primary),
+                    ),
                     TextSpan(
-                        text: 'on  ${5}Orders',
+                        text: ' on  ${5} Orders',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ],
                 ),
@@ -37,13 +39,16 @@ class CustomerOrders extends StatelessWidget {
             ],
           ),
           const SizedBox(height: ASizes.spaceBtwItems),
+          
           TextFormField(
             onChanged: (query) {},
             decoration: const InputDecoration(
-                hintText: 'Search Orders',
-                prefixIcon: Icon(Iconsax.search_normal)),
+              hintText: 'Search Orders',
+              prefixIcon: Icon(Iconsax.search_normal),
+            ),
           ),
           const SizedBox(height: ASizes.spaceBtwSections),
+
           const CustomerOrderTable(),
         ],
       ),

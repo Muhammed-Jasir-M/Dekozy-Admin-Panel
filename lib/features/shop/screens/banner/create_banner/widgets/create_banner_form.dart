@@ -50,8 +50,9 @@ class CreateBannerForm extends StatelessWidget {
                 ),
                 const SizedBox(height: ASizes.spaceBtwItems),
                 TextButton(
-                    onPressed: () => controller.pickimage(),
-                    child: Text('Select Image')),
+                  onPressed: () => controller.pickimage(),
+                  child: Text('Select Image'),
+                ),
               ],
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields),
@@ -69,26 +70,33 @@ class CreateBannerForm extends StatelessWidget {
             const SizedBox(height: ASizes.spaceBtwInputFields),
 
             // Dropdown Menu Screens
-
-            Obx(() {
-              return DropdownButton<String>(
-                  value: controller.targetScreem.value,
+            Obx(
+              () {
+                return DropdownButton<String>(
+                  value: controller.targetScreen.value,
                   onChanged: (String? newValue) =>
-                      controller.targetScreem.value = newValue!,
+                      controller.targetScreen.value = newValue!,
                   items: AppScreens.allAppScreenItems
-                      .map<DropdownMenuItem<String>>((value) {
-                    return DropdownMenuItem<String>(
-                        value: value, child: Text(value));
-                  },
+                      .map<DropdownMenuItem<String>>(
+                    (value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    },
                   ).toList(),
-                  );
-            },
+                );
+              },
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields * 2),
 
+            // Create Button
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(onPressed: () => controller.createBanenr(), child: const Text('Create')),
+              child: ElevatedButton(
+                onPressed: () => controller.createBanenr(),
+                child: const Text('Create'),
+              ),
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields * 2),
           ],

@@ -3,17 +3,17 @@ import 'package:aura_kart_admin_panel/features/personalisation/screens/profile/p
 import 'package:aura_kart_admin_panel/features/personalisation/screens/settings/settings.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/brand/all_brands/brands.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/brand/edit_brand/edit_brand.dart';
-import 'package:aura_kart_admin_panel/features/shop/screens/category/create_categories/create_category.dart';
-import 'package:aura_kart_admin_panel/features/shop/screens/category/edit_categories/edit_catogory.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/category/create_category/create_category.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/category/edit_category/edit_catogory.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/customer/all_customers/customers.dart';
-import 'package:aura_kart_admin_panel/features/shop/screens/customer/customer_detail/customer.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/customer/customer_detail/customer_detail.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/dashboard.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/forget_password/forget_password.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/login/login.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/reset_password/reset_password.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/order/all_orders/orders.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/order/orders_detail/order_detail.dart';
-import 'package:aura_kart_admin_panel/features/shop/screens/product/all_products/widgets/products.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/product/all_products/products.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/product/create_product/create_product.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/product/edit_product/edit_product.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
@@ -24,7 +24,7 @@ import '../features/shop/screens/banner/all_banners/banners.dart';
 import '../features/shop/screens/banner/create_banner/create_banner.dart';
 import '../features/shop/screens/banner/edit_banner/edit_banner.dart';
 import '../features/shop/screens/brand/create_brand/create_brand.dart';
-import '../features/shop/screens/category/all_categories/widgets/categories.dart';
+import '../features/shop/screens/category/all_categories/categories.dart';
 
 class AAppRoutes {
   static final List<GetPage> pages = [
@@ -34,7 +34,7 @@ class AAppRoutes {
     // ForgetPassword
     GetPage(
         name: ARoutes.forgetPassword, page: () => const ForgetPasswordScreen()),
-        
+
     // ResetPassword
     GetPage(
         name: ARoutes.resetPassword, page: () => const ResetPasswordScreen()),
@@ -126,8 +126,8 @@ class AAppRoutes {
         name: ARoutes.profile,
         page: () => const ProfileScreen(),
         middlewares: [ARoutesMiddleware()]),
-        
-    //Orders
+
+    // Orders
     GetPage(
         name: ARoutes.orders,
         page: () => const OrdersScreen(),

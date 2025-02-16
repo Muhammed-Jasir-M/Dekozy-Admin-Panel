@@ -20,6 +20,7 @@ class EditBannerForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(EditBannerController());
     controller.init(banner);
+
     return ARoundedContainer(
       width: 500,
       padding: const EdgeInsets.all(ASizes.defaultSpace),
@@ -51,8 +52,9 @@ class EditBannerForm extends StatelessWidget {
                 ),
                 const SizedBox(height: ASizes.spaceBtwItems),
                 TextButton(
-                    onPressed: () => controller.pickImage(),
-                    child: Text('Select Image')),
+                  onPressed: () => controller.pickImage(),
+                  child: Text('Select Image'),
+                ),
               ],
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields),
@@ -72,19 +74,29 @@ class EditBannerForm extends StatelessWidget {
             // Dropdown Menu Screens
             Obx(
               () => DropdownButton<String>(
-                  value: controller.targetScreen.value,
-                  onChanged: (String? newValue) =>
-                      controller.targetScreen.value = newValue!,
-                  items: AppScreens.allAppScreenItems
-                      .map<DropdownMenuItem<String>>((value) {
-                    return DropdownMenuItem<String>(value: value, child: Text(value));
-                  }).toList(),
-                  ),
+                value: controller.targetScreen.value,
+                onChanged: (String? newValue) =>
+                    controller.targetScreen.value = newValue!,
+                items:
+                    AppScreens.allAppScreenItems.map<DropdownMenuItem<String>>(
+                  (value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  },
+                ).toList(),
+              ),
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields * 2),
+
+            // Button
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(onPressed: () => controller.updateBanner(banner), child: Text('Update')),
+              child: ElevatedButton(
+                onPressed: () => controller.updateBanner(banner),
+                child: Text('Update'),
+              ),
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields * 2),
           ],
