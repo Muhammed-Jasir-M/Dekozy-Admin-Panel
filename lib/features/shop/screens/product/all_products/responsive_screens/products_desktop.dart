@@ -1,6 +1,8 @@
 import 'package:aura_kart_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:aura_kart_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/product/all_products/table/products_table.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
@@ -12,6 +14,7 @@ class ProductsDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -25,22 +28,27 @@ class ProductsDesktopScreen extends StatelessWidget {
               SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body
-              ARoundedContainer(
-                child: Column(
-                  children: [
-                    // Table Header
-                    ATableHeader(
-                      buttonText: 'Add Product',
-                      onPressed: () => Get.toNamed(ARoutes.createProduct),
-                    ),
+              Obx(() {
+                if (controller.isLoading.value) return const ALoaderAnimation();
 
-                    SizedBox(height: ASizes.spaceBtwItems),
 
-                    // Table
-                    const ProductsTable(),
-                  ],
-                ),
-              ),
+                return ARoundedContainer(
+                  child: Column(
+                    children: [
+                      // Table Header
+                      ATableHeader(buttonText: 'Add Product',
+                        onPressed: () => Get.toNamed(ARoutes.createProduct),
+                        searchOnChanged: controller.searchQuery(query),
+                      ),
+
+                      const SizedBox(height: ASizes.spaceBtwItems),
+
+                      // Table
+                      const ProductsTable(),
+                    ],
+                  ),
+                );
+              }),
             ],
           ),
         ),

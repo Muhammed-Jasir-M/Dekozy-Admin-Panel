@@ -32,6 +32,7 @@ class ProductsTabletScreen extends StatelessWidget {
                     ATableHeader(
                       buttonText: 'Add Product',
                       onPressed: () => Get.toNamed(ARoutes.createProduct),
+                      searchOnChanged: controller.searchQuery(query),
                     ),
 
                     SizedBox(height: ASizes.spaceBtwItems),

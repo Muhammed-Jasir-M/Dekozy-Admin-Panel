@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'brand_model.dart';
 import 'product_attribute_model.dart';
 import 'product_variation_model.dart';
@@ -19,6 +18,7 @@ class ProductModel {
   String? categoryId;
   List<String>? images;
   String productType;
+  int soldQuantity;
   List<ProductAttributeModel>? productAttributes;
   List<ProductVariationModel>? productVariations;
 
@@ -29,6 +29,7 @@ class ProductModel {
     required this.price,
     required this.thumbnail,
     required this.productType,
+    this.soldQuantity = 0, 
     this.sku,
     this.brand,
     this.date,
@@ -66,6 +67,7 @@ class ProductModel {
       'Brand': brand!.toJson(),
       'Description': description,
       'ProductType': productType,
+      'soldQuantity': soldQuantity,
       'ProductAttributes': productAttributes != null
           ? productAttributes!.map((e) => e.toJson()).toList()
           : [],
@@ -85,6 +87,7 @@ class ProductModel {
       sku: data['SKU'],
       title: data['Title'],
       stock: data['Stock'] ?? 0,
+      soldQuantity: data.containsKey('soldQuantity') ? data['soldQuantity'] ?? 0 : 0,
       isFeatured: data['IsFeatured'] ?? false,
       price: double.parse((data['Price'] ?? 0.0).toString()),
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
@@ -112,6 +115,7 @@ class ProductModel {
       sku: data['SKU'] ?? '',
       title: data['Title'] ?? '',
       stock: data['Stock'] ?? 0,
+      soldQuantity: data.containsKey('soldQuantity') ? data['soldQuantity'] ?? 0 : 0,
       isFeatured: data['IsFeatured'] ?? false,
       price: double.parse((data['Price'] ?? 0.0).toString()),
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),

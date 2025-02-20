@@ -33,6 +33,7 @@ class ProductsMobileScreen extends StatelessWidget {
                     ATableHeader(
                       buttonText: 'Add Product',
                       onPressed: () => Get.toNamed(ARoutes.createProduct),
+                      searchOnChanged: controller.searchQuery(query),
                     ),
 
                     const SizedBox(height: ASizes.spaceBtwItems),

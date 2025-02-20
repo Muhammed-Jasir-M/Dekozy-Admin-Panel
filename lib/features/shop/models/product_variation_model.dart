@@ -1,23 +1,27 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
 class ProductVariationModel {
   final String id;
   String sku;
-  String image;
+  Rx<String> image;
   String? description;
   double price;
   double salePrice;
   int stock;
+  int soldQuantity;
   Map<String, String> attributeValues;
 
   ProductVariationModel({
     required this.id,
     this.sku = '',
-    this.image = '',
+    String image = '',
     this.description = '',
     this.price = 0.0,
     this.salePrice = 0.0,
     this.stock = 0,
+    this.soldQuantity = 0,
     required this.attributeValues,
-  });
+  }) : image = image.obs;
 
   /// Create Empty function for clean code
   static ProductVariationModel empty() =>
@@ -27,12 +31,13 @@ class ProductVariationModel {
   toJson() {
     return {
       'Id': id,
-      'Image': image,
+      'Image': image.value,
       'Description': description,
       'Price': price,
       'SalePrice': salePrice,
       'SKU': sku,
       'Stock': stock,
+      'soldQuantity' : soldQuantity,
       'AttributeValues': attributeValues,
     };
   }
@@ -47,6 +52,7 @@ class ProductVariationModel {
       id: data['Id'] ?? '',
       price: double.parse((data['Price'] ?? 0.0).toString()),
       sku: data['SKU'] ?? '',
+      description: data['Description'] ?? '',
       stock: data['Stock'] ?? 0,
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
       image: data['Image'] ?? '',

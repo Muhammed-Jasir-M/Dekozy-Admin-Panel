@@ -1,5 +1,6 @@
 import 'package:aura_kart_admin_panel/common/widgets/icons/table_action_icon_buttons.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_controller.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
@@ -12,9 +13,15 @@ import 'package:get/get.dart';
 import '../../../../models/product_model.dart';
 
 class ProductsRows extends DataTableSource {
+  final controller = ProductController.instance;
+
   @override
   DataRow? getRow(int index) {
+    final product = controller.filteredItems[index];
     return DataRow2(
+      selected: controller.selectedRows[index],
+      onTap: () => Get.toNamed(ARoutes.editProduct, arguments: product),
+      onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
@@ -23,8 +30,8 @@ class ProductsRows extends DataTableSource {
                 width: 50,
                 height: 50,
                 padding: ASizes.xs,
-                image: AImages.applePay,
-                imageType: ImageType.asset,
+                image: product.thumbnail,
+                imageType: ImageType.network,
                 borderRadius: ASizes.borderRadiusMd,
                 backgroundColor: AColors.primaryBackground,
               ),
@@ -34,14 +41,14 @@ class ProductsRows extends DataTableSource {
                   'Product Title',
                   style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(
                         color: AColors.primary,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                        ),
                 ),
               ),
             ],
           ),
         ),
-        DataCell(Text('256')),
+        DataCell(Text(controller.getProductStockTotal(product))),
+        DataCell(Text(controller.getProductSoldQuantity(product))),
         DataCell(
           Row(
             children: [
@@ -57,21 +64,22 @@ class ProductsRows extends DataTableSource {
               const SizedBox(width: ASizes.spaceBtwItems),
               Flexible(
                 child: Text(
-                  'Nike',
+                 product.brand ! = null ? product.brand!.name : '',
                   style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(
-                      color: AColors.primary, overflow: TextOverflow.ellipsis),
+                      color: AColors.primary),
                 ),
-              )
+              ),
             ],
           ),
         ),
-        const DataCell(Text('\u{20B9}99.9')),
-        DataCell(Text(DateTime.now().toString())),
+
+
+        DataCell(Text('\$${controller.getProductPrice(product)}')),
+        DataCell(Text(product.formattedDate)),
         DataCell(
           ATableActionButtons(
-            onEditPressed: () => Get.toNamed(ARoutes.editProduct,
-                arguments: ProductModel.empty()),
-            onDeletePressed: () {},
+            onEditPressed: () => Get.toNamed(ARoutes.editProduct,arguments: ProductModel.empty()),
+            onDeletePressed: () => controller.confrimAndDeleteItem(product),
           ),
         ),
       ],
@@ -82,8 +90,8 @@ class ProductsRows extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => 100;
+  int get rowCount => controller.filteredItems.length;
 
   @override
-  int get selectedRowCount => 0;
+  int get selectedRowCount => controller.selectedRows.where((selected) => selected).length;
 }

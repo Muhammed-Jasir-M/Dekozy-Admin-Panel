@@ -23,7 +23,7 @@ abstract class ABaseController<T> extends GetxController {
   Future<List<T>> fetchItems();
 
   //abstract method to be implemented by subclass for deleting on item
-  Future<void> deleteItem(T item);
+  Future<void>  deleteItem(T item);
 
   // abstract method to be implemented by subclass for checking if the items contqains the search query
   bool containsSearchQuery(T item, String query);
