@@ -13,10 +13,10 @@ class BrandRepository extends GetxController {
   //  singleton instance of the BrandRepositiory
   static BrandRepository get instance => Get.find();
 
-  //fiebase firestore instance
+  // Firebase Firestore Instance
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // get all brands from the 'Brands' collection
+  // Get all brands from the 'Brands' collection
   Future<List<BrandModel>> getAllBrands() async {
     try {
       final snapshot = await _db.collection('Brands').get();
@@ -30,11 +30,11 @@ class BrandRepository extends GetxController {
     } on PlatformException catch (e) {
       throw e.message!;
     } catch (e) {
-      throw 'something went wrong!! please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // get all brands from the brandscatefgory collection
+  // Get all brand categories from the 'BrandCategory' collection
   Future<List<BrandCategoryModel>> getAllBrandCategories() async {
     try {
       final brandCategoryQuery = await _db.collection('BrandCategory').get();
@@ -49,21 +49,24 @@ class BrandRepository extends GetxController {
     } on PlatformException catch (e) {
       throw e.message!;
     } catch (e) {
-      throw 'something went wrong!! plaese try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  //get specific brand categories for aa given brand id
+  // Get specific brand categories for a given brandId
   Future<List<BrandCategoryModel>> getCategoriesOfSpecificBrand(
-      String brandId) async {
+    String brandId,
+  ) async {
     try {
-      final brandCatgeoryQuery = await _db
+      final brandCategoryQuery = await _db
           .collection('BrandCategory')
           .where('brandId', isEqualTo: brandId)
           .get();
-      final brandCategories = brandCatgeoryQuery.docs
+
+      final brandCategories = brandCategoryQuery.docs
           .map((doc) => BrandCategoryModel.fromSnapshot(doc))
           .toList();
+
       return brandCategories;
     } on FirebaseException catch (e) {
       throw e.message!;
@@ -72,11 +75,11 @@ class BrandRepository extends GetxController {
     } on PlatformException catch (e) {
       throw e.message!;
     } catch (e) {
-      throw 'something went wrong!! plaese try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // create a new brand document in the 'Brands' collection
+  // Create a new brand document in the 'Brands' collection
   Future<String> createBrand(BrandModel brand) async {
     try {
       final result = await _db.collection("Brands").add(brand.toJson());
@@ -88,11 +91,11 @@ class BrandRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'something went wrong!! plaese try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // create a new brand category document in the 'brandcategory' collection
+  // Create a new brandCategory document in the 'BrandCategory' collection
   Future<String> createBrandCategory(BrandCategoryModel brandCategory) async {
     try {
       final result =
@@ -105,11 +108,11 @@ class BrandRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'something went wrong!! plaese try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // update an existing brand document in the 'brand' collection
+  // Update an existing brand document in the 'Brands' collection
   Future<void> updateBrand(BrandModel brand) async {
     try {
       await _db.collection("Brands").doc(brand.id).update(brand.toJson());
@@ -120,11 +123,11 @@ class BrandRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'something went wrong!! plaese try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  //  delete an existing document and its associated brand categories
+  // Delete an existing brand document and its associated brand categories
   Future<void> deleteBrand(BrandModel brand) async {
     try {
       await _db.runTransaction((transaction) async {
@@ -139,6 +142,7 @@ class BrandRepository extends GetxController {
             .collection('Brandcategory')
             .where('brandId', isEqualTo: brand.id)
             .get();
+
         final brandCategories = brandCatgoriesSnapshot.docs
             .map((e) => BrandCategoryModel.fromSnapshot(e));
 
@@ -148,6 +152,7 @@ class BrandRepository extends GetxController {
                 .delete(_db.collection('BrandCategory').doc(brandCategory.id));
           }
         }
+
         transaction.delete(brandRef);
       });
     } on FirebaseException catch (e) {
@@ -157,11 +162,11 @@ class BrandRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong , please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // delete a brand document in the 'Brand Category' Collecion
+  // Delete a brand category document in the 'BrandCategory' collecion
   Future<void> deleteBrandCategory(String brandCategoryId) async {
     try {
       await _db.collection("BrandCategory").doc(brandCategoryId).delete();
@@ -172,7 +177,7 @@ class BrandRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong , please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 }

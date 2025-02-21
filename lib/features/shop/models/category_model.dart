@@ -23,7 +23,7 @@ class CategoryModel {
   String get formattedDate => AFormatter.formatDate(createdAt);
   String get formattedUpdatedAtDate => AFormatter.formatDate(updatedAt);
 
-  /// Empty Helper Function
+  /// Empty helper function
   static CategoryModel empty() =>
       CategoryModel(id: '', image: '', name: '', isFeatured: false);
 
@@ -34,15 +34,16 @@ class CategoryModel {
       'Image': image,
       'ParentId': parentId,
       'IsFeatured': isFeatured,
+      'CreatedAt': createdAt,
+      'UpdatedAt': updatedAt = DateTime.now(),
     };
   }
 
   /// Map Json oriented document snapshot from Firebase to Usermodel
   factory CategoryModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
-      final data = document.data()!;
-
+    final data = document.data();
+    if (data != null) {
       // Map Json Record to Model
       return CategoryModel(
         id: document.id,
@@ -50,6 +51,8 @@ class CategoryModel {
         image: data['Image'] ?? '',
         parentId: data['ParentId'] ?? '',
         isFeatured: data['IsFeatured'] ?? false,
+        createdAt: data.containsKey('CreatedAt') ? data['CreatedAt']?.toDate() : null,
+        updatedAt: data.containsKey('UpdatedAt') ? data['UpdatedAt']?.toDate() : null,
       );
     } else {
       return CategoryModel.empty();

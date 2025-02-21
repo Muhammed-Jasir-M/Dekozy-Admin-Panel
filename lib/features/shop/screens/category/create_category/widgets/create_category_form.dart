@@ -62,9 +62,7 @@ class CreateCategoryForm extends StatelessWidget {
                               value: item,
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(item.name),
-                                ],
+                                children: [Text(item.name)],
                               ),
                             ),
                           )

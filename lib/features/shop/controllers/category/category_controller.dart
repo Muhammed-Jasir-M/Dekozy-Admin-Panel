@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/data/abstract/base_data_table_controlle.dart';
+import 'package:aura_kart_admin_panel/data/abstract/base_data_table_controller.dart';
 import 'package:aura_kart_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/category_model.dart';
 import 'package:get/get.dart';
@@ -23,11 +23,12 @@ class CategoryController extends ABaseController<CategoryModel> {
     return await _categoryRepository.getAllCategories();
   }
 
-  //soring related code
+  // Soring related code
   void sortByName(int sortColumnIndex, bool ascending) {
-    sortByProperty(sortColumnIndex, ascending, (
-      CategoryModel category) => category.name.toLowerCase());
+    sortByProperty(
+      sortColumnIndex,
+      ascending,
+      (CategoryModel category) => category.name.toLowerCase(),
+    );
   }
 }
-  
-   

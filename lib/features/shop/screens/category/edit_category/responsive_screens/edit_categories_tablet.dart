@@ -6,8 +6,13 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class EditCategoryTabletScreen extends StatelessWidget {
-  const EditCategoryTabletScreen({super.key, required this.category});
+  const EditCategoryTabletScreen({
+    super.key,
+    required this.category,
+  });
+
   final CategoryModel category;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

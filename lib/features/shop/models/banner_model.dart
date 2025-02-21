@@ -3,14 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class BannerModel {
   String? id;
   String imageUrl;
-  late final String targetScreen;
-  late final bool active;
+  String targetScreen;
+  bool active;
 
-  BannerModel(
-      {this.id,
-        required this.imageUrl,
-      required this.targetScreen,
-      required this.active});
+  BannerModel({
+    this.id,
+    required this.imageUrl,
+    required this.targetScreen,
+    required this.active,
+  });
 
   Map<String, dynamic> toJson() {
     return {

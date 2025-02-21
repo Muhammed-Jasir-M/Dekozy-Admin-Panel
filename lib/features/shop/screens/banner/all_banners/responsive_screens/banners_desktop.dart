@@ -30,26 +30,30 @@ class BannersDesktopScreen extends StatelessWidget {
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body
-              Obx(() {
-                // Show Loader
-                if (controller.isLoading.value) return const ALoaderAnimation();
+              Obx(
+                () {
+                  // Show Loader
+                  if (controller.isLoading.value) {
+                    return const ALoaderAnimation();
+                  }
 
-                return ARoundedContainer(
-                  child: Column(
-                    children: [
-                      // Table Header
-                      ATableHeader(
-                        buttonText: 'Create New Banner',
-                        onPressed: () => Get.toNamed(ARoutes.createBanner),
-                      ),
-                      const SizedBox(height: ASizes.spaceBtwItems),
+                  return ARoundedContainer(
+                    child: Column(
+                      children: [
+                        // Table Header
+                        ATableHeader(
+                          buttonText: 'Create New Banner',
+                          onPressed: () => Get.toNamed(ARoutes.createBanner),
+                        ),
+                        const SizedBox(height: ASizes.spaceBtwItems),
 
-                      // Table
-                      const BannersTable(),
-                    ],
-                  ),
-                );
-              }),
+                        // Table
+                        const BannersTable(),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),

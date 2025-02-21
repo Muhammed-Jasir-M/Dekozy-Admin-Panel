@@ -17,34 +17,40 @@ class EditCategoryController extends GetxController {
   RxString imageURL = ''.obs;
   final isFeatured = false.obs;
   final name = TextEditingController();
+  
   final formKey = GlobalKey<FormState>();
 
   /// Init Data
-  void init(CategoryModel category){
+  void init(CategoryModel category) {
     name.text = category.name;
-    isFeatured.value=category.isFeatured;
-    imageURL.value =category.image;
+    isFeatured.value = category.isFeatured;
+    imageURL.value = category.image;
     if (category.parentId.isNotEmpty) {
-      selectedParent.value=CategoryController.instance.allItems.where((c)=>c.id == category.parentId).single;
+      selectedParent.value = CategoryController.instance.allItems
+          .where((c) => c.id == category.parentId)
+          .single;
     }
   }
 
-  /// Register new Category
+  /// Register Category
   Future<void> updateCategory(CategoryModel category) async {
     try {
-      //Strat Loading
+      // Start Loading
       AFullScreenLoader.popUpCircular();
+
       // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AFullScreenLoader.stopLoading();
         return;
       }
+
       // Form Validation
       if (!formKey.currentState!.validate()) {
         AFullScreenLoader.stopLoading();
         return;
       }
+
       // Map Data
       category.image = imageURL.value;
       category.name = name.text.trim();
@@ -55,20 +61,21 @@ class EditCategoryController extends GetxController {
       // Call Repository to create new user
       await CategoryRepository.instance.updateCategory(category);
 
-      // Update all data list
-      CategoryController.instance.updateItemforLists(category);
-      //Reset form
+      // Update all Data list
+      CategoryController.instance.updateItemfromLists(category);
+
+      // Reset Form
       resetFields();
 
-      //Remove Loader
+      // Remove Loader
       AFullScreenLoader.stopLoading();
 
-      //Success Message & Redirect
+      // Success Message & Redirect
       ALoaders.successSnackBar(
           title: 'Congratulations', message: 'Your Record has been updated.');
     } catch (e) {
       AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 
@@ -85,13 +92,13 @@ class EditCategoryController extends GetxController {
       imageURL.value = selectedImage.url;
     }
   }
-  
-  // Method to reset field
+
+  /// Method to reset field
   void resetFields() {
     selectedParent(CategoryModel.empty());
     loading(false);
     isFeatured(false);
     name.clear();
-    imageURL.value='';
+    imageURL.value = '';
   }
 }

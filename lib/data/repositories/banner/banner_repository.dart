@@ -11,10 +11,10 @@ import 'package:get/get.dart';
 class BannerRepository extends GetxController {
   static BannerRepository get instance => Get.find();
 
-  // firebase firestore instance
+  // Firebase Firestore Instance
   final _db = FirebaseFirestore.instance;
 
-  // get all banners from firestore
+  // Get all banners from Firestore
   Future<List<BannerModel>> getAllBanners() async {
     try {
       final snapshot = await _db.collection("Banners").get();
@@ -28,11 +28,11 @@ class BannerRepository extends GetxController {
     } on PlatformException catch (e) {
       throw e.message!;
     } catch (e) {
-      throw 'something went wrong! cplease try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // craete a new banner in firestore
+  // Create a new banner in Firestore
   Future<String> createBanner(BannerModel banner) async {
     try {
       final result = await _db.collection("Banners").add(banner.toJson());
@@ -44,29 +44,37 @@ class BannerRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'something went wrong! plaease try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // update an existing banner in firestore
-  Future<String?> updateBanner(BannerModel banner) async {
+  // Update an existing Banner in Firestore
+  Future<void> updateBanner(BannerModel banner) async {
     try {
       await _db.collection("Banners").doc(banner.id).update(banner.toJson());
-      return banner.id;
     } on FirebaseException catch (e) {
-       throw AFirebaseException(e.code).message;
+      throw AFirebaseException(e.code).message;
     } on FormatException catch (_) {
       throw const AFormatException();
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'something went wrong! plaease try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  deleteBanner(String s) {}
-
-
-
+  // Delete a Banner from Firestore
+  Future<void> deleteBanner(String bannerId) async {
+    try {
+      await _db.collection("Banners").doc(bannerId).delete();
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong!. Please try again';
+    }
+  }
 }
-

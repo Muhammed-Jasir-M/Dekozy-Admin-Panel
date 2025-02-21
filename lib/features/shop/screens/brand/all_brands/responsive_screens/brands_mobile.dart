@@ -37,6 +37,7 @@ class BrandsMobileScreen extends StatelessWidget {
                     ATableHeader(
                       buttonText: 'Create New Brand',
                       onPressed: () => Get.toNamed(ARoutes.createBrand),
+                      searchOnChanged: (query) => controller.searchQuery(query),
                     ),
                     const SizedBox(height: ASizes.spaceBtwItems),
 
@@ -47,6 +48,7 @@ class BrandsMobileScreen extends StatelessWidget {
                         if (controller.isLoading.value) {
                           return const ALoaderAnimation();
                         }
+                        
                         return const BrandTable();
                       },
                     ),

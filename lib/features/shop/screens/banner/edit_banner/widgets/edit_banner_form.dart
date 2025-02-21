@@ -8,7 +8,6 @@ import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../../../utils/constants/colors.dart';
 
 class EditBannerForm extends StatelessWidget {
@@ -25,6 +24,7 @@ class EditBannerForm extends StatelessWidget {
       width: 500,
       padding: const EdgeInsets.all(ASizes.defaultSpace),
       child: Form(
+        key: controller.formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -73,20 +73,22 @@ class EditBannerForm extends StatelessWidget {
 
             // Dropdown Menu Screens
             Obx(
-              () => DropdownButton<String>(
-                value: controller.targetScreen.value,
-                onChanged: (String? newValue) =>
-                    controller.targetScreen.value = newValue!,
-                items:
-                    AppScreens.allAppScreenItems.map<DropdownMenuItem<String>>(
-                  (value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  },
-                ).toList(),
-              ),
+              () {
+                return DropdownButton<String>(
+                  value: controller.targetScreen.value,
+                  onChanged: (String? newValue) =>
+                      controller.targetScreen.value = newValue!,
+                  items: AppScreens.allAppScreenItems
+                      .map<DropdownMenuItem<String>>(
+                    (value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    },
+                  ).toList(),
+                );
+              },
             ),
             const SizedBox(height: ASizes.spaceBtwInputFields * 2),
 

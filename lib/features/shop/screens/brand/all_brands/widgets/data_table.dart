@@ -24,14 +24,16 @@ class BrandTable extends StatelessWidget {
 
       return APaginatedDataTable(
         minWidth: 700,
-        tableHeight: lgTable ? 96 * 11.5 : 760,
         dataRowHeight: lgTable ? 96 : 64,
+        tableHeight: lgTable ? 96 * 11.5 : 760,
         sortAscending: controller.sortAscending.value,
         sortColumnIndex: controller.sortColumnIndex.value,
         columns: [
           DataColumn2(
             label: const Text('Brand'),
             fixedWidth: ADeviceUtils.isMobileScreen(Get.context!) ? null : 200,
+            onSort: (columnIndex, ascending) =>
+                controller.sortByName(columnIndex, ascending),
           ),
           const DataColumn2(label: Text('Categories')),
           DataColumn2(

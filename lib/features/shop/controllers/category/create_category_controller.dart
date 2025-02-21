@@ -17,53 +17,16 @@ class CreateCategoryController extends GetxController {
   RxString imageURL = ''.obs;
   final isFeatured = false.obs;
   final name = TextEditingController();
+  
   final formKey = GlobalKey<FormState>();
 
   /// Method to Reset Fileds
-
-  /// Pick Thumbnail Image From Media
-
-  /// Register new Category
-  Future<void> createcategory() async {
-    try {
-      //Start Loading
-      AFullScreenLoader.popUpCircular();
-      // Check Internet Connectivity
-      final isConnected = await NetworkManager.instance.isConnected();
-      if (!isConnected) {
-        AFullScreenLoader.stopLoading();
-        return;
-      }
-      if (!formKey.currentState!.validate()) {
-        AFullScreenLoader.stopLoading();
-        return;
-      }
-
-      //Map Data
-      final newRecord= CategoryModel(
-        id: '', 
-        image:imageURL.value ,
-        name: name.text.trim(),
-        createdAt: DateTime.now(),
-        isFeatured: isFeatured.value,
-        parentId: selectedParent.value.id,
-        );
-      newRecord.id=  await CategoryRepository.instance.createCategory(newRecord);
-      
-       // Update All Data list
-       CategoryController.instance.addItemToLists(newRecord);
-       // Reset for
-       resetFields();
-
-      //Remove Loader
-      AFullScreenLoader.stopLoading();
-      // Success Message & Redirect
-      ALoaders.successSnackBar(
-          title: 'Congratulations', message: 'New Record Has Been Added.');
-    } catch (e) {
-      AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
-    }
+  void resetFields() {
+    selectedParent(CategoryModel.empty());
+    loading(false);
+    isFeatured(false);
+    name.clear();
+    imageURL.value = '';
   }
 
   /// Pick Thumbnail Image from Media
@@ -79,12 +42,55 @@ class CreateCategoryController extends GetxController {
       imageURL.value = selectedImage.url;
     }
   }
-  
-  void resetFields() {
-    selectedParent(CategoryModel.empty());
-    loading(false);
-    isFeatured(false);
-    name.clear();
-    imageURL.value='';
+
+  /// Register new Category
+  Future<void> createcategory() async {
+    try {
+      // Start Loading
+      AFullScreenLoader.popUpCircular();
+
+      // Check Internet Connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        AFullScreenLoader.stopLoading();
+        return;
+      }
+
+      // Form Validation
+      if (!formKey.currentState!.validate()) {
+        AFullScreenLoader.stopLoading();
+        return;
+      }
+
+      // Map Data
+      final newRecord = CategoryModel(
+        id: '',
+        image: imageURL.value,
+        name: name.text.trim(),
+        createdAt: DateTime.now(),
+        isFeatured: isFeatured.value,
+        parentId: selectedParent.value.id,
+      );
+
+      newRecord.id =
+          await CategoryRepository.instance.createCategory(newRecord);
+
+      // Update All Data list
+      CategoryController.instance.addItemToLists(newRecord);
+
+      // Reset Form
+      resetFields();
+
+      // Remove Loader
+      AFullScreenLoader.stopLoading();
+
+      // Success Message & Redirect
+      ALoaders.successSnackBar(
+          title: 'Congratulations', message: 'New Record Has Been Added.');
+    } catch (e) {
+      AFullScreenLoader.stopLoading();
+
+      ALoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+    }
   }
 }

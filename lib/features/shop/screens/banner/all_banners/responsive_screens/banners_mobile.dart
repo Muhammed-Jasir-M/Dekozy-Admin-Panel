@@ -1,3 +1,5 @@
+import 'package:aura_kart_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/banner/banner_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +15,8 @@ class BannersMobileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BannerController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -22,28 +26,34 @@ class BannersMobileScreen extends StatelessWidget {
             children: [
               // Breadcrumbs
               const ABreadcrumbsWithHeading(
-                heading: 'Banners',
-                breadcrumbItems: ['Banners'],
-              ),
+                  heading: 'Banners', breadcrumbItems: ['Banners']),
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body
-              ARoundedContainer(
-                child: Column(
-                  children: [
-                    // Table Header
-                    ATableHeader(
-                      buttonText: 'Create New Banner',
-                      onPressed: () => Get.toNamed(ARoutes.createBanner),
-                    ),
-                    
-                    const SizedBox(height: ASizes.spaceBtwItems),
+              Obx(
+                () {
+                  // Show Loader
+                  if (controller.isLoading.value) {
+                    return const ALoaderAnimation();
+                  }
 
-                    // Table
-                    const BannersTable(),
-                  ],
-                ),
-              )
+                  return ARoundedContainer(
+                    child: Column(
+                      children: [
+                        // Table Header
+                        ATableHeader(
+                          buttonText: 'Create New Banner',
+                          onPressed: () => Get.toNamed(ARoutes.createBanner),
+                        ),
+                        const SizedBox(height: ASizes.spaceBtwItems),
+
+                        // Table
+                        const BannersTable(),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),

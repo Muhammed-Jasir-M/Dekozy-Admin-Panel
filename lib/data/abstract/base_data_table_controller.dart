@@ -6,11 +6,15 @@ import 'package:get/get.dart';
 
 abstract class ABaseController<T> extends GetxController {
   RxBool isLoading = false.obs;
+
   RxInt sortColumnIndex = 1.obs;
   RxBool sortAscending = true.obs;
+
   RxList<T> allItems = <T>[].obs;
   RxList<T> filteredItems = <T>[].obs;
+
   RxList<bool> selectedRows = <bool>[].obs;
+
   final searchTextController = TextEditingController();
 
   @override
@@ -19,45 +23,53 @@ abstract class ABaseController<T> extends GetxController {
     super.onInit();
   }
 
-  // abstract method to be implemented by subclass for fetching items
+  // Abstract method to be implemented by subclass for fetching items.
   Future<List<T>> fetchItems();
 
-  //abstract method to be implemented by subclass for deleting on item
-  Future<void>  deleteItem(T item);
+  // Abstract method to be implemented by subclass for deleting an item.
+  Future<void> deleteItem(T item);
 
-  // abstract method to be implemented by subclass for checking if the items contqains the search query
+  // Abstract method to be implemented by subclass for checking if an item contains the search query.
   bool containsSearchQuery(T item, String query);
 
-  // common method for fetching data
+  // Common Method for Fetching Data
   Future<void> fetchData() async {
     try {
       isLoading.value = true;
+
       List<T> fetchedItems = [];
+
       if (allItems.isEmpty) {
         fetchedItems = await fetchItems();
       }
+
       allItems.assignAll(fetchedItems);
       filteredItems.assignAll(allItems);
       selectedRows.assignAll(List.generate(allItems.length, (index) => false));
     } catch (e) {
       isLoading.value = false;
+
       AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Uh Oh', message: e.toString());
+
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
       isLoading.value = false;
     }
   }
 
-// commmon method for searching based on aa query
+  // Common Method for Searching based on a Query
   void searchQuery(String query) {
     filteredItems.assignAll(
       allItems.where((item) => containsSearchQuery(item, query)),
     );
   }
 
-  // common methods for sorting a property
+  // Common Method for Sorting items by a property
   void sortByProperty(
-      int sortColumIndex, bool ascending, Function(T) property) {
+    int sortColumIndex,
+    bool ascending,
+    Function(T) property,
+  ) {
     sortAscending.value = ascending;
     this.sortColumnIndex.value = sortColumIndex;
 
@@ -70,15 +82,15 @@ abstract class ABaseController<T> extends GetxController {
     });
   }
 
-  //method for adding an item to list
+  // Method for adding an item to the lists.
   void addItemToLists(T item) {
     allItems.add(item);
     filteredItems.add(item);
     selectedRows.assignAll(List.generate(allItems.length, (index) => false));
   }
 
-  // method for updating an item to lists
-  void updateItemforLists(T item) {
+  // Method for updating an item in the lists
+  void updateItemfromLists(T item) {
     final itemIndex = allItems.indexWhere((i) => i == item);
     final filteredItemIndex = filteredItems.indexWhere((i) => i == item);
 
@@ -86,16 +98,16 @@ abstract class ABaseController<T> extends GetxController {
     if (filteredItemIndex != -1) filteredItems[itemIndex] = item;
   }
 
-  // method for removing an item from the list
-  void removeItemFromList(T item) {
+  // Method for removing an item from the lists.
+  void removeItemFromLists(T item) {
     allItems.remove(item);
     filteredItems.remove(item);
     selectedRows.assignAll(List.generate(allItems.length, (index) => false));
   }
 
-  // common method for confirming deletion and performing the deletion
+  // Common Method for confirming deletion and performing the deletion.
   Future<void> confrimAndDeleteItem(T item) async {
-    // show a confirguration dialog
+    // Show a Confirmation Dialog
     Get.defaultDialog(
       title: 'Delete Item',
       content: const Text('Are you sure you want to delete this item?'),
@@ -107,7 +119,8 @@ abstract class ABaseController<T> extends GetxController {
             padding:
                 const EdgeInsets.symmetric(vertical: ASizes.buttonHeight / 2),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ASizes.buttonRadius * 5)),
+              borderRadius: BorderRadius.circular(ASizes.buttonRadius * 5),
+            ),
           ),
           child: const Text('Ok'),
         ),
@@ -120,7 +133,8 @@ abstract class ABaseController<T> extends GetxController {
             padding:
                 const EdgeInsets.symmetric(vertical: ASizes.buttonHeight / 2),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ASizes.buttonRadius * 5)),
+              borderRadius: BorderRadius.circular(ASizes.buttonRadius * 5),
+            ),
           ),
           child: const Text('Cancel'),
         ),
@@ -128,26 +142,27 @@ abstract class ABaseController<T> extends GetxController {
     );
   }
 
-  //method to implement by subclasses for handling confirmation before deleteing an item
+  // Method to be implemented by subclasses for handling confirmation before deleteing an item.
   Future<void> deleteOnConfirm(T item) async {
     try {
-      //remove the configuration dialog
+      // Remove the Confirmation Dialog
       AFullScreenLoader.stopLoading();
 
-      //start the loader
+      // Start the Loader
       AFullScreenLoader.popUpCircular();
 
-      //delete firestore data
+      // Delete Firestore Data
       await deleteItem(item);
 
-      removeItemFromList(item);
+      removeItemFromLists(item);
 
       AFullScreenLoader.stopLoading();
+
       ALoaders.successSnackBar(
-          title: 'Item Deleted', message: 'Your item has been deleted');
+          title: 'Item Deleted', message: 'Your Item has been Deleted');
     } catch (e) {
       AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Uh Oh!', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 }

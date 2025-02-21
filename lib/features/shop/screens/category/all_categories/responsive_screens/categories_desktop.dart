@@ -29,7 +29,6 @@ class CategoriesDesktopScreen extends StatelessWidget {
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body
-              // Show Loader
               ARoundedContainer(
                 child: Column(
                   children: [
@@ -38,6 +37,7 @@ class CategoriesDesktopScreen extends StatelessWidget {
                       buttonText: 'Create New Category',
                       onPressed: () => Get.toNamed(ARoutes.createCategory),
                       searchController: controller.searchTextController,
+                      searchOnChanged: (query) => controller.searchQuery(query),
                     ),
                     const SizedBox(height: ASizes.spaceBtwItems),
 

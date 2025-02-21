@@ -109,7 +109,7 @@ class ImageModel {
       filename: imageName,
       sizeBytes: response['bytes'] ?? 0,
       contentType: response['resource_type'] ?? '',
-      createdAt: response['created_at'] ?? DateTime.now(),
+      createdAt: DateTime.now(),
       format: response['format'] ?? '',
       mimeType: mimeType ?? '',
     );

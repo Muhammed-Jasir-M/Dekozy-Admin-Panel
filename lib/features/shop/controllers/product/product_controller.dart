@@ -1,8 +1,9 @@
-import 'package:aura_kart_admin_panel/data/abstract/base_data_table_controlle.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/product_model.dart';
-import 'package:aura_kart_admin_panel/features/shop/models/product_repositroy.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:get/get.dart';
+
+import '../../../../data/abstract/base_data_table_controller.dart';
+import '../../../../data/repositories/product/product_repositroy.dart';
 
 class ProductController extends ABaseController<ProductModel> {
   static ProductController get instance => Get.find();
@@ -24,27 +25,41 @@ class ProductController extends ABaseController<ProductModel> {
 
   @override
   Future<void> deleteItem(ProductModel item) async {
+    // You might want to add check if any orders of this product exists, then delete it.
     await _productRepository.deleteProduct(item);
   }
 
-  // sorting related code
+  // Sorting related code
   void sortByName(int sortColumnIndex, bool ascending) {
-    sortByProperty(sortColumnIndex, ascending,
-        (ProductModel product) => product.title.toLowerCase());
+    sortByProperty(
+      sortColumnIndex,
+      ascending,
+      (ProductModel product) => product.title.toLowerCase(),
+    );
   }
 
   void sortByPrice(int sortColumnIndex, bool ascending) {
     sortByProperty(
-        sortColumnIndex, ascending, (ProductModel product) => product.price);
+      sortColumnIndex,
+      ascending,
+      (ProductModel product) => product.price,
+    );
   }
 
   void sortByStock(int sortColmunIndex, bool ascending) {
     sortByProperty(
-        sortColmunIndex, ascending, (ProductModel product) => product.stock);
+      sortColmunIndex,
+      ascending,
+      (ProductModel product) => product.stock,
+    );
   }
 
   void sortBySoldItems(int sortColumnIndex, bool ascending) {
-    sortByProperty(sortColumnIndex, ascending,(ProductModel product) => product.soldQuantity);
+    sortByProperty(
+      sortColumnIndex,
+      ascending,
+      (ProductModel product) => product.soldQuantity,
+    );
   }
 
   /// Get the product price or price range for variation
@@ -62,10 +77,12 @@ class ProductController extends ABaseController<ProductModel> {
         // Determine The Price to Consider (sale price if available,otherwise regular price)
         double priceToConsider =
             variation.salePrice > 0.0 ? variation.salePrice : variation.price;
+
         // Update smallest and Largest Prices
         if (priceToConsider < smallestPrice) {
           smallestPrice = priceToConsider;
         }
+
         if (priceToConsider > largestPrice) {
           largestPrice = priceToConsider;
         }
@@ -75,8 +92,8 @@ class ProductController extends ABaseController<ProductModel> {
       if (smallestPrice.isEqual(largestPrice)) {
         return largestPrice.toString();
       } else {
-        // Otherwise,return a price range
-        return '$smallestPrice - \$$largestPrice';
+        // Otherwise, return a price range
+        return '$smallestPrice - \u{20B9}$largestPrice';
       }
     }
   }
@@ -90,21 +107,31 @@ class ProductController extends ABaseController<ProductModel> {
     return percentage.toStringAsFixed(0);
   }
 
-  // calculate product stock
+  /// Calculate Product Stock
   String getProductStockTotal(ProductModel product) {
     return product.productType == ProductType.single.toString()
-    ? product.soldQuantity.toString()
-    : product.productVariations!.fold<int>(0, (previousValue, element) => previousValue + element.stock).toString();
+        ? product.stock.toString()
+        : product.productVariations!
+            .fold<int>(
+              0,
+              (previousValue, element) => previousValue + element.stock,
+            )
+            .toString();
   }
 
-  // calculate products sold quantity
+  /// Calculate Product Sold Quantity
   String getProductSoldQuantity(ProductModel product) {
     return product.productType == ProductType.single.toString()
-    ? product.soldQuantity.toString()
-    : product.productVariations!.fold<int>(0, (previousValue, element) => previousValue + element.soldQuantity).toString();
+        ? product.soldQuantity.toString()
+        : product.productVariations!
+            .fold<int>(
+              0,
+              (previousValue, element) => previousValue + element.soldQuantity,
+            )
+            .toString();
   }
 
-  /// Check Product Stock status
+  /// Check Product Stock Status
   String getProductStockStatus(ProductModel product) {
     return product.stock > 0 ? 'In Stock' : 'Out of Stock';
   }

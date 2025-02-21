@@ -12,43 +12,45 @@ class ProductsTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProductController());
+
     return Obx(() {
-      // products and selected rows are hidden , just to update ui
+      // Products and Selected Rows are hidden => just to update the UI => Obx => [ProductRows]
       Text(controller.filteredItems.length.toString());
       Text(controller.selectedRows.length.toString());
 
-
-    // table
-    return APaginatedDataTable(
-      minWidth: 1000,
-      sortAscending: controller.sortAscending.value,
-      sortColumnIndex: controller.sortColumnIndex.value,
-      columns: [
-        DataColumn2(
-          label: const Text('Product'),
-          fixedWidth: !ADeviceUtils.isDesktopScreen(context) ? 300 : 400,
-          onSort: (columnIndex, ascending) => controller.sortByName(columnIndex, ascending),
-        ),
-        DataColumn2(
-          label: const Text('Stock'),
-          onSort: (columnIndex, ascending) => controller.sortByStock(columnIndex, ascending),
-        ),
-
-        DataColumn2(
-          label: const Text('Sold'),
-          onSort: (columnIndex, ascending) => controller.sortBySoldItems(columnIndex, ascending),
+      // Table
+      return APaginatedDataTable(
+        minWidth: 1000,
+        sortAscending: controller.sortAscending.value,
+        sortColumnIndex: controller.sortColumnIndex.value,
+        columns: [
+          DataColumn2(
+            label: const Text('Product'),
+            fixedWidth: !ADeviceUtils.isDesktopScreen(context) ? 300 : 400,
+            onSort: (columnIndex, ascending) =>
+                controller.sortByName(columnIndex, ascending),
           ),
-        const DataColumn2(label:  Text('Brand')),
-        DataColumn2(
-          label: const Text('Price'),
-          onSort: (columnIndex, ascending) => controller.sortByPrice(columnIndex, ascending),
-        ),
-        const DataColumn2(label: Text('Date')),
-        const DataColumn2(label: Text('Action'), fixedWidth: 100),
-      ],
-      source: ProductsRows(),
-    );
-    }
-    );
+          DataColumn2(
+            label: const Text('Stock'),
+            onSort: (columnIndex, ascending) =>
+                controller.sortByStock(columnIndex, ascending),
+          ),
+          DataColumn2(
+            label: const Text('Sold'),
+            onSort: (columnIndex, ascending) =>
+                controller.sortBySoldItems(columnIndex, ascending),
+          ),
+          const DataColumn2(label: Text('Brand')),
+          DataColumn2(
+            label: const Text('Price'),
+            onSort: (columnIndex, ascending) =>
+                controller.sortByPrice(columnIndex, ascending),
+          ),
+          const DataColumn2(label: Text('Date')),
+          const DataColumn2(label: Text('Action'), fixedWidth: 100),
+        ],
+        source: ProductsRows(),
+      );
+    });
   }
 }

@@ -11,6 +11,7 @@ class CategoryTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CategoryController());
+    
     return Obx(
       () {
         Text(controller.filteredItems.length.toString());

@@ -6,8 +6,13 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class EditCategoryMobileScreen extends StatelessWidget {
-  const EditCategoryMobileScreen({super.key, required this.category});
+  const EditCategoryMobileScreen({
+    super.key,
+    required this.category,
+  });
+
   final CategoryModel category;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +28,7 @@ class EditCategoryMobileScreen extends StatelessWidget {
                 heading: 'Update Category',
                 breadcrumbItems: [ARoutes.categories, 'Update Category'],
               ),
-
+              
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Form

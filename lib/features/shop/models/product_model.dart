@@ -1,3 +1,4 @@
+import 'package:aura_kart_admin_panel/utils/formatters/formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'brand_model.dart';
 import 'product_attribute_model.dart';
@@ -29,7 +30,7 @@ class ProductModel {
     required this.price,
     required this.thumbnail,
     required this.productType,
-    this.soldQuantity = 0, 
+    this.soldQuantity = 0,
     this.sku,
     this.brand,
     this.date,
@@ -41,6 +42,8 @@ class ProductModel {
     this.productAttributes,
     this.productVariations,
   });
+
+  String get formattedDate => AFormatter.formatDate(date);
 
   /// Create Empty func for clean code
   static ProductModel empty() => ProductModel(
@@ -67,7 +70,7 @@ class ProductModel {
       'Brand': brand!.toJson(),
       'Description': description,
       'ProductType': productType,
-      'soldQuantity': soldQuantity,
+      'SoldQuantity': soldQuantity,
       'ProductAttributes': productAttributes != null
           ? productAttributes!.map((e) => e.toJson()).toList()
           : [],
@@ -80,14 +83,15 @@ class ProductModel {
   /// Map Json-oriented document snapshot from Firebase to Model
   factory ProductModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() == null) return ProductModel.empty();
-    final data = document.data()!;
+    final data = document.data();
+    if (data == null) return ProductModel.empty();
     return ProductModel(
       id: document.id,
       sku: data['SKU'],
       title: data['Title'],
       stock: data['Stock'] ?? 0,
-      soldQuantity: data.containsKey('soldQuantity') ? data['soldQuantity'] ?? 0 : 0,
+      soldQuantity:
+          data.containsKey('SoldQuantity') ? data['SoldQuantity'] ?? 0 : 0,
       isFeatured: data['IsFeatured'] ?? false,
       price: double.parse((data['Price'] ?? 0.0).toString()),
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
@@ -115,7 +119,8 @@ class ProductModel {
       sku: data['SKU'] ?? '',
       title: data['Title'] ?? '',
       stock: data['Stock'] ?? 0,
-      soldQuantity: data.containsKey('soldQuantity') ? data['soldQuantity'] ?? 0 : 0,
+      soldQuantity:
+          data.containsKey('SoldQuantity') ? data['SoldQuantity'] ?? 0 : 0,
       isFeatured: data['IsFeatured'] ?? false,
       price: double.parse((data['Price'] ?? 0.0).toString()),
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),

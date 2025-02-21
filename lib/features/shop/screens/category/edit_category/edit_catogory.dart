@@ -11,6 +11,7 @@ class EditCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final category = Get.arguments;
+    
     return ASiteTemplate(
       desktop: EditCategoryDesktopScreen(category: category),
       tablet: EditCategoryTabletScreen(category: category),

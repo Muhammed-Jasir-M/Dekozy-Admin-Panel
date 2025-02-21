@@ -55,7 +55,7 @@ class CategoryRows extends DataTableSource {
         DataCell(
           category.isFeatured
               ? const Icon(Iconsax.heart, color: AColors.primary)
-              : const Icon(Iconsax.heart),
+              : const Icon(Iconsax.heart, color: AColors.grey),
         ),
         DataCell(
             Text(category.createdAt == null ? '' : category.formattedDate)),
@@ -77,5 +77,6 @@ class CategoryRows extends DataTableSource {
   int get rowCount => controller.filteredItems.length;
 
   @override
-  get selectedRowCount => 0;
+  int get selectedRowCount =>
+      controller.selectedRows.where((selected) => selected).length;
 }

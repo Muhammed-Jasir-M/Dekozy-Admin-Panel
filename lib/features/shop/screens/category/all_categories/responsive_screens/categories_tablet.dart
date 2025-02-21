@@ -30,7 +30,6 @@ class CategoriesTabletScreen extends StatelessWidget {
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body
-              // Show Loader
               ARoundedContainer(
                 child: Column(
                   children: [
@@ -42,12 +41,6 @@ class CategoriesTabletScreen extends StatelessWidget {
                       searchOnChanged: (query) => controller.searchQuery(query),
                     ),
                     const SizedBox(height: ASizes.spaceBtwItems),
-                    // Table Header
-                    ATableHeader(
-                      buttonText: 'Create New Category',
-                      onPressed: () => Get.toNamed(ARoutes.createCategory),
-                    ),
-                    const SizedBox(height: ASizes.spaceBtwItems),
 
                     // Table
                     Obx(
@@ -55,6 +48,7 @@ class CategoriesTabletScreen extends StatelessWidget {
                         if (controller.isLoading.value) {
                           return const ALoaderAnimation();
                         }
+                        
                         return const CategoryTable();
                       },
                     ),

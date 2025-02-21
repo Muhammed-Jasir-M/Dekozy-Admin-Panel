@@ -15,13 +15,15 @@ class CreateBrandController extends GetxController {
   static CreateBrandController get instance => Get.find();
 
   final loading = false.obs;
+  
   RxString imageURL = ''.obs;
   final isFeatured = false.obs;
   final name = TextEditingController();
-  final formKey = GlobalKey<FormState>();
   final List<CategoryModel> selectedCategories = <CategoryModel>[].obs;
 
-  //toggle category seleciton
+  final formKey = GlobalKey<FormState>();
+
+  /// Toggle Category Seleciton
   void toggleSelection(CategoryModel category) {
     if (selectedCategories.contains(category)) {
       selectedCategories.remove(category);
@@ -30,7 +32,7 @@ class CreateBrandController extends GetxController {
     }
   }
 
-  // method to reset fields
+  /// Method to reset fields
   void resetFields() {
     name.clear();
     loading(false);
@@ -39,84 +41,84 @@ class CreateBrandController extends GetxController {
     selectedCategories.clear();
   }
 
-  //pick thumbnial from media
+  /// Pick Thumbnail Image from Media
   void pickImage() async {
     final controller = Get.put(MediaController());
     List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
 
-    // handle the selected images
+    // Handle the selected images
     if (selectedImages != null && selectedImages.isNotEmpty) {
-      //set the selected image to the main image or perform ay other action
+      // Set the selected image or perform any other action
       ImageModel selectedImage = selectedImages.first;
-      // update the main image using the selectedImage
+      // Update the main image using the selectedImage
       imageURL.value = selectedImage.url;
     }
-  }
+  }                                                           
 
-  //register new brand
+  /// Register new Brand
   Future<void> createBrand() async {
     try {
-      // start loading
+      // Start Loading
       AFullScreenLoader.popUpCircular();
 
-      //check  iternet connectivity
+      // Check  Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AFullScreenLoader.stopLoading();
         return;
       }
 
-      // form validation
+      // Form Validation
       if (!formKey.currentState!.validate()) {
-        // form validation
-        if (!formKey.currentState!.validate()) {
-          AFullScreenLoader.stopLoading();
-          return;
-        }
-
-        // map data
-        final newRecord = BrandModel(
-          id: '',
-          productsCount: 0,
-          image: imageURL.value,
-          name: name.text.trim(),
-          createdAt: DateTime.now(),
-          isFeatured: isFeatured.value,
-        );
-
-        // call reposotory to create new brand
-        newRecord.id = await BrandRepository.instance.createBrand(newRecord);
-
-        // register brand categorues if any
-        if (selectedCategories.isNotEmpty) {
-          if (newRecord.id.isEmpty) {
-            throw 'Error storing relational data. try again';
-          }
-
-          // loop selected brand categories
-          for (var category in selectedCategories) {
-            // map data
-            final brandCategory = BrandCategoryModel(
-                brandId: newRecord.id, categoryId: category.id, id: '');
-            await BrandRepository.instance.createBrandCategory(brandCategory);
-          }
-          newRecord.brandCategories ??= [];
-          newRecord.brandCategories!.addAll(selectedCategories);
-        }
-
-        // update all data list
-        BrandController.instance.addItemToLists(newRecord);
-
-        //reset formPcreate
-        resetFields();
-
-        // removce loader
         AFullScreenLoader.stopLoading();
-
-        // succes  messege and redirect
-        ALoaders.successSnackBar(
-            title: 'Congratulations', message: 'New Record has been added');
+        return;
       }
+
+      // Map Data
+      final newRecord = BrandModel(
+        id: '',
+        productsCount: 0,
+        image: imageURL.value,
+        name: name.text.trim(),
+        createdAt: DateTime.now(),
+        isFeatured: isFeatured.value,
+      );
+
+      // Call repository to create New Brand
+      newRecord.id = await BrandRepository.instance.createBrand(newRecord);
+
+      // Register brand categories if any
+      if (selectedCategories.isNotEmpty) {
+        if (newRecord.id.isEmpty) {
+          throw 'Error storing relational data. Try again';
+        }
+
+        // Loop selected Brand Categories
+        for (var category in selectedCategories) {
+          // Map Data
+          final brandCategory = BrandCategoryModel(
+            brandId: newRecord.id,
+            categoryId: category.id,
+            id: '',
+          );
+          await BrandRepository.instance.createBrandCategory(brandCategory);
+        }
+        newRecord.brandCategories ??= [];
+        newRecord.brandCategories!.addAll(selectedCategories);
+      }
+
+      // Update all Data list
+      BrandController.instance.addItemToLists(newRecord);
+
+      // Reset Form
+      resetFields();
+
+      // Remove Loader
+      AFullScreenLoader.stopLoading();
+
+      // Succes Messege and Redirect
+      ALoaders.successSnackBar(
+          title: 'Congratulations', message: 'New Record has been added.');
     } catch (e) {
       AFullScreenLoader.stopLoading();
       ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());

@@ -76,17 +76,15 @@ class BrandRows extends DataTableSource {
                           ),
                         )
                         .toList()
-                    : [
-                        const SizedBox(),
-                      ],
+                    : [const SizedBox()],
               ),
             ),
           ),
         ),
         DataCell(
-          brand.isFeatured!
+          brand.isFeatured
               ? const Icon(Iconsax.heart, color: AColors.primary)
-              : const Icon(Iconsax.heart),
+              : const Icon(Iconsax.heart, color: AColors.grey),
         ),
         DataCell(Text(brand.createdAt != null ? brand.formattedDate : '')),
         DataCell(

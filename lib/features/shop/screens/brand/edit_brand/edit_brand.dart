@@ -11,6 +11,7 @@ class EditBrandScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brand = Get.arguments;
+    
     return ASiteTemplate(
       desktop: EditBrandDesktopScreen(brand: brand),
       tablet: EditBrandTabletScreen(brand: brand),

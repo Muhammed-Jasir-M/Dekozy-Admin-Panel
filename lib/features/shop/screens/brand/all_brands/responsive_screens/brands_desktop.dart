@@ -47,6 +47,7 @@ class BrandsDesktopScreen extends StatelessWidget {
                         if (controller.isLoading.value) {
                           return const ALoaderAnimation();
                         }
+
                         return const BrandTable();
                       },
                     ),

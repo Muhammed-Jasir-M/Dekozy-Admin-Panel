@@ -8,7 +8,7 @@ import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../data/repositories/banners/banner_repository.dart';
+import '../../../../data/repositories/banner/banner_repository.dart';
 
 class EditBannerController extends GetxController {
   static EditBannerController get instance => Get.find();
@@ -17,75 +17,77 @@ class EditBannerController extends GetxController {
   final loading = false.obs;
   final isActive = false.obs;
   RxString targetScreen = ''.obs;
+
   final formKey = GlobalKey<FormState>();
+
   final repository = Get.put(BannerRepository());
 
-  // init data
+  // Init Data
   void init(BannerModel banner) {
     imageURL.value = banner.imageUrl;
     isActive.value = banner.active;
     targetScreen.value = banner.targetScreen;
   }
 
-  // pick thumbnail image from media
+  /// Pick Thumbnail Image from Media
   void pickImage() async {
     final controller = Get.put(MediaController());
     List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
 
-    // handle the selected images
+    // Handle the selected images
     if (selectedImages != null && selectedImages.isNotEmpty) {
-      // set the selected image to the main image to perform any other action
+      // Set the selected image or perform any other action
       ImageModel selectedImage = selectedImages.first;
-
-      // update the main image using the selectedImage
+      // Update the main image using the selectedImage
       imageURL.value = selectedImage.url;
     }
   }
 
-  // register new banner
+  // Register Banner
   Future<void> updateBanner(BannerModel banner) async {
     try {
-      // start loading
+      // Start Loading
       AFullScreenLoader.popUpCircular();
 
-      // check internet connecttivity
+      // Check Internet Connecttivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AFullScreenLoader.stopLoading();
         return;
       }
 
-      // form validation
+      // Form validation
       if (!formKey.currentState!.validate()) {
         AFullScreenLoader.stopLoading();
         return;
       }
 
-      // is data updated
+      // Is Data Updated
       if (banner.imageUrl != imageURL.value ||
           banner.targetScreen != targetScreen.value ||
           banner.active != isActive.value) {
-        // map data
+
+        // Map Data
         banner.imageUrl = imageURL.value;
         banner.targetScreen = targetScreen.value;
         banner.active = isActive.value;
 
-        // call repository to update
+        // Call Repository to Update
         await repository.updateBanner(banner);
       }
 
-      // update the list
-      BannerController.instance.updateItemforLists(banner);
+      // Update the List
+      BannerController.instance.updateItemfromLists(banner);
 
-      // remove loader
+      // Remove Loader
       AFullScreenLoader.stopLoading();
 
-      // success ms and redirect
+      // Success Message and Redirect
       ALoaders.successSnackBar(
-          title: 'Congratulations', message: 'Your record has been updated');
+          title: 'Congratulations', message: 'Your record has been updated.');
     } catch (e) {
       AFullScreenLoader.stopLoading();
-      ALoaders.errorSnackBar(title: 'Uh oh', message: e.toString()); 
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString()); 
     }
   }
 }

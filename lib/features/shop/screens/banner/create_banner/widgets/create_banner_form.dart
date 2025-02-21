@@ -15,11 +15,12 @@ class CreateBannerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CreateBannerController());
+
     return ARoundedContainer(
       width: 500,
       padding: const EdgeInsets.all(ASizes.defaultSpace),
       child: Form(
-        key: controller.formkey,
+        key: controller.formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,7 +35,7 @@ class CreateBannerForm extends StatelessWidget {
               children: [
                 Obx(
                   () => GestureDetector(
-                    onTap: () => controller.pickimage(),
+                    onTap: () => controller.pickImage(),
                     child: ARoundedImage(
                       width: 400,
                       height: 200,
@@ -50,7 +51,7 @@ class CreateBannerForm extends StatelessWidget {
                 ),
                 const SizedBox(height: ASizes.spaceBtwItems),
                 TextButton(
-                  onPressed: () => controller.pickimage(),
+                  onPressed: () => controller.pickImage(),
                   child: Text('Select Image'),
                 ),
               ],
@@ -94,7 +95,7 @@ class CreateBannerForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => controller.createBanenr(),
+                onPressed: () => controller.createBanner(),
                 child: const Text('Create'),
               ),
             ),

@@ -15,24 +15,27 @@ class EditBrandController extends GetxController {
   static EditBrandController get instance => Get.find();
 
   final loading = false.obs;
+
   RxString imageURL = ''.obs;
   final isFeatured = false.obs;
   final name = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-  final repository = Get.put(BrandRepository());
   final List<CategoryModel> selectedCategories = <CategoryModel>[].obs;
 
-  // init data
+  final repository = Get.put(BrandRepository());
+
+  final formKey = GlobalKey<FormState>();
+
+  // Init Data
   void init(BrandModel brand) {
     name.text = brand.name;
     imageURL.value = brand.image;
-    isFeatured.value = brand.isFeatured!;
+    isFeatured.value = brand.isFeatured;
     if (brand.brandCategories != null) {
       selectedCategories.addAll(brand.brandCategories ?? []);
     }
   }
 
-  // toggle category selection
+  // Toggle Category Selection
   void toggleSelection(CategoryModel category) {
     if (selectedCategories.contains(category)) {
       selectedCategories.remove(category);
@@ -41,7 +44,7 @@ class EditBrandController extends GetxController {
     }
   }
 
-  // method to reset fields
+  /// Method to Reset Fields
   void resetFields() {
     name.clear();
     loading(false);
@@ -50,106 +53,109 @@ class EditBrandController extends GetxController {
     selectedCategories.clear();
   }
 
-  // pick thumbnail images from media
+  /// Pick Thumbnail Images from Media
   void pickImage() async {
     final controller = Get.put(MediaController());
+    List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
 
-    List<ImageModel>? selectedImages =
-        await controller.selectImagesFromMedia();
-
-    // handle the selected images
+    // Handle the selected images
     if (selectedImages != null && selectedImages.isNotEmpty) {
-      // set the selected image to the main image
+      // Set the selected image or perform any other action
       ImageModel selectedImage = selectedImages.first;
-      // update the main image using the selectedimages
+      // Update the main image using the selectedImage
       imageURL.value = selectedImage.url;
     }
   }
 
-  // register the brand
+  // Register Brand
   Future<void> updateBrand(BrandModel brand) async {
     try {
-      // start loading
+      // Start loading
       AFullScreenLoader.popUpCircular();
 
-      //check internet connection
+      // Check Internet Connection
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AFullScreenLoader.stopLoading();
         return;
       }
 
-      // form validation
+      // Form Validation
       if (!formKey.currentState!.validate()) {
         AFullScreenLoader.stopLoading();
         return;
       }
 
-      // is data updated
+      // Is Data updated
       bool isBrandUpdated = false;
       if (brand.image != imageURL.value ||
           brand.name != name.text.trim() ||
           brand.isFeatured != isFeatured.value) {
         isBrandUpdated = true;
 
-        // map data
+        // Map Data
         brand.image = imageURL.value;
         brand.name = name.text.trim();
         brand.isFeatured = isFeatured.value;
         brand.updatedAt = DateTime.now();
 
-        // call repository to update
+        // Call Repository to update
         await repository.updateBrand(brand);
       }
-      // update Brandcategories
+
+      // Update BrandCategories
       if (selectedCategories.isNotEmpty) await updateBrandCategories(brand);
 
-      // update brand data in profucts
+      // Update Brand Data in Products
       if (isBrandUpdated) await updateBrandInProducts(brand);
 
-      // update all data in list
-      BrandController.instance.updateItemforLists(brand);
+      // Update all Data in list
+      BrandController.instance.updateItemfromLists(brand);
 
-      // remove loaders
+      // Remove Loaders
       AFullScreenLoader.stopLoading();
 
-      //success messege & redirect
+      // Success Messege & Redirect
       ALoaders.successSnackBar(
-          title: 'Congratulations', message: 'your record has been updated');
+          title: 'Congratulations', message: 'Your Record has been updated.');
     } catch (e) {
       AFullScreenLoader.stopLoading();
       ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 
-  // update categories of this brand
+  // Update Categories of this Brand
   updateBrandCategories(BrandModel brand) async {
-    // fetch all BrandCategories
+    // Fetch all BrandCategories
     final brandCategories =
         await repository.getCategoriesOfSpecificBrand(brand.id);
 
-    // selected categories
+    // Selected Categories
     final selectedCategoryIds = selectedCategories.map((e) => e.id);
 
-    // identify categhories to remove
+    // Identify categories to remove
     final categoriesToRemove = brandCategories
-        .where((existingCategory) =>
-            !selectedCategoryIds.contains(existingCategory.categoryId))
+        .where(
+          (existingCategory) =>
+              !selectedCategoryIds.contains(existingCategory.categoryId),
+        )
         .toList();
 
-    // remove unselected categories
+    // Remove unselected categories
     for (var categoryToRemove in categoriesToRemove) {
       await BrandRepository.instance
           .deleteBrandCategory(categoryToRemove.id ?? '');
     }
 
-    // identify new category to add
+    // Identify new Categories to add
     final newCategoriesToAdd = selectedCategories
-        .where((newCategory) => !brandCategories.any((existingCategory) =>
-            existingCategory.categoryId == newCategory.id))
+        .where(
+          (newCategory) => !brandCategories.any((existingCategory) =>
+              existingCategory.categoryId == newCategory.id),
+        )
         .toList();
 
-    // add new categories
+    // Add new categories
     for (var newCategory in newCategoriesToAdd) {
       var brandCategory =
           BrandCategoryModel(brandId: brand.id, categoryId: newCategory.id);
@@ -158,9 +164,9 @@ class EditBrandController extends GetxController {
     }
 
     brand.brandCategories!.assignAll(selectedCategories);
-    BrandController.instance.updateItemforLists(brand);
+    BrandController.instance.updateItemfromLists(brand);
   }
 
-  //updatew profuct of this brand
+  /// Update Products of this Brand
   updateBrandInProducts(BrandModel brand) async {}
 }

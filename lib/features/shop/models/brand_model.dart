@@ -6,7 +6,7 @@ class BrandModel {
   String id;
   String name;
   String image;
-  bool? isFeatured;
+  bool isFeatured;
   int? productsCount;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -20,17 +20,17 @@ class BrandModel {
     required this.name,
     this.isFeatured = false,
     this.productsCount,
-    this.createdAt, 
+    this.createdAt,
     this.updatedAt,
     this.brandCategories,
   });
 
-  /// Empty Helper Function
-  static BrandModel empty() => BrandModel(id: '', name: '', image: '');
-
   String get formattedDate => AFormatter.formatDate(createdAt);
 
   String get formatUpdatedAtDate => AFormatter.formatDate(updatedAt);
+
+  /// Empty Helper Function
+  static BrandModel empty() => BrandModel(id: '', name: '', image: '');
 
   /// Convert model to Json structure so that you can store data in FireBase
   toJson() {
@@ -46,28 +46,11 @@ class BrandModel {
   }
 
   /// Map Json oriented document snapshot from Firebase to UserModel
-  factory BrandModel.fromJson(Map<String, dynamic> document) {
-    final data = document;
-    if (data.isEmpty) return BrandModel.empty();
-    return BrandModel(
-      id: data['Id'] ?? '',
-      name: data['Name'] ?? '',
-      image: data['Image'] ?? '',
-      isFeatured: data['IsFeatured'] ?? false,
-      productsCount: int.parse((data['ProductsCount'] ?? 0).toString()),
-      createdAt:
-          data.containsKey('CreatedAt') ? data['CreatedAt']?.toDate() : null,
-      updatedAt:
-          data.containsKey('UpdatedAt') ? data['UpdatedAt']?.toDate() : null,
-    );
-  }
-
-  /// Map Json oriented document snapshot from Firebase to UserModel
   factory BrandModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
-      final data = document.data()!;
+    final data = document.data();
 
+    if (data != null) {
       // Map JSON Record to the Model
       return BrandModel(
         id: document.id,
@@ -75,6 +58,27 @@ class BrandModel {
         image: data['Image'] ?? '',
         isFeatured: data['IsFeatured'] ?? false,
         productsCount: data['ProductsCount'] ?? '',
+        createdAt:
+            data.containsKey('CreatedAt') ? data['CreatedAt']?.toDate() : null,
+        updatedAt:
+            data.containsKey('UpdatedAt') ? data['UpdatedAt']?.toDate() : null,
+      );
+    } else {
+      return BrandModel.empty();
+    }
+  }
+
+  /// Map Json oriented document snapshot from Firebase to UserModel
+  factory BrandModel.fromJson(Map<String, dynamic> document) {
+    final data = document;
+    
+    if (data.isNotEmpty) {
+      return BrandModel(
+        id: data['Id'] ?? '',
+        name: data['Name'] ?? '',
+        image: data['Image'] ?? '',
+        isFeatured: data['IsFeatured'] ?? false,
+        productsCount: int.parse((data['ProductsCount'] ?? 0).toString()),
         createdAt:
             data.containsKey('CreatedAt') ? data['CreatedAt']?.toDate() : null,
         updatedAt:

@@ -20,6 +20,7 @@ class EditCategoryForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final editController = Get.put(EditCategoryController());
     editController.init(category);
+
     final categoryController = Get.put(CategoryController());
 
     return ARoundedContainer(
@@ -66,9 +67,7 @@ class EditCategoryForm extends StatelessWidget {
                         value: item,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(item.name),
-                          ],
+                          children: [Text(item.name)],
                         ),
                       ),
                     )

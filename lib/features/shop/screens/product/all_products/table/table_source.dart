@@ -10,18 +10,18 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../models/product_model.dart';
-
 class ProductsRows extends DataTableSource {
   final controller = ProductController.instance;
 
   @override
   DataRow? getRow(int index) {
     final product = controller.filteredItems[index];
+
     return DataRow2(
       selected: controller.selectedRows[index],
       onTap: () => Get.toNamed(ARoutes.editProduct, arguments: product),
-      onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
+      onSelectChanged: (value) =>
+          controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
@@ -38,10 +38,11 @@ class ProductsRows extends DataTableSource {
               const SizedBox(width: ASizes.spaceBtwItems),
               Flexible(
                 child: Text(
-                  'Product Title',
-                  style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(
-                        color: AColors.primary,
-                        ),
+                  product.title,
+                  style: Theme.of(Get.context!)
+                      .textTheme
+                      .bodyLarge!
+                      .apply(color: AColors.primary),
                 ),
               ),
             ],
@@ -56,29 +57,33 @@ class ProductsRows extends DataTableSource {
                 width: 35,
                 height: 35,
                 padding: ASizes.xs,
-                image: AImages.applePay,
-                imageType: ImageType.asset,
+                image: product.brand != null
+                    ? product.brand!.image
+                    : AImages.defaultImage,
+                imageType:
+                    product.brand != null ? ImageType.network : ImageType.asset,
                 borderRadius: ASizes.borderRadiusMd,
                 backgroundColor: AColors.primaryBackground,
               ),
               const SizedBox(width: ASizes.spaceBtwItems),
               Flexible(
                 child: Text(
-                 product.brand ! = null ? product.brand!.name : '',
-                  style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(
-                      color: AColors.primary),
+                  product.brand != null ? product.brand!.name : '',
+                  style: Theme.of(Get.context!)
+                      .textTheme
+                      .bodyLarge!
+                      .apply(color: AColors.primary),
                 ),
               ),
             ],
           ),
         ),
-
-
-        DataCell(Text('\$${controller.getProductPrice(product)}')),
+        DataCell(Text('\u{20B9}${controller.getProductPrice(product)}')),
         DataCell(Text(product.formattedDate)),
         DataCell(
           ATableActionButtons(
-            onEditPressed: () => Get.toNamed(ARoutes.editProduct,arguments: ProductModel.empty()),
+            onEditPressed: () =>
+                Get.toNamed(ARoutes.editProduct, arguments: product),
             onDeletePressed: () => controller.confrimAndDeleteItem(product),
           ),
         ),
@@ -93,5 +98,6 @@ class ProductsRows extends DataTableSource {
   int get rowCount => controller.filteredItems.length;
 
   @override
-  int get selectedRowCount => controller.selectedRows.where((selected) => selected).length;
+  int get selectedRowCount =>
+      controller.selectedRows.where((selected) => selected).length;
 }

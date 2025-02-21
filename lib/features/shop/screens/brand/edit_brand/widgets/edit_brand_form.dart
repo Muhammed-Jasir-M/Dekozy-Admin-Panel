@@ -77,8 +77,12 @@ class EditBrandForm extends StatelessWidget {
               () => AImageUploader(
                 width: 80,
                 height: 80,
-                image: AImages.defaultImage,
-                imageType: ImageType.asset,
+                image: controller.imageURL.value.isNotEmpty
+                    ? controller.imageURL.value
+                    : AImages.defaultImage,
+                imageType: controller.imageURL.value.isNotEmpty
+                    ? ImageType.network
+                    : ImageType.asset,
                 onIconButtonPressed: () => controller.pickImage(),
               ),
             ),

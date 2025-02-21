@@ -17,7 +17,7 @@ class BannersRows extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     final banner = controller.filteredItems[index];
-    
+
     return DataRow2(
       selected: controller.selectedRows[index],
       onTap: () => Get.toNamed(ARoutes.editBanner, arguments: banner),

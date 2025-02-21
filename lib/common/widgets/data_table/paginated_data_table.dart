@@ -56,7 +56,8 @@ class APaginatedDataTable extends StatelessWidget {
       height: tableHeight,
       child: Theme(
         // Use to set the Backend color
-        data: Theme.of(context).copyWith(cardTheme: const CardTheme(color: Colors.white, elevation: 0)),
+        data: Theme.of(context).copyWith(
+            cardTheme: const CardTheme(color: Colors.white, elevation: 0)),
         child: PaginatedDataTable2(
           source: source,
           columns: columns,
@@ -78,21 +79,27 @@ class APaginatedDataTable extends StatelessWidget {
 
           /// Header Design
           headingTextStyle: Theme.of(context).textTheme.titleMedium,
-          headingRowColor: WidgetStateProperty.resolveWith((states) => AColors.primaryBackground),
+          headingRowColor: WidgetStateProperty.resolveWith(
+              (states) => AColors.primaryBackground),
           headingRowDecoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(ASizes.borderRadiusMd),
               topRight: Radius.circular(ASizes.borderRadiusMd),
             ),
           ),
-          empty: AAnimationLoaderWidget(animation: AImages.packageAnimation, text: 'Nothing Found', height: 200, width: 200),
-          
+          empty: AAnimationLoaderWidget(
+              animation: AImages.packageAnimation,
+              text: 'Nothing Found',
+              height: 200,
+              width: 200),
+
           /// Sorting
           sortColumnIndex: sortColumnIndex,
           sortAscending: sortAscending,
           sortArrowBuilder: (bool ascending, bool sorted) {
             if (sorted) {
-              return Icon(ascending ? Iconsax.arrow_up_3 : Iconsax.arrow_down, size: ASizes.iconSm);
+              return Icon(ascending ? Iconsax.arrow_up_3 : Iconsax.arrow_down,
+                  size: ASizes.iconSm);
             } else {
               return const Icon(Iconsax.arrow_3, size: ASizes.iconSm);
             }

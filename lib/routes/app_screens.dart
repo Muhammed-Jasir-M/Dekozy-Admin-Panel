@@ -1,4 +1,3 @@
-// all app screens
 class AppScreens {
   static const home = '/';
   static const store = '/store';
@@ -7,13 +6,13 @@ class AppScreens {
   static const subCategories = '/sub-categories';
   static const search = '/search';
   static const productReviews = '/product-reviews';
-  static const productDetails = '/product-details';
+  static const productDetail = '/product-details';
   static const order = '/order';
   static const checkout = '/checkout';
   static const cart = '/cart';
   static const brand = '/brand';
   static const allProducts = '/all-products';
-  static const userProfiles = '/user-profile';
+  static const userProfile = '/user-profile';
   static const userAddress = '/user-address';
   static const signUp = '/signup';
   static const signupSuccess = '/signup-success';
@@ -24,28 +23,27 @@ class AppScreens {
   static const onBoarding = '/onboarding';
 
   static List<String> allAppScreenItems = [
-
-    // ith karyakanda , ellathum itil ind
-   home, 
-   store, 
-   favourites, 
-   settings ,
-   subCategories, 
-   search ,
-   productReviews ,
-   productDetails ,
-   order ,
-   checkout ,
-   cart    ,
-   allProducts ,
-   userProfiles ,
-   userAddress ,
-   signUp ,
-   signupSuccess ,
-   verifyEmail ,
-   signIn ,
-   resetPassword ,
-   forgetPassword ,
-   onBoarding ,
+    home,
+    store,
+    favourites,
+    settings,
+    subCategories,
+    search,
+    productReviews,
+    productDetail,
+    order,
+    checkout,
+    cart,
+    brand,
+    allProducts,
+    userProfile,
+    userAddress,
+    signUp,
+    signupSuccess,
+    verifyEmail,
+    signIn,
+    resetPassword,
+    forgetPassword,
+    onBoarding,
   ];
 }

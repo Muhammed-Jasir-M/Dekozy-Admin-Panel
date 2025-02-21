@@ -37,7 +37,7 @@ class ProductVariationModel {
       'SalePrice': salePrice,
       'SKU': sku,
       'Stock': stock,
-      'soldQuantity' : soldQuantity,
+      'SoldQuantity': soldQuantity,
       'AttributeValues': attributeValues,
     };
   }
@@ -54,6 +54,8 @@ class ProductVariationModel {
       sku: data['SKU'] ?? '',
       description: data['Description'] ?? '',
       stock: data['Stock'] ?? 0,
+      soldQuantity:
+          data.containsKey('SoldQuantity') ? data['SoldQuantity'] ?? 0 : 0,
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
       image: data['Image'] ?? '',
       attributeValues: Map<String, String>.from(data['AttributeValues']),

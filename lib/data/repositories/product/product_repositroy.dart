@@ -1,24 +1,21 @@
-import 'dart:async';
 import 'dart:core';
 import 'package:aura_kart_admin_panel/features/shop/models/product_category_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/product_model.dart';
-import 'package:aura_kart_admin_panel/features/shop/screens/product/create_product/widgets/product_categories.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/firebase_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/format_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/platform_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ProductRepository extends GetxController {
   static ProductRepository get instance => Get.find();
 
-  // firebase instance for databse interaction
+  // Firebase Instance for Databse Interaction
   final _db = FirebaseFirestore.instance;
 
-  //functiomns
+  /// Create Product
   Future<String> createProduct(ProductModel product) async {
     try {
       final result = await _db.collection('Products').add(product.toJson());
@@ -30,11 +27,11 @@ class ProductRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong..please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // create new product category
+  /// Create new product category
   Future<String> createProductCategory(
       ProductCategoryModel productCategory) async {
     try {
@@ -48,11 +45,11 @@ class ProductRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong.. please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // update product
+  /// Update Product
   Future<void> updateProduct(ProductModel product) async {
     try {
       await _db.collection('Products').doc(product.id).update(product.toJson());
@@ -63,11 +60,11 @@ class ProductRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong.. please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // update product instance
+  // Update Product Instance
   Future<void> updateProductSpecificValue(id, Map<String, dynamic> data) async {
     try {
       await _db.collection('Products').doc(id).update(data);
@@ -76,14 +73,14 @@ class ProductRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong.... please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // get limited featured products
+  /// Get limited featured products
   Future<List<ProductModel>> getAllProducts() async {
     try {
-      final snapshot = await _db.collection('Propducts').get();
+      final snapshot = await _db.collection('Products').get();
       return snapshot.docs
           .map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot))
           .toList();
@@ -92,11 +89,11 @@ class ProductRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong.... please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // get limited featured products
+  /// Get limited featured products
   Future<List<ProductCategoryModel>> getAllCategories(String productId) async {
     try {
       final snapshot = await _db
@@ -112,40 +109,45 @@ class ProductRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong... please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
   Future<void> deleteProduct(ProductModel product) async {
     try {
-      // delete all data once fromm firebase
+      // Delete all data once fromm Firebase
       await _db.runTransaction((transaction) async {
         final productRef = _db.collection("Products").doc(product.id);
-        final productSnap - await transaction.get(productRef);
+        final productSnap = await transaction.get(productRef);
 
         if (!productSnap.exists) {
           throw Exception("Products not found");
         }
 
-        // fetch productCategories
-        final ProductCategoriesSnapshot = await _db.collection("ProductCategory").where('productId', isEqualTo: product.id).get();
-        final ProductCategories = ProductCategoriesSnapshot.docs.map((e) => ProductCategoryModel.fromSnapshot(e));
+        // Fetch ProductCategories
+        final productCategoriesSnapshot = await _db
+            .collection("ProductCategory")
+            .where('productId', isEqualTo: product.id)
+            .get();
+        final productCategories = productCategoriesSnapshot.docs
+            .map((e) => ProductCategoryModel.fromSnapshot(e));
 
-        if (ProductCategories.isNotEmpty) {
-          for (var productCategory in ProductCategories) {
-            transaction.delete(_db.collection("ProductCategory").doc(productCategory.id));
+        if (productCategories.isNotEmpty) {
+          for (var productCategory in productCategories) {
+            transaction.delete(
+                _db.collection("ProductCategory").doc(productCategory.id));
           }
         }
         transaction.delete(productRef);
       });
     } on FirebaseException catch (e) {
       throw AFirebaseException(e.code).message;
-    } on FormatException catch(_) {
+    } on FormatException catch (_) {
       throw const AFormatException();
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something wen wrong.... please try again';  
+      throw 'Something went wrong!. Please try again';
     }
   }
 }

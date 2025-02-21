@@ -15,6 +15,7 @@ class ProductsDesktopScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProductController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -28,27 +29,32 @@ class ProductsDesktopScreen extends StatelessWidget {
               SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body
-              Obx(() {
-                if (controller.isLoading.value) return const ALoaderAnimation();
+              Obx(
+                () {
+                  if (controller.isLoading.value) {
+                    return const ALoaderAnimation();
+                  }
 
+                  return ARoundedContainer(
+                    child: Column(
+                      children: [
+                        // Table Header
+                        ATableHeader(
+                          buttonText: 'Add Product',
+                          onPressed: () => Get.toNamed(ARoutes.createProduct),
+                          searchOnChanged: (query) =>
+                              controller.searchQuery(query),
+                        ),
 
-                return ARoundedContainer(
-                  child: Column(
-                    children: [
-                      // Table Header
-                      ATableHeader(buttonText: 'Add Product',
-                        onPressed: () => Get.toNamed(ARoutes.createProduct),
-                        searchOnChanged: controller.searchQuery(query),
-                      ),
+                        const SizedBox(height: ASizes.spaceBtwItems),
 
-                      const SizedBox(height: ASizes.spaceBtwItems),
-
-                      // Table
-                      const ProductsTable(),
-                    ],
-                  ),
-                );
-              }),
+                        // Table
+                        const ProductsTable(),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),

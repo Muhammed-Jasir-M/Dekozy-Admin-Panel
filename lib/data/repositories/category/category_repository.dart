@@ -24,15 +24,14 @@ class CategoryRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something Went Wrong !! Please Try Again';
+      throw 'Something went wrong!. Please try again';
     }
   }
-  
- // Creat a new category document in the 'Categoryies' collection 
+
+  // Creat a new category document in the 'Categoryies' collection
   Future<String> createCategory(CategoryModel category) async {
     try {
-
-     final data = await _db.collection("Categories").add(category.toJson());
+      final data = await _db.collection("Categories").add(category.toJson());
       return data.id;
     } on FirebaseException catch (e) {
       throw AFirebaseException(e.code).message;
@@ -41,16 +40,14 @@ class CategoryRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something Went Wrong , Please Try Again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
   // Delete an existing category document from the 'Categories' collection
   Future<void> deleteCategory(String categoryId) async {
     try {
-
       await _db.collection("Categories").doc(categoryId).delete();
-      
     } on FirebaseException catch (e) {
       throw AFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -58,16 +55,17 @@ class CategoryRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something Went Wrong , Please Try Again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // Creat a new category document in the 'Categoryies' collection 
+  // Create a new category document in the 'Categories' collection
   Future<void> updateCategory(CategoryModel category) async {
     try {
-
-   await _db.collection("Categories").doc(category.id).update(category.toJson());
-     
+      await _db
+          .collection("Categories")
+          .doc(category.id)
+          .update(category.toJson());
     } on FirebaseException catch (e) {
       throw AFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -75,8 +73,7 @@ class CategoryRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something Went Wrong , Please Try Again';
+      throw 'Something went wrong!. Please try again';
     }
   }
-
 }
