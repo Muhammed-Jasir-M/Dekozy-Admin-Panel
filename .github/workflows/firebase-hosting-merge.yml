@@ -6,9 +6,11 @@ on:
   push:
     branches:
       - main
+      
 jobs:
   build_and_deploy:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -28,14 +30,9 @@ jobs:
       - name: Create .env file
         run: |
           echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" > .env
-          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env
           echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env
-
-      - name: Verify environment variables
-        run: |
-          echo $CLOUDINARY_CLOUD_NAME
-          echo $CLOUDINARY_API_KEY
-          echo $CLOUDINARY_API_SECRET
+          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env
+          echo "CLOUDINARY_UPLOAD_PRESET=${{ secrets.CLOUDINARY_UPLOAD_PRESET }}" >> .env
 
       - name: Build Web App
         run: flutter build web --release

@@ -27,9 +27,13 @@ class MediaRepository {
     required String imageName,
   }) async {
     try {
-      String resourceType = mimeType.startsWith('image/') ? 'image' : 'raw';
+      final cloudinaryCloudName = APIConstants.cloudinaryCloudName;
 
-      final uri = Uri.parse(APIConstants.getCloudinaryBaseUrl(resourceType));
+      final resourceType = mimeType.startsWith('image/') ? 'image' : 'raw';
+
+      final cloudinaryUploadUrl = APIConstants.getCloudinaryUploadUrl(cloudinaryCloudName, resourceType);
+
+      final uri = Uri.parse(cloudinaryUploadUrl);
 
       var request = http.MultipartRequest('POST', uri);
 
@@ -54,7 +58,6 @@ class MediaRepository {
         final jsonResponse = jsonDecode(responseBody);
 
         print("Cloudinary Response: $jsonResponse");
-        print("Cloudinary: $mimeType");
 
         // Create the ImageModel from the response
         return ImageModel.fromCloudinaryResponse(
@@ -65,9 +68,7 @@ class MediaRepository {
         );
       } else {
         final error = await response.stream.bytesToString();
-        print('error: $error');
-        print('error: ${response.statusCode} -- ${response.reasonPhrase}');
-        throw Exception('Failed to upload image');
+        throw Exception('Failed to upload image: $error');
       }
     } on ACloudinaryException catch (e) {
       print(e.toString());
@@ -114,7 +115,6 @@ class MediaRepository {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      print("Error during fetching: $e");
       throw e.toString();
     }
   }
@@ -142,7 +142,6 @@ class MediaRepository {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      print("Error during more fetching: $e");
       throw e.toString();
     }
   }
@@ -150,11 +149,16 @@ class MediaRepository {
   // Delete file from Cloudinary & corresponding document from Firebase
   Future<void> deleteImageFileFromCloudinary(ImageModel image) async {
     try {
-      String resourceType = image.contentType!;
+      final cloudinaryCloudName = APIConstants.cloudinaryCloudName;
 
-      final uri = Uri.parse(APIConstants.getCloudinaryDeleteUrl(resourceType));
+      final resourceType = image.contentType!;
+
+      final deleteUrl = APIConstants.getCloudinaryDeleteUrl(cloudinaryCloudName, resourceType);
+
+      final uri = Uri.parse(deleteUrl);
 
       final timestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
       final publicId = image.publicId;
 
       final signatureString =
@@ -163,12 +167,15 @@ class MediaRepository {
       final bytes = utf8.encode(signatureString);
       final signature = sha1.convert(bytes).toString();
 
-      final response = await http.post(uri, body: {
-        'public_id': publicId,
-        'timestamp': timestamp.toString(),
-        'api_key': APIConstants.cloudinaryApiKey,
-        'signature': signature,
-      });
+      final response = await http.post(
+        uri,
+        body: {
+          'public_id': publicId,
+          'timestamp': timestamp.toString(),
+          'api_key': APIConstants.cloudinaryApiKey,
+          'signature': signature,
+        },
+      );
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
@@ -180,7 +187,6 @@ class MediaRepository {
     } on ACloudinaryException catch (e) {
       throw ACloudinaryException(e.code).message;
     } catch (e) {
-      print(e.toString());
       throw e.toString();
     }
   }
@@ -196,7 +202,6 @@ class MediaRepository {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      print("Error during deleting: $e");
       throw e.toString();
     }
   }

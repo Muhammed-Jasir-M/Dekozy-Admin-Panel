@@ -75,13 +75,8 @@ class DashboardController extends GetxController {
         index = index < 0 ? index + 7 : index;
 
         weeklySales[index] += order.totalAmount;
-
-        print(
-            'OrderDate : ${order.orderDate}, CurrentWeekDay: $orderWeekStart, Index: $index');
       }
     }
-
-    print('Weekly Sales : $weeklySales');
   }
 
   // Call this function to calculate Order Status counts

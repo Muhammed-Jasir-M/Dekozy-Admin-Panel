@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../features/media/models/image_model.dart';
+import '../exceptions/cloudinary_exceptions.dart';
 
 /// Helper functions for cloud-related operations.
 class ACloudHelperFunctions {
@@ -71,9 +72,13 @@ class ACloudHelperFunctions {
     required String imageName,
   }) async {
     try {
-      String resourceType = mimeType.startsWith('image/') ? 'image' : 'raw';
+      final cloudinaryCloudName = APIConstants.cloudinaryCloudName;
 
-      final uri = Uri.parse(APIConstants.getCloudinaryBaseUrl(resourceType));
+      final resourceType = mimeType.startsWith('image/') ? 'image' : 'raw';
+
+      final cloudinaryUploadUrl = APIConstants.getCloudinaryUploadUrl(cloudinaryCloudName, resourceType);
+
+      final uri = Uri.parse(cloudinaryUploadUrl);
 
       var request = http.MultipartRequest('POST', uri);
 
@@ -105,8 +110,11 @@ class ACloudHelperFunctions {
           mimeType,
         );
       } else {
-        throw Exception('Failed to upload image');
+        final error = await response.stream.bytesToString();
+        throw Exception('Failed to upload image: $error');
       }
+    } on ACloudinaryException catch (e) {
+      throw ACloudinaryException(e.code).message;
     } catch (e) {
       throw e.toString();
     }
@@ -115,11 +123,16 @@ class ACloudHelperFunctions {
   // Delete file from Cloudinary & corresponding document from Firebase
   Future<void> deleteImageFileFromCloudinary(ImageModel image) async {
     try {
-      String resourceType = image.contentType == 'image' ? 'image' : 'raw';
+      final cloudinaryCloudName = APIConstants.cloudinaryCloudName;
 
-      final uri = Uri.parse(APIConstants.getCloudinaryDeleteUrl(resourceType));
+      final resourceType = image.contentType!;
+
+      final deleteUrl = APIConstants.getCloudinaryDeleteUrl(cloudinaryCloudName, resourceType);
+
+      final uri = Uri.parse(deleteUrl);
 
       final timestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
       final publicId = image.publicId;
 
       final signatureString =
@@ -128,20 +141,24 @@ class ACloudHelperFunctions {
       final bytes = utf8.encode(signatureString);
       final signature = sha1.convert(bytes).toString();
 
-      final response = await http.post(uri, body: {
-        'public_id': publicId,
-        'timestamp': timestamp.toString(),
-        'api_key': APIConstants.cloudinaryApiKey,
-        'signature': signature,
-      });
+      final response = await http.post(
+        uri,
+        body: {
+          'public_id': publicId,
+          'timestamp': timestamp.toString(),
+          'api_key': APIConstants.cloudinaryApiKey,
+          'signature': signature,
+        },
+      );
 
       if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        print('Image deleted successfully from Cloudinary: $jsonResponse');
+        // final jsonResponse = jsonDecode(response.body); 
       } else {
         throw Exception(
             'Failed to delete image from Cloudinary: ${response.body}');
       }
+    } on ACloudinaryException catch (e) {
+      throw ACloudinaryException(e.code).message;
     } catch (e) {
       throw e.toString();
     }

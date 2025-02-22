@@ -259,8 +259,6 @@ class MediaController extends GetxController {
       // Stop Loader in case of an error
       AFullScreenLoader.stopLoading();
 
-      print(e.toString());
-
       // Show a warning snak-bar for the error
       ALoaders.warningSnackBar(
         title: 'Error Uploading Images',
