@@ -1,6 +1,8 @@
+import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../../../../../utils/constants/sizes.dart';
 
@@ -9,67 +11,76 @@ class ProductStockAndPricing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Stock
-          FractionallySizedBox(
-            widthFactor: 0.45,
-            child: TextFormField(
-              decoration: const InputDecoration(
-                  labelText: 'Stock',
-                  hintText: 'Add Stock, only numbers are allowed'),
-              validator: (value) =>
-                  AValidator.validateEmptyText('Stock', value),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+      final controller = CreateProductControlle.instance;
+
+    return Obx(
+      ()=> controller.productType.value == ProductType.single
+      ? Form(
+        key: controller.stockPriceFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Stock
+            FractionallySizedBox(
+              widthFactor: 0.45,
+              child: TextFormField(
+                controller: controller.stock,
+                decoration: const InputDecoration(
+                    labelText: 'Stock',
+                    hintText: 'Add Stock, only numbers are allowed'),
+                validator: (value) =>
+                    AValidator.validateEmptyText('Stock', value),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
+            ),
+            const SizedBox(height: ASizes.spaceBtwInputFields),
+      
+            // Pricing
+            Row(
+              children: [
+                // Price
+                Expanded(
+                  child: TextFormField(
+                    controller: controller.price,
+                    decoration: const InputDecoration(
+                        labelText: 'Price',
+                        hintText: 'Price with up-to 2 decimals'),
+                    validator: (value) =>
+                        AValidator.validateEmptyText('Price', value),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d+\.?\d{0,2}$'),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: ASizes.spaceBtwItems),
+      
+                // Sale Price
+                Expanded(
+                  child: TextFormField(
+                    controller: controller.salePrice,
+                    decoration: const InputDecoration(
+                        labelText: 'Discounted Price',
+                        hintText: 'Price with up-to 2 decimals'),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d+\.?\d{0,2}$'),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-          const SizedBox(height: ASizes.spaceBtwInputFields),
-
-          // Pricing
-          Row(
-            children: [
-              // Stock
-              Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      labelText: 'Price',
-                      hintText: 'Price with up-to 2 decimals'),
-                  validator: (value) =>
-                      AValidator.validateEmptyText('Price', value),
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d+\.?\d{0,2}$'),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: ASizes.spaceBtwItems),
-
-              // Sale Price
-              Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      labelText: 'Discounted Price',
-                      hintText: 'Price with up-to 2 decimals'),
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d+\.?\d{0,2}$'),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -9,7 +9,7 @@ class ADialogs {
     String cancelText = 'Cancel',
     String confirmText = 'Remove',
     Function()? onCancel,
-    Function()? onConfirm,
+    Function()? onConfirm, required BuildContext contexts,
   }) {
     // Show a confirmation dialog
     showDialog(

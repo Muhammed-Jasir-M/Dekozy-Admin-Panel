@@ -1,6 +1,8 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/create_product_controller.dart';
 import 'package:aura_kart_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../../../utils/constants/sizes.dart';
 
@@ -9,6 +11,8 @@ class ProductTitleAndDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CreateProductController());
+    
     return ARoundedContainer(
       child: Form(
         child: Column(
