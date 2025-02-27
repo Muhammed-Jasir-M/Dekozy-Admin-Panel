@@ -31,7 +31,7 @@ class AFullScreenLoader {
             child: Center(
               child: Column(
                 children: [
-                  // const SizedBox(height: 200),
+                  const SizedBox(height: 200),
                   AAnimationLoaderWidget(text: text, animation: animation),
                 ],
               ),

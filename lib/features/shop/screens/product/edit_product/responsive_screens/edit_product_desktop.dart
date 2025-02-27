@@ -1,4 +1,5 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_image_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/product_model.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
@@ -21,12 +22,17 @@ import '../widgets/product_variations.dart';
 import '../widgets/product_visibility_widget.dart';
 
 class EditProductDesktopScreen extends StatelessWidget {
-  const EditProductDesktopScreen({super.key, required this.product});
+  const EditProductDesktopScreen({
+    super.key,
+    required this.product,
+  });
 
   final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductImagesController());
+    
     return Scaffold(
       bottomNavigationBar: ProductBottomNavigationButtons(product: product),
       body: SingleChildScrollView(
@@ -53,7 +59,7 @@ class EditProductDesktopScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Basic Information
-                        const ProductTitleAndDescription(),
+                        ProductTitleAndDescription(),
                         const SizedBox(height: ASizes.spaceBtwSections),
 
                         // Stock & Pricing
@@ -70,7 +76,7 @@ class EditProductDesktopScreen extends StatelessWidget {
                               const SizedBox(height: ASizes.spaceBtwItems),
 
                               // Product Type
-                              const ProductTypeWidget(),
+                              ProductTypeWidget(),
                               const SizedBox(
                                   height: ASizes.spaceBtwInputFields),
 
@@ -114,9 +120,11 @@ class EditProductDesktopScreen extends StatelessWidget {
                               const SizedBox(height: ASizes.spaceBtwItems),
                               ProductAdditionalImages(
                                 additionalProductImagesURLs:
-                                    RxList<String>.empty(),
-                                onTapToAddImages: () {},
-                                onTapToRemoveImage: (index) {},
+                                    controller.additionalProductImageUrls,
+                                onTapToAddImages: () =>
+                                    controller.selectMultipleProductImages(),
+                                onTapToRemoveImage: (index) =>
+                                    controller.removeImage(index),
                               ),
                             ],
                           ),

@@ -6,6 +6,7 @@ import 'package:aura_kart_admin_panel/utils/exceptions/cloudinary_exceptions.dar
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -31,7 +32,8 @@ class MediaRepository {
 
       final resourceType = mimeType.startsWith('image/') ? 'image' : 'raw';
 
-      final cloudinaryUploadUrl = APIConstants.getCloudinaryUploadUrl(cloudinaryCloudName, resourceType);
+      final cloudinaryUploadUrl = APIConstants.getCloudinaryUploadUrl(
+          cloudinaryCloudName, resourceType);
 
       final uri = Uri.parse(cloudinaryUploadUrl);
 
@@ -57,7 +59,7 @@ class MediaRepository {
         final responseBody = await response.stream.bytesToString();
         final jsonResponse = jsonDecode(responseBody);
 
-        print("Cloudinary Response: $jsonResponse");
+        if (kDebugMode) print("Cloudinary Response: $jsonResponse");
 
         // Create the ImageModel from the response
         return ImageModel.fromCloudinaryResponse(
@@ -71,10 +73,10 @@ class MediaRepository {
         throw Exception('Failed to upload image: $error');
       }
     } on ACloudinaryException catch (e) {
-      print(e.toString());
+      if (kDebugMode) print(e.toString());
       throw ACloudinaryException(e.code).message;
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) print(e.toString());
       throw e.toString();
     }
   }
@@ -153,7 +155,8 @@ class MediaRepository {
 
       final resourceType = image.contentType!;
 
-      final deleteUrl = APIConstants.getCloudinaryDeleteUrl(cloudinaryCloudName, resourceType);
+      final deleteUrl = APIConstants.getCloudinaryDeleteUrl(
+          cloudinaryCloudName, resourceType);
 
       final uri = Uri.parse(deleteUrl);
 
@@ -179,7 +182,9 @@ class MediaRepository {
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        print('Image deleted successfully from Cloudinary: $jsonResponse');
+        if (kDebugMode) {
+          print('Image deleted successfully from Cloudinary: $jsonResponse');
+        }
       } else {
         throw Exception(
             'Failed to delete image from Cloudinary: ${response.body}');

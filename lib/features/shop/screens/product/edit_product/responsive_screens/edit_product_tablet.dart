@@ -1,4 +1,5 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_image_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/product_model.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
@@ -27,6 +28,8 @@ class EditProductTabletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductImagesController());
+
     return Scaffold(
       bottomNavigationBar: ProductBottomNavigationButtons(product: product),
       body: SingleChildScrollView(
@@ -114,9 +117,11 @@ class EditProductTabletScreen extends StatelessWidget {
                               const SizedBox(height: ASizes.spaceBtwItems),
                               ProductAdditionalImages(
                                 additionalProductImagesURLs:
-                                    RxList<String>.empty(),
-                                onTapToAddImages: () {},
-                                onTapToRemoveImage: (index) {},
+                                    controller.additionalProductImageUrls,
+                                onTapToAddImages: () =>
+                                    controller.selectMultipleProductImages(),
+                                onTapToRemoveImage: (index) =>
+                                    controller.removeImage(index),
                               ),
                             ],
                           ),

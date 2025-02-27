@@ -14,6 +14,7 @@ import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../utils/constants/sizes.dart';
 import '../../models/brand_model.dart';
@@ -49,16 +50,6 @@ class CreateProductController extends GetxController {
   RxBool additionalImagesUploader = false.obs;
   RxBool productDataUploader = false.obs;
   RxBool categoriesRelationshipUploader = false.obs;
-
-  // Function to show progress dialog
-  void showProgressDialog() {
-    // Implementation for showing progress dialog
-    // This can be a simple Get.dialog or any other implementation
-    Get.dialog(
-      Center(child: CircularProgressIndicator()),
-      barrierDismissible: false,
-    );
-  }
 
   // Functions for creating a new product
   Future<void> createProduct() async {
@@ -171,6 +162,9 @@ class CreateProductController extends GetxController {
         // Update Product List
         ProductController.instance.addItemToLists(newRecord);
 
+        // Reset Form Values
+        resetValues();
+
         // Close the Loader
         AFullScreenLoader.stopLoading();
 
@@ -208,6 +202,46 @@ class CreateProductController extends GetxController {
     categoriesRelationshipUploader.value = false;
   }
 
+  // Function to show progress dialog
+  void showProgressDialog() {
+    Get.dialog(
+      PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: const Text('Uploading Product'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset(AImages.uploadingAnimation, height: 200, width: 200),
+              const SizedBox(height: ASizes.spaceBtwItems),
+
+              // Checkboxes
+              Obx(() => buildCheckbox('Thumbnail Image', thumbnailUploader)),
+              const SizedBox(height: ASizes.spaceBtwItems),
+              Obx(
+                () => buildCheckbox(
+                    'Additional Images', additionalImagesUploader),
+              ),
+              const SizedBox(height: ASizes.spaceBtwItems),
+              Obx(
+                () => buildCheckbox('Product Data, Attributes & Variations',
+                    productDataUploader),
+              ),
+              const SizedBox(height: ASizes.spaceBtwItems),
+              Obx(
+                () => buildCheckbox(
+                    'Product Categories', categoriesRelationshipUploader),
+              ),
+
+              const SizedBox(height: ASizes.spaceBtwItems),
+              Text('Sit Tight, Your product is uploading'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   // Build a checkbox widget
   Widget buildCheckbox(
     String label,
@@ -220,9 +254,12 @@ class CreateProductController extends GetxController {
           child: value.value
               ? const Icon(
                   CupertinoIcons.checkmark_alt_circle_fill,
-                  color: Colors.blue,
+                  color: Colors.green,
                 )
-              : const Icon(CupertinoIcons.checkmark_alt_circle),
+              : const Icon(
+                  CupertinoIcons.checkmark_alt_circle,
+                  color: Colors.blue,
+                ),
         ),
         const SizedBox(width: ASizes.spaceBtwItems),
         Text(label),
@@ -245,16 +282,17 @@ class CreateProductController extends GetxController {
           )
         ],
         content: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(AImages.productsIllustration, height: 200, width: 200),
+            Lottie.asset(AImages.uploadingCompletedAnimation, height: 200, width: 200),
             const SizedBox(height: ASizes.spaceBtwItems),
             Text(
               'Congradulations!',
               style: Theme.of(Get.context!).textTheme.headlineSmall,
             ),
             const SizedBox(height: ASizes.spaceBtwItems),
-            Text('Your product has been successfully created'),
+            Center(child: Text('Your product has been successfully created')),
           ],
         ),
       ),

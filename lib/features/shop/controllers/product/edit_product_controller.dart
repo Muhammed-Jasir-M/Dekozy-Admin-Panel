@@ -16,6 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../utils/constants/sizes.dart';
 import '../../models/brand_model.dart';
@@ -57,16 +58,6 @@ class EditProductController extends GetxController {
   RxBool additionalImagesUploader = false.obs;
   RxBool productDataUploader = false.obs;
   RxBool categoriesRelationshipUploader = false.obs;
-
-  // Function to show progress dialog
-  void showProgressDialog() {
-    // Implementation for showing progress dialog
-    // This can be a simple Get.dialog or any other implementation
-    Get.dialog(
-      Center(child: CircularProgressIndicator()),
-      barrierDismissible: false,
-    );
-  }
 
   // Initialize Product Data
   void initProductData(ProductModel product) {
@@ -201,6 +192,9 @@ class EditProductController extends GetxController {
         throw 'Select a Thumbnail Image for the Product';
       }
 
+      // Additional Product Images
+      additionalImagesUploader.value = true;
+
       // Product Variation Images
       final variations = ProductVariationController.instance.productVariations;
       if (productType.value == ProductType.single && variations.isNotEmpty) {
@@ -266,6 +260,9 @@ class EditProductController extends GetxController {
         // Update Product List
         ProductController.instance.updateItemfromLists(product);
 
+        // Reset Values
+        resetValues();
+
         // Close the Loader
         AFullScreenLoader.stopLoading();
 
@@ -303,6 +300,46 @@ class EditProductController extends GetxController {
     categoriesRelationshipUploader.value = false;
   }
 
+  // Function to show progress dialog
+  void showProgressDialog() {
+    Get.dialog(
+      PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: const Text('Uploading Product'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset(AImages.uploadingAnimation, height: 200, width: 200),
+              const SizedBox(height: ASizes.spaceBtwItems),
+
+              // Checkboxes
+              Obx(() => buildCheckbox('Thumbnail Image', thumbnailUploader)),
+              const SizedBox(height: ASizes.spaceBtwItems),
+              Obx(
+                () => buildCheckbox(
+                    'Additional Images', additionalImagesUploader),
+              ),
+              const SizedBox(height: ASizes.spaceBtwItems),
+              Obx(
+                () => buildCheckbox('Product Data, Attributes & Variations',
+                    productDataUploader),
+              ),
+              const SizedBox(height: ASizes.spaceBtwItems),
+              Obx(
+                () => buildCheckbox(
+                    'Product Categories', categoriesRelationshipUploader),
+              ),
+
+              const SizedBox(height: ASizes.spaceBtwItems),
+              Text('Sit Tight, Your product is uploading'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   // Build a checkbox widget
   Widget buildCheckbox(
     String label,
@@ -315,9 +352,12 @@ class EditProductController extends GetxController {
           child: value.value
               ? const Icon(
                   CupertinoIcons.checkmark_alt_circle_fill,
-                  color: Colors.blue,
+                  color: Colors.green,
                 )
-              : const Icon(CupertinoIcons.checkmark_alt_circle),
+              : const Icon(
+                  CupertinoIcons.checkmark_alt_circle,
+                  color: Colors.blue,
+                ),
         ),
         const SizedBox(width: ASizes.spaceBtwItems),
         Text(label),
@@ -341,7 +381,8 @@ class EditProductController extends GetxController {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(AImages.productsIllustration, height: 200, width: 200),
+          Lottie.asset(AImages.uploadingCompletedAnimation,
+              height: 200, width: 200),
           const SizedBox(height: ASizes.spaceBtwItems),
           Text(
             'Congradulations!',

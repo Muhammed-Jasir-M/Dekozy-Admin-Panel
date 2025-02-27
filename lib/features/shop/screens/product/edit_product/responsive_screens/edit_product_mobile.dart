@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../../../../routes/routes.dart';
 
+import '../../../../controllers/product/product_image_controller.dart';
 import '../widgets/product_additional_images.dart';
 import '../widgets/product_attributes.dart';
 import '../widgets/product_bottom_navigation_buttons.dart';
@@ -26,6 +27,8 @@ class EditProductMobileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductImagesController());
+
     return Scaffold(
       bottomNavigationBar: ProductBottomNavigationButtons(product: product),
       body: SingleChildScrollView(
@@ -94,9 +97,12 @@ class EditProductMobileScreen extends StatelessWidget {
                             style: Theme.of(context).textTheme.headlineSmall),
                         const SizedBox(height: ASizes.spaceBtwItems),
                         ProductAdditionalImages(
-                          additionalProductImagesURLs: RxList<String>.empty(),
-                          onTapToAddImages: () {},
-                          onTapToRemoveImage: (index) {},
+                          additionalProductImagesURLs:
+                              controller.additionalProductImageUrls,
+                          onTapToAddImages: () =>
+                              controller.selectMultipleProductImages(),
+                          onTapToRemoveImage: (index) =>
+                              controller.removeImage(index),
                         ),
                       ],
                     ),

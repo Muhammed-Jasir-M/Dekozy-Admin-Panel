@@ -11,31 +11,31 @@ class ProductTypeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = CreateProductController.instance;
-    
+
     return Obx(
-      ()=> Row(
+      () => Row(
         children: [
           Text('Product Type', style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(width: ASizes.spaceBtwItems),
-      
+
           // Radio button for Single Product Type
           RadioMenuButton(
             value: ProductType.single,
             groupValue: controller.productType.value,
             onChanged: (value) {
               // Update the selected product type in the controller
-              controller.productType.value = value?? ProductType.single;
+              controller.productType.value = value ?? ProductType.single;
             },
             child: const Text('Single'),
           ),
-      
+
           // Radio button for Variable Product Type
           RadioMenuButton(
             value: ProductType.variable,
-             groupValue: controller.productType.value,
+            groupValue: controller.productType.value,
             onChanged: (value) {
               // Update the selected product type in the controller
-              controller.productType.value = value?? ProductType.single;
+              controller.productType.value = value ?? ProductType.single;
             },
             child: const Text('Variable'),
           ),

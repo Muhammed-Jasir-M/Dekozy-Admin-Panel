@@ -1,9 +1,9 @@
-import 'package:aura_kart_admin_panel/features/shop/controllers/product/create_product_controller.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/edit_product_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
 
 import '../../../../../../utils/constants/sizes.dart';
 
@@ -12,7 +12,7 @@ class ProductStockAndPricing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = CreateProductController.instance;
+    final controller = EditProductController.instance;
 
     return Obx(
       () => controller.productType.value == ProductType.single

@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import '../../../../../../utils/constants/sizes.dart';
 
 class ProductBottomNavigationButtons extends StatelessWidget {
-  const ProductBottomNavigationButtons({super.key, required this.product});
+  const ProductBottomNavigationButtons({
+    super.key,
+    required this.product,
+  });
 
   final ProductModel product;
 
@@ -24,7 +27,8 @@ class ProductBottomNavigationButtons extends StatelessWidget {
           SizedBox(
             width: 160,
             child: ElevatedButton(
-              onPressed: () => EditProductController.instance.editProduct(product),
+              onPressed: () =>
+                  EditProductController.instance.editProduct(product),
               child: const Text('Save Changes'),
             ),
           ),

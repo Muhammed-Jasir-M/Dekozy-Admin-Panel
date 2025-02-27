@@ -201,6 +201,8 @@ class ProductAttributes extends StatelessWidget {
         controller: controller.attributes,
         expands: true,
         maxLength: null,
+        maxLines: null,
+        minLines: null,
         textAlign: TextAlign.start,
         keyboardType: TextInputType.multiline,
         textAlignVertical: TextAlignVertical.top,

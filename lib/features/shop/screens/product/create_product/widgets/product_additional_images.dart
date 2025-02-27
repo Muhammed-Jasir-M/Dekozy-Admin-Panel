@@ -58,7 +58,7 @@ class ProductAdditionalImages extends StatelessWidget {
                   flex: 2,
                   child: SizedBox(
                     height: 80,
-                    child: _uploadedImagesOrEmptyList(),
+                    child: Obx(() => _uploadedImagesOrEmptyList()),
                   ),
                 ),
                 const SizedBox(width: ASizes.spaceBtwItems / 2),
@@ -83,7 +83,7 @@ class ProductAdditionalImages extends StatelessWidget {
 
   // Widget to Display Either Uploaded Images or Empty List
   Widget _uploadedImagesOrEmptyList() {
-    return emptyList();
+    return additionalProductImagesURLs.isEmpty ? emptyList() : uploadedImages();
   }
 
   // Widget to Display Empty List Placeholder
