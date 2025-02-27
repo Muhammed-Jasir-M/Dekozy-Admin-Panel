@@ -2,7 +2,7 @@ import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_containe
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/product/create_product_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_attributes_controller.dart';
-import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_controller.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_variations_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
@@ -27,16 +27,18 @@ class ProductAttributes extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Obx(() {
-          return productController.productType.value == ProductType.single
-              ? const Column(
-                  children: [
-                    Divider(color: AColors.primaryBackground),
-                    SizedBox(height: ASizes.spaceBtwSections),
-                  ],
-                )
-              : const SizedBox.shrink();
-        }),
+        Obx(
+          () {
+            return productController.productType.value == ProductType.single
+                ? const Column(
+                    children: [
+                      Divider(color: AColors.primaryBackground),
+                      SizedBox(height: ASizes.spaceBtwSections),
+                    ],
+                  )
+                : const SizedBox.shrink();
+          },
+        ),
 
         Text('Add Product Attributes',
             style: Theme.of(context).textTheme.headlineSmall),
@@ -136,14 +138,15 @@ class ProductAttributes extends StatelessWidget {
         // Generate Variations Button
         Obx(
           () => productController.productType.value == ProductType.variable &&
-                  variationController.ProductVariationController.isEmpty
+                  variationController.productVariations.isEmpty
               ? Center(
                   child: SizedBox(
                     width: 200,
                     child: ElevatedButton.icon(
                       icon: const Icon(Iconsax.activity),
                       label: const Text('Generate Variations'),
-                    onPressed:()=> variationController.generateVariationsConfirmation(context),
+                      onPressed: () => variationController
+                          .generateVariationsConfirmation(context),
                     ),
                   ),
                 )

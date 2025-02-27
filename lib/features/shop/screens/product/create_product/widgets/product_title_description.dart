@@ -15,6 +15,7 @@ class ProductTitleAndDescription extends StatelessWidget {
     
     return ARoundedContainer(
       child: Form(
+        key: controller.titleDescriptionFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -25,6 +26,7 @@ class ProductTitleAndDescription extends StatelessWidget {
 
             // Product Title Input Field
             TextFormField(
+              controller: controller.title,
               validator: (value) =>
                   AValidator.validateEmptyText('Product Title', value),
               decoration: const InputDecoration(labelText: 'Product Title'),
@@ -35,6 +37,7 @@ class ProductTitleAndDescription extends StatelessWidget {
             SizedBox(
               height: 300,
               child: TextFormField(
+                controller: controller.description,
                 expands: true,
                 maxLines: null,
                 textAlign: TextAlign.start,

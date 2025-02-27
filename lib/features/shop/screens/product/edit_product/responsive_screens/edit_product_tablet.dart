@@ -28,7 +28,7 @@ class EditProductTabletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const ProductBottomNavigationButtons(),
+      bottomNavigationBar: ProductBottomNavigationButtons(product: product),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(ASizes.defaultSpace),
@@ -128,7 +128,7 @@ class EditProductTabletScreen extends StatelessWidget {
                         const SizedBox(height: ASizes.spaceBtwSections),
 
                         // Product Categories
-                        const ProductCategories(),
+                        ProductCategories(product: product),
                         const SizedBox(height: ASizes.spaceBtwSections),
 
                         // Product Visibility

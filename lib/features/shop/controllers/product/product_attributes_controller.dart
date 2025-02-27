@@ -1,9 +1,8 @@
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_variations_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/product_attribute_model.dart';
 import 'package:aura_kart_admin_panel/utils/popups/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class ProductAttributesController extends GetxController {
   static ProductAttributesController get instance => Get.find();
@@ -13,21 +12,26 @@ class ProductAttributesController extends GetxController {
   final attributesFormKey = GlobalKey<FormState>();
   TextEditingController attributeName = TextEditingController();
   TextEditingController attributes = TextEditingController();
+
   final RxList<ProductAttributeModel> productAttributes =
       <ProductAttributeModel>[].obs;
 
   // Function to add a new attribute
   void addNewAttribute() {
     // Form Validation
-    if (!attributesFormkey.currentState!.validate()) {
+    if (!attributesFormKey.currentState!.validate()) {
       return;
     }
 
     // Add Attributes to the List of Attributes
-    productAttributes.add(ProductAttributeModel(
+    productAttributes.add(
+      ProductAttributeModel(
         name: attributeName.text.trim(),
-        values: attributes.text.trim().split('|').toList()));
-    // clear text field after adding
+        values: attributes.text.trim().split('|').toList(),
+      ),
+    );
+
+    // Clear text fields after adding
     attributeName.text = '';
     attributes.text = '';
   }
@@ -42,13 +46,13 @@ class ProductAttributesController extends GetxController {
         Navigator.of(context).pop();
         productAttributes.removeAt(index);
 
-        // Reset productvariations when removing an attribute
-        ProductVariationController.instance.productvariations.value = [];
+        // Reset productVariations when removing an attribute
+        ProductVariationController.instance.productVariations.value = [];
       },
     );
   }
 
-// function to reset productAttributes
+  // Function to reset productAttributes
   void resetProductAttributes() {
     productAttributes.clear();
   }

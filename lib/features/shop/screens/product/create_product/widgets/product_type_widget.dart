@@ -10,7 +10,7 @@ class ProductTypeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = CreateProductControlle.instance;
+    final controller = CreateProductController.instance;
     
     return Obx(
       ()=> Row(

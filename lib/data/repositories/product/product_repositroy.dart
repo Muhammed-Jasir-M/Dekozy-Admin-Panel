@@ -94,7 +94,8 @@ class ProductRepository extends GetxController {
   }
 
   /// Get limited featured products
-  Future<List<ProductCategoryModel>> getAllCategories(String productId) async {
+  Future<List<ProductCategoryModel>> getProductCategories(
+      String productId) async {
     try {
       final snapshot = await _db
           .collection('ProductCategory')
@@ -140,6 +141,31 @@ class ProductRepository extends GetxController {
         }
         transaction.delete(productRef);
       });
+    } on FirebaseException catch (e) {
+      throw AFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong!. Please try again';
+    }
+  }
+
+  /// Remove product category
+  Future<void> removeProductCategory(
+      String productId, String categoryId) async {
+    try {
+      final result = await _db
+          .collection('ProductCategory')
+          .where('productId', isEqualTo: productId)
+          .where('categoryId', isEqualTo: categoryId)
+          .get();
+      
+      for (final doc in result.docs) {
+        await doc.reference.delete();
+      }
+
     } on FirebaseException catch (e) {
       throw AFirebaseException(e.code).message;
     } on FormatException catch (_) {

@@ -6,158 +6,187 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductVariationController extends GetxController {
-// Singleton instance
-static ProductVariationController get instance => Get.find();
+  // Singleton instance
+  static ProductVariationController get instance => Get.find();
 
-// Observables for loading state and product variations
-final isLoading = false.obs;
-final RxList<ProductVariationModel> productvariations = <ProductVariationModel>[].obs;
+  // Observables for loading state and product variations
+  final isLoading = false.obs;
+  final RxList<ProductVariationModel> productVariations =
+      <ProductVariationModel>[].obs;
 
-// Lists to store controllers for each variation attribute
-List<Map<ProductVariationModel, TextEditingController>> stockControllersList = [];
-List<Map<ProductVariationModel, TextEditingController>> priceControllersList = [];
-List<Map <ProductVariationModel, TextEditingController>> salePriceControllersList = [];
-List<Map<ProductVariationModel, TextEditingController>> descriptionControllerstist = [];
+  // Lists to store controllers for each variation attribute
+  List<Map<ProductVariationModel, TextEditingController>> stockControllersList =
+      [];
+  List<Map<ProductVariationModel, TextEditingController>> priceControllersList =
+      [];
+  List<Map<ProductVariationModel, TextEditingController>>
+      salePriceControllersList = [];
+  List<Map<ProductVariationModel, TextEditingController>>
+      descriptionControllersList = [];
 
-// Instance of ProductAttributesController
-final attributesController= Get.put(ProductAttributesController());
+  // Instance of ProductAttributesController
+  final attributesController = Get.put(ProductAttributesController());
 
-void initializeVariationControllers (List<ProductVariationModel> variations) {
-// Clear existing lists
+  void initializeVariationControllers(List<ProductVariationModel> variations) {
+    // Clear existing lists
+    stockControllersList.clear();
+    priceControllersList.clear();
+    salePriceControllersList.clear();
+    descriptionControllersList.clear();
 
-stockControllersList.clear();
-priceControllersList.clear();
-salePriceControllersList.clear();
-descriptionControllerstist.clear();
+    // Initialize controllers for each variation
+    for (var variation in variations) {
+      // Stock Controllers
+      Map<ProductVariationModel, TextEditingController> stockControllers = {};
+      stockControllers[variation] =
+          TextEditingController(text: variation.stock.toString());
+      stockControllersList.add(stockControllers);
 
-// Initialize controllers for each variation
-for (var variation in variations) {
-// Stock Controllers
-Map <ProductVariationModel, TextEditingController> stockControllers = {};
-stockControllers [variation] = TextEditingController(text: variation.stock.toString());
-stockControllersList.add(stockControllers);
+      // Price Controllers
+      Map<ProductVariationModel, TextEditingController> priceControllers = {};
+      priceControllers[variation] =
+          TextEditingController(text: variation.price.toString());
+      priceControllersList.add(priceControllers);
 
-// Price Controllers
-Map<ProductVariationModel, TextEditingController> priceControllers={};
-priceControllers [variation] = TextEditingController(text: variation.price.toString());
-priceControllersList.add(priceControllers);
+      // Sale Price Controllers
+      Map<ProductVariationModel, TextEditingController> salePriceControllers =
+          {};
+      salePriceControllers[variation] =
+          TextEditingController(text: variation.salePrice.toString());
+      salePriceControllersList.add(salePriceControllers);
 
-// Sale Price Controllers
+      // Description Controllers
+      Map<ProductVariationModel, TextEditingController> descriptionControllers =
+          {};
+      descriptionControllers[variation] =
+          TextEditingController(text: variation.description);
+      descriptionControllersList.add(descriptionControllers);
+    }
+  }
 
-Map<ProductVariationModel, TextEditingController> salePriceControllers = {};
-salePriceControllers [variation] = TextEditingController(text: variation.salePrice.toString());
-salePriceControllersList.add(salePriceControllers);
+  void removeVariations(BuildContext context) {
+    ADialogs.defaultDialog(
+      context: context,
+      title: 'Remove Variation',
+      onConfirm: () {
+        productVariations.value = [];
+        resetAllValues();
+        Navigator.of(context).pop();
+      },
+    );
+  }
 
-// Descripyion Controllers
+  // Function to generate variations with a confirmation dialog
+  void generateVariationsConfirmation(BuildContext context) {
+    ADialogs.defaultDialog(
+      context: context,
+      confirmText: 'Generate',
+      title: 'Generate Variations',
+      content:
+          'Once the variations are created, you cannot add more attributes. In order to add more variations, you have to delete any of the attributes.',
+      onConfirm: () => generateVariationsFromAttributes(),
+    );
+  }
 
-Map<ProductVariationModel, TextEditingController> descriptionControllers = {};
-descriptionControllers[variation]=  TextEditingController(text: variation.description);
-descriptionControllerstist.add(descriptionControllers);
-}
-}
-void removeVariation(BuildContext context){
-  ADialogs.defaultDialog(
-    context: context,
-    title: 'Remove Variation',
-    onConfirm: (){
-      productVariations.value=[];
-      resetAllvalues();
-      Navigator.of(context).pop();
-    }, 
-  );
-}
+  // Function to generate variations from attributes
+  void generateVariationsFromAttributes() {
+    // Close the previous Popup
+    Get.back();
 
+    final List<ProductVariationModel> variations = [];
 
+    // Check if there are attributes
+    if (attributesController.productAttributes.isNotEmpty) {
+      // Get all combinations of attribute values, [[Green, Blue], [Small, Large]]
+      final List<List<String>> attributeCombinations = getCombinations(
+        attributesController.productAttributes
+            .map((attr) => attr.values ?? <String>[])
+            .toList(),
+      );
 
-// Function to generate variations with a confirsation dialog
-void generateVariationsConfirmation (BuildContext context) {
-ADialogs.defaultDialog(
-context: context,
-confirmText: 'Generate',
-title: 'Generate Variations',
-content:
-'Once the variations are created, you cannot add more attributes. In order to add more variations, you have to delete any of the attributes.'.
-onConfirm: () => generateVariationsFromAttributes(),
-);
-}
+      // Generate ProductVariationModel for each combination
+      for (final combination in attributeCombinations) {
+        final Map<String, String> attributeValues = Map.fromIterables(
+          attributesController.productAttributes.map((attr) => attr.name ?? ''),
+          combination,
+        );
 
-// Function to generate variations from attributes
-void generateVariationsFromAttributes() {
-// Close the previous Popup
-Get.back();
+        // You can set default values for other properties if needed
+        final ProductVariationModel variation = ProductVariationModel(
+          id: UniqueKey().toString(),
+          attributeValues: attributeValues,
+        );
+        variations.add(variation);
 
-final List<ProductVariationModel> variations = [];
+        // Create controllers
+        final Map<ProductVariationModel, TextEditingController>
+            stockControllers = {};
+        final Map<ProductVariationModel, TextEditingController>
+            priceControllers = {};
+        final Map<ProductVariationModel, TextEditingController>
+            salePriceControllers = {};
+        final Map<ProductVariationModel, TextEditingController>
+            descriptionControllers = {};
 
-// Check if there are attributes
-if (attributesController.productAttributes.isNotEmpty) {
-// Get all combinations of attribute values, [[Green, Blue], [Small, Large]]
-final List<List<String>> attributeCombinations =
-getCombinations(attributesController.productAttributes.map((attr) => attr.values ?? <String>[]).toList());
+        // Assuming variation is your current ProductVariationModel
+        stockControllers[variation] = TextEditingController();
+        priceControllers[variation] = TextEditingController();
+        salePriceControllers[variation] = TextEditingController();
+        descriptionControllers[variation] = TextEditingController();
 
-// Generate Product VariationModel for each combination
-for (final combination in attributeCombinations) {
-final Map<String, String> attributeValues =
-Map.fromIterables(attributesController.productAttributes.map((attr) => attr.name ??''), combination);
+        // Add the maps to their respective lists
+        stockControllersList.add(stockControllers);
+        priceControllersList.add(priceControllers);
+        salePriceControllersList.add(salePriceControllers);
+        descriptionControllersList.add(descriptionControllers);
+      }
+    }
 
-// You can set default values for other properties if needed
-final ProductVariationModel variation = ProductVariationModel(id: UniqueKey().toString(), attributeValues: attributeValues);
-variations.add(variation);
+    // Assign the generated variations to the productVariations list
+    productVariations.assignAll(variations);
+  }
 
-// Create controllers
-final Map<ProductVariationModel, TextEditingController> stockControllers = {};
-final Map<ProductVariationModel, TextEditingController> priceControllers = {};
-final Map<ProductVariationModel, TextEditingController> salePriceControllers = {};
-final Map<ProductVariationModel, TextEditingController> descriptionControllers = {};
+  // Get all combinations of attribute values
+  List<List<String>> getCombinations(List<List<String>> lists) {
+    // The result list that will store all combinations
+    final List<List<String>> result = [];
 
-// Assuming variation is your current ProductVariationModel
-stockControllers [variation] = TextEditingController();
-priceControllers [variation] = TextEditingController();
-salePriceControllers [variation] = TextEditingController();
-descriptionControllers [variation] = TextEditingController();
+    // Start combining attributes from the first one
+    combine(lists, 0, <String>[], result);
 
-// Add the maps to their respective lists
-stockControllersList.add(stockControllers);
-priceControllersList.add(priceControllers);
-salePriceControllersList.add(salePriceControllers);
-descriptionControllerstist.add(descriptionControllers);
-}
-}
+    // Return the final list of combinations
+    return result;
+  }
 
-// Assign the generated variations to the productVariations list
-productvariations.assignAll (variations);
+  // Helper function to recursively combine attribute values
+  void combine(
+    List<List<String>> lists,
+    int index,
+    List<String> current,
+    List<List<String>> result,
+  ) {
+    // If we have reached the end of the lists, add the current combination to the result
+    if (index == lists.length) {
+      result.add(List.from(current));
+      return;
+    }
 
-}
+    // Iterate over the values of the current attribute
+    for (final item in lists[index]) {
+      // Create an updated list with the current value added
+      final List<String> updated = List.from(current)..add(item);
 
+      // Recursively combine with the next attribute
+      combine(lists, index + 1, updated, result);
+    }
+  }
 
-// Get all combinations of attribute values
-List<List<String>> getCombinations (List<List<String>> lists) {
-// The result list that will store all combinations
-final List<List<String>> result = [];
-
-// Start combining attributes from the first one
-combine (lists, 0, <String>[], result);
-
-// Return the final list of combinations
-return result;
-}
-
-//Helper function to recursively combine attribute values
-void combine (List<List<String>> lists, int index, List<String> current, List<List<String>> result) {
-// If we have reached the end of the lists, add the current combination to the result
-if (index == lists.length) {
-result.add(List.from(current));
-return;
-}
-
-
-// Iterate over the values of the current attribute
-for (final item in lists [index]) {
-// Create an updated list with the current value added
-final List<String> updated =List.from(current)..add(item);
-
-// Recursively combine with the next attribute
-combine(lists, index + 1, updated, result);
-}
-}
-
+  // Function to reset all values
+  void resetAllValues() {
+    productVariations.clear();
+    stockControllersList.clear();
+    priceControllersList.clear();
+    salePriceControllersList.clear();
+    descriptionControllersList.clear();
+  }
 }

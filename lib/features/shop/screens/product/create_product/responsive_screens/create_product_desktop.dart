@@ -25,7 +25,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProductImageController());
+    final controller = Get.put(ProductImagesController());
 
     return Scaffold(
       bottomNavigationBar: const ProductBottomNavigationButtons(),
@@ -114,9 +114,11 @@ class CreateProductDesktopScreen extends StatelessWidget {
                               const SizedBox(height: ASizes.spaceBtwItems),
                               ProductAdditionalImages(
                                 additionalProductImagesURLs:
-                                    RxList<String>.empty(),
-                                onTapToAddImages: () {},
-                                onTapToRemoveImage: (index) {},
+                                    controller.additionalProductImageUrls,
+                                onTapToAddImages: () =>
+                                    controller.selectMultipleProductImages(),
+                                onTapToRemoveImage: (index) =>
+                                    controller.removeImage(index),
                               ),
                             ],
                           ),

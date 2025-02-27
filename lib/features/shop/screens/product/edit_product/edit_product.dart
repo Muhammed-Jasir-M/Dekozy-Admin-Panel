@@ -1,3 +1,4 @@
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/edit_product_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/product/edit_product/responsive_screens/edit_product_desktop.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/product/edit_product/responsive_screens/edit_product_mobile.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/product/edit_product/responsive_screens/edit_product_tablet.dart';
@@ -11,7 +12,10 @@ class EditProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(EditProductController());
     final product = Get.arguments;
+    controller.initProductData(product);
+    
     return ASiteTemplate(
       desktop: EditProductDesktopScreen(product: product),
       tablet: EditProductTabletScreen(product: product),

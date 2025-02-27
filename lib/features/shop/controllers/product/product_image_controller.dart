@@ -1,9 +1,10 @@
 import 'package:aura_kart_admin_panel/features/media/controller/media_controller.dart';
 import 'package:aura_kart_admin_panel/features/media/models/image_model.dart';
+import 'package:aura_kart_admin_panel/features/shop/models/product_variation_model.dart';
 import 'package:get/get.dart';
 
-class ProductImageController extends GetxController {
-  static ProductImageController get instance => Get.find();
+class ProductImagesController extends GetxController {
+  static ProductImagesController get instance => Get.find();
 
   // Rx Observable for the selected thumbnail images
   Rx<String?> selectedThumbnailImageUrl = Rx<String?>(null);
@@ -45,5 +46,19 @@ class ProductImageController extends GetxController {
   /// Funtion to remove Product Image
   Future<void> removeImage(int index) async {
     additionalProductImageUrls.removeAt(index);
+  }
+
+  /// Pick Multiple Images from Media
+  void selectVariationImage(ProductVariationModel variation) async {
+    final controller = Get.put(MediaController());
+    List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
+
+    // Handle the Selected images
+    if (selectedImages != null && selectedImages.isNotEmpty) {
+      // Set the selected  images to the main image or perform any other action
+      ImageModel selectedImage = selectedImages.first;
+      // Update the main image using the selectedImage
+      variation.image.value = selectedImage.url;
+    }
   }
 }

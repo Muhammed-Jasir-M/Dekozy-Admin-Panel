@@ -1,4 +1,5 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/product/create_product_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../utils/constants/sizes.dart';
@@ -20,7 +21,7 @@ class ProductBottomNavigationButtons extends StatelessWidget {
           SizedBox(
             width: 160,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => CreateProductController.instance.createProduct(),
               child: const Text('Save Changes'),
             ),
           ),
