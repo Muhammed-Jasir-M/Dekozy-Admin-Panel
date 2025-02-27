@@ -10,7 +10,7 @@ class AddressModel {
   final String state;
   final String postalCode;
   final String country;
-  final DateTime? dateTime;
+  final DateTime? dateTime; 
   bool selectedAddress;
 
   AddressModel({

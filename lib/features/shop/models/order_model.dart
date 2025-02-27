@@ -6,27 +6,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderModel {
   final String id;
+  final String docId;
   final String userId;
-  final OrderStatus status;
+  OrderStatus status;
   final double totalAmount;
+  final double shippingCost;
+  final double taxCost;
   final DateTime orderDate;
   final String paymentMethod;
   final AddressModel? address;
   final DateTime? deliveryDate;
-  final List<CartItemModel>? items;
-  final String docId;
+  final List<CartItemModel> items;
+  final bool billingAddressSameAsShipping;
 
   OrderModel({
     required this.id,
     this.userId = '',
     this.docId = '',
-    required this.status,
+    required this.status,  
+    required this.items,
     required this.totalAmount,
+    required this.shippingCost,
+    required this.taxCost,
     required this.orderDate,
     this.paymentMethod = 'Paypal',
     this.address,
     this.deliveryDate,
-    this.items,
+    this.billingAddressSameAsShipping = true,
   });
 
   String get formattedOrderDate => AHelperFunctions.getFormattedDate(orderDate);
@@ -42,7 +48,11 @@ class OrderModel {
           : 'Processing';
 
   /// Static function to create an empty model
-  static OrderModel empty() => OrderModel(id: '', status: OrderStatus.pending, totalAmount: 0, orderDate: DateTime.now());
+  static OrderModel empty() => OrderModel(
+      id: '',
+      status: OrderStatus.pending,
+      totalAmount: 0,
+      orderDate: DateTime.now());
 
   Map<String, dynamic> toJson() {
     return {

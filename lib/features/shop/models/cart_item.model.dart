@@ -20,6 +20,9 @@ class CartItemModel {
     this.selectedVariation,
   });
 
+  // calculate total amount
+  String get totalAmount => (price * quantity).toStringAsFixed(1);
+
   /// Empty Cart
   static CartItemModel empty() => CartItemModel(productId: '', quantity: 0);
 
