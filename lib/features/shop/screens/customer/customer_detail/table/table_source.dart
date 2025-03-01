@@ -16,10 +16,17 @@ class CustomerOrderRows extends DataTableSource {
       id: 'id',
       status: OrderStatus.shipped,
       totalAmount: 234,
+      shippingCost: 50, // ✅ FIXED: Added required 'shippingCost' parameter
+      taxCost: 18, // ✅ FIXED: Added required 'taxCost' parameter
       orderDate: DateTime.now(),
+      items: [], // ✅ FIXED: Added required 'items' parameter
     );
 
     const totalAmount = '2453';
+
+    // Safe context retrieval
+    final context = Get.context;
+    if (context == null) return const DataRow(cells: []);
 
     return DataRow2(
       selected: false,
@@ -28,29 +35,29 @@ class CustomerOrderRows extends DataTableSource {
         DataCell(
           Text(
             order.id,
-            style: Theme.of(Get.context!)
+            style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
                 .apply(color: AColors.primary),
           ),
         ),
         DataCell(Text(order.formattedOrderDate)),
-        const DataCell(Text('${5} Items')),
+        DataCell(Text('${5} Items')), // ✅ Removed unnecessary `const`
         DataCell(
           ARoundedContainer(
             radius: ASizes.cardRadiusSm,
             padding: const EdgeInsets.symmetric(
                 vertical: ASizes.sm, horizontal: ASizes.md),
             backgroundColor: AHelperFunctions.getOrderStatusColor(order.status)
-                .withValues(alpha: 0.1),
+                .withOpacity(0.1), // ✅ Fixed withOpacity instead of withValues
             child: Text(
-              order.status.name.capitalize.toString(),
+              order.status.name.capitalizeFirst ?? '', // ✅ Fixed capitalization
               style: TextStyle(
                   color: AHelperFunctions.getOrderStatusColor(order.status)),
             ),
           ),
         ),
-        const DataCell(Text('\u{20B9}$totalAmount')),
+        DataCell(Text('\u{20B9}$totalAmount')), // ✅ Removed `const`
       ],
     );
   }

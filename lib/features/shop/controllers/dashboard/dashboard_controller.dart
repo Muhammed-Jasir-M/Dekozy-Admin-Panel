@@ -17,36 +17,51 @@ class DashboardController extends GetxController {
       id: 'CWT0012',
       status: OrderStatus.processing,
       totalAmount: 265,
+      shippingCost: 50, // ✅ FIXED: Added required 'shippingCost' parameter
+      taxCost: 18, // ✅ FIXED: Added required 'taxCost' parameter
       orderDate: DateTime(2024, 5, 20),
       deliveryDate: DateTime(2024, 5, 20),
+      items: [], // ✅ FIXED: Added required 'items' parameter
     ),
     OrderModel(
-      id: 'CWT0012',
+      id: 'CWT0013',
       status: OrderStatus.processing,
-      totalAmount: 265,
-      orderDate: DateTime(2024, 5, 20),
-      deliveryDate: DateTime(2024, 5, 20),
+      totalAmount: 300,
+      shippingCost: 55,
+      taxCost: 20,
+      orderDate: DateTime(2024, 5, 21),
+      deliveryDate: DateTime(2024, 5, 22),
+      items: [],
     ),
     OrderModel(
-      id: 'CWT0012',
+      id: 'CWT0014',
       status: OrderStatus.shipped,
-      totalAmount: 265,
-      orderDate: DateTime(2024, 5, 20),
-      deliveryDate: DateTime(2024, 5, 20),
+      totalAmount: 400,
+      shippingCost: 60,
+      taxCost: 25,
+      orderDate: DateTime(2024, 5, 22),
+      deliveryDate: DateTime(2024, 5, 23),
+      items: [],
     ),
     OrderModel(
-      id: 'CWT0012',
+      id: 'CWT0015',
       status: OrderStatus.delivered,
-      totalAmount: 265,
-      orderDate: DateTime(2024, 5, 20),
-      deliveryDate: DateTime(2024, 5, 20),
+      totalAmount: 500,
+      shippingCost: 65,
+      taxCost: 30,
+      orderDate: DateTime(2024, 5, 23),
+      deliveryDate: DateTime(2024, 5, 24),
+      items: [],
     ),
     OrderModel(
-      id: 'CWT0012',
+      id: 'CWT0016',
       status: OrderStatus.delivered,
-      totalAmount: 265,
-      orderDate: DateTime(2024, 5, 20),
-      deliveryDate: DateTime(2024, 5, 20),
+      totalAmount: 600,
+      shippingCost: 70,
+      taxCost: 35,
+      orderDate: DateTime(2024, 5, 24),
+      deliveryDate: DateTime(2024, 5, 25),
+      items: [],
     ),
   ];
 
@@ -71,7 +86,7 @@ class DashboardController extends GetxController {
           orderWeekStart.add(const Duration(days: 7)).isAfter(DateTime.now())) {
         int index = (order.orderDate.weekday - 1) % 7;
 
-        // Ensure the index is non negative
+        // Ensure the index is non-negative
         index = index < 0 ? index + 7 : index;
 
         weeklySales[index] += order.totalAmount;
@@ -106,7 +121,7 @@ class DashboardController extends GetxController {
       case OrderStatus.shipped:
         return 'Shipped';
       case OrderStatus.delivered:
-        return 'Delevered';
+        return 'Delivered'; // ✅ FIXED typo (previously "Delevered")
       case OrderStatus.cancelled:
         return 'Cancelled';
     }
