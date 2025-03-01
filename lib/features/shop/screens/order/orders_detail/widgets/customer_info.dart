@@ -1,11 +1,13 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/order/order_detail_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OrderCustomer extends StatelessWidget {
   const OrderCustomer({super.key, required this.order});
@@ -14,144 +16,133 @@ class OrderCustomer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OrderDetailController());
+    controller.order.value = order;
+    controller.getCUstomerOfCurrentOrder();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Personal Info
         ARoundedContainer(
-          padding: EdgeInsets.all(ASizes.defaultSpace),
+          padding: const EdgeInsets.all(ASizes.defaultSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Customer',
-                  style: Theme.of(context).textTheme.headlineMedium),
-              SizedBox(
-                height: ASizes.spaceBtwSections,
-              ),
-              Row(
-                children: [
-                  ARoundedImage(
-                    padding: 0,
-                    backgroundColor: AColors.primaryBackground,
-                    image: AImages.user,
-                    imageType: ImageType.asset,
-                  ),
-                  SizedBox(width: ASizes.spaceBtwItems),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Aurakart',
-                          style: Theme.of(context).textTheme.titleLarge,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        Text(
-                          'support@aurakart.com',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ],
+              Text('Customer',style: Theme.of(context).textTheme.headlineMedium),
+              const SizedBox(height: ASizes.spaceBtwSections),
+              Obx(
+                () {
+                return Row(
+                  children: [
+                    ARoundedImage(
+                      padding: 0,
+                      backgroundColor: AColors.primaryBackground,
+                      image: controller.customer.value.profilePicture.isNotEmpty ? controller.customer.value.profilePicture : AImages.user,
+                      imageType: controller.customer.value.profilePicture.isNotEmpty ? ImageType.network : ImageType.asset,
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: ASizes.spaceBtwItems),
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            controller.customer.value.fullName,
+                            style: Theme.of(context).textTheme.titleLarge,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          Text(
+                            controller.customer.value.email,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }),
             ],
           ),
         ),
-        SizedBox(height: ASizes.spaceBtwSections),
+        const SizedBox(height: ASizes.spaceBtwSections),
+
 
         // Contact Info
-        SizedBox(
-          width: double.infinity,
-          child: ARoundedContainer(
-            padding: EdgeInsets.all(ASizes.defaultSpace),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Contact Person',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                SizedBox(height: ASizes.spaceBtwSections),
-                Text(
-                  'Aurakart',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                SizedBox(height: ASizes.spaceBtwItems / 2),
-                Text(
-                  'support@aurakart.com',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                SizedBox(height: ASizes.spaceBtwItems / 2),
-                Text(
-                  '(+91) 9587435987',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ],
+        Obx(
+          () => SizedBox(
+            width: double.infinity,
+            child: ARoundedContainer(
+              padding: const EdgeInsets.all(ASizes.defaultSpace),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Contact Person',style: Theme.of(context).textTheme.headlineMedium,),
+                  const SizedBox(height: ASizes.spaceBtwSections),
+                  Text(controller.customer.value.fullName,style: Theme.of(context).textTheme.titleSmall,),
+                  const SizedBox(height: ASizes.spaceBtwItems / 2),
+                  Text(controller.customer.value.email,style: Theme.of(context).textTheme.titleSmall,),
+                  const SizedBox(height: ASizes.spaceBtwItems / 2),
+                  Text(controller.customer.value.formattedPhoneNo.isNotEmpty ? 
+                  controller.customer.value.formattedPhoneNo : '(+91) ***********',
+                   style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        SizedBox(height: ASizes.spaceBtwSections),
+        const SizedBox(height: ASizes.spaceBtwSections),
 
         // Shipping Info
         SizedBox(
           width: double.infinity,
           child: ARoundedContainer(
-            padding: EdgeInsets.all(ASizes.defaultSpace),
+            padding: const EdgeInsets.all(ASizes.defaultSpace),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Shipping Address',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                SizedBox(height: ASizes.spaceBtwSections),
-                Text(
-                  'Aura kart LTD',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                SizedBox(height: ASizes.spaceBtwItems / 2),
-                Text(
-                  '61 Bridge Street, Kington, United Kingdom',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
+                Text('Shipping Address',style: Theme.of(context).textTheme.headlineMedium,),
+                const SizedBox(height: ASizes.spaceBtwSections),
+
+                Text(order.shippingAddress != null ? order.shippingAddress!.name : '',
+                style: Theme.of(context).textTheme.titleSmall,),
+
+                const SizedBox(height: ASizes.spaceBtwItems / 2),
+                Text(order.shippingAddress != null ? order.shippingAddress!.toString() : '' ,style: Theme.of(context).textTheme.titleSmall,),
               ],
             ),
           ),
         ),
-        SizedBox(height: ASizes.spaceBtwSections),
+        const SizedBox(height: ASizes.spaceBtwSections),
 
         // Billing Info
-        SizedBox(
+         SizedBox(
           width: double.infinity,
           child: ARoundedContainer(
             padding: EdgeInsets.all(ASizes.defaultSpace),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Billing Address',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
+                Text('Billing Address',style: Theme.of(context).textTheme.headlineMedium,),
                 SizedBox(height: ASizes.spaceBtwSections),
-                Text(
-                  'Aura kart LTD',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
+
+                Text(order.billingAddressSameAsShipping ? order.shippingAddress!.name : order.billingAddress!.name,
+                style: Theme.of(context).textTheme.titleSmall,),
+                
                 SizedBox(height: ASizes.spaceBtwItems / 2),
-                Text(
-                  '61 Bridge Street, Kington, United Kingdom',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
+
+                Text(order.billingAddressSameAsShipping ? order.shippingAddress!.name : order.billingAddress!.toString(),
+                style: Theme.of(context).textTheme.titleSmall,),
               ],
             ),
           ),
         ),
-        SizedBox(height: ASizes.spaceBtwSections),
+        const SizedBox(height: ASizes.spaceBtwSections),
       ],
     );
   }
 }
+ 

@@ -70,6 +70,7 @@ class AddressModel {
 
   factory AddressModel.fromDocumentSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;
+    
     return AddressModel(
       id: snapshot.id,
       name: data['Name'] ?? '',

@@ -6,15 +6,11 @@ import 'package:get/get.dart';
 
 abstract class ABaseController<T> extends GetxController {
   RxBool isLoading = false.obs;
-
   RxInt sortColumnIndex = 1.obs;
   RxBool sortAscending = true.obs;
-
   RxList<T> allItems = <T>[].obs;
   RxList<T> filteredItems = <T>[].obs;
-
   RxList<bool> selectedRows = <bool>[].obs;
-
   final searchTextController = TextEditingController();
 
   @override
@@ -48,9 +44,7 @@ abstract class ABaseController<T> extends GetxController {
       selectedRows.assignAll(List.generate(allItems.length, (index) => false));
     } catch (e) {
       isLoading.value = false;
-
       AFullScreenLoader.stopLoading();
-
       ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
       isLoading.value = false;

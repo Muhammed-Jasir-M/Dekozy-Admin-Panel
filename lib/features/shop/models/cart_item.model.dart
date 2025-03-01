@@ -11,7 +11,7 @@ class CartItemModel {
   // Constructor
   CartItemModel({
     required this.productId,
-    required this.quantity,
+    required this.quantity,  
     this.variationId = '',
     this.image,
     this.price = 0.0,

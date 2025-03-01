@@ -16,7 +16,7 @@ class OrderItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subTotal = order.items!.fold(
+    final subTotal = order.items.fold(
       0.0,
       (previousValue, element) =>
           previousValue + (element.price * element.quantity),
@@ -33,12 +33,12 @@ class OrderItems extends StatelessWidget {
           // Items
           ListView.separated(
             shrinkWrap: true,
-            itemCount: order.items!.length,
+            itemCount: order.items.length,
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder: (_, __) =>
                 const SizedBox(height: ASizes.spaceBtwItems),
             itemBuilder: (_, index) {
-              final item = order.items?[index];
+              final item = order.items[index];
 
               return Row(
                 children: [
@@ -80,7 +80,7 @@ class OrderItems extends StatelessWidget {
                   const SizedBox(width: ASizes.spaceBtwItems),
                   SizedBox(
                     width: ASizes.xl * 2,
-                    child: Text('\u{20B9}${item.price.toStringAsFixed(1)}',
+                    child: Text('\$${item.price.toStringAsFixed(1)}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ),
                   SizedBox(
@@ -95,7 +95,7 @@ class OrderItems extends StatelessWidget {
                         ? ASizes.xl * 1.4
                         : ASizes.xl * 2,
                     child: Text(
-                        '\u{20B9}${(item.price * item.quantity).toStringAsFixed(2)}',
+                        '\$${(item.price * item.quantity).toStringAsFixed(2)}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ),
                 ],
@@ -115,7 +115,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Subtotal',
                         style: Theme.of(context).textTheme.titleLarge),
-                    Text('\u{20B9}$subTotal',
+                    Text('\$$subTotal',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
@@ -125,7 +125,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Discount',
                         style: Theme.of(context).textTheme.titleLarge),
-                    Text('\u{20B9}0.00',
+                    Text('\$0.00',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
@@ -136,7 +136,7 @@ class OrderItems extends StatelessWidget {
                     Text('Shipping',
                         style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\u{20B9}${APricingCalculator.calculateShippingCost(subTotal, '')}',
+                      '\$${order.shippingCost.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
@@ -147,7 +147,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Tax', style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\u{20B9}${APricingCalculator.calculateTax(subTotal, '')}',
+                      '\$${order.taxCost.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
@@ -161,7 +161,7 @@ class OrderItems extends StatelessWidget {
                     Text('Total',
                         style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\u{20B9}${APricingCalculator.calculateTotalPrice(subTotal, '')}',
+                      '\$${order.totalAmount.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],

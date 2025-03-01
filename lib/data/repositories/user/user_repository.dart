@@ -5,6 +5,7 @@ import 'package:aura_kart_admin_panel/utils/exceptions/format_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/platform_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -45,6 +46,47 @@ class UserRepository extends GetxController {
       throw APlatformException(e.code).message;
     } catch (e) {
       throw 'Something went wrong. $e';
+    }
+  }
+
+  // Funtion to fetch user details on userid
+  Future<List<UserModel>> getAllUsers() async {
+    try {
+      final querySnapshot =
+          await _db.collection("Users").orderBy('FirstName').get();
+      return querySnapshot.docs
+          .map((doc) => UserModel.fromSnapshot(doc))
+          .toList();
+    } on FirebaseAuthException catch (e) {
+      throw AFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      if (kDebugMode) print('Something went wrong: $e');
+      throw 'SOmething Went Wrong: $e';
+    }
+  }
+
+  // fcuntoin to fetch user details based on userId
+  Future<UserModel> fetchUserDetails(String id) async {
+    try {
+      final documentSnapshot = await _db.collection("Users").doc(id).get();
+      if (documentSnapshot.exists) {
+        return UserModel.fromSnapshot(documentSnapshot);
+      } else {
+        return UserModel.empty();
+      }
+    } on FirebaseAuthException catch (e) {
+      throw AFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AFormatException();
+    } on PlatformException catch (e) {
+      throw APlatformException(e.code).message;
+    } catch (e) {
+      if (kDebugMode) print('Something Went Wrong : $e');
+      throw 'Something went wrong : $e';
     }
   }
 }

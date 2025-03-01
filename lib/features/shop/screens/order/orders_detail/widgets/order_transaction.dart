@@ -42,7 +42,7 @@ class OrderTransaction extends StatelessWidget {
                               style: Theme.of(context).textTheme.titleLarge),
                           // Adjust your Payment Method Fee if any
                           Text(
-                              '${order.paymentMethod.capitalize} fee \u{20B9}25',
+                              '${order.paymentMethod.capitalize} fee \u{20B9}',
                               style: Theme.of(context).textTheme.labelMedium),
                         ],
                       ),
@@ -67,7 +67,7 @@ class OrderTransaction extends StatelessWidget {
                   children: [
                     Text('Total',
                         style: Theme.of(context).textTheme.labelMedium),
-                    Text('\u{20B9}${order.totalAmount}',
+                    Text('\$${order.totalAmount}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ],
                 ),

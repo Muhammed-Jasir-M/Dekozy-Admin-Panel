@@ -1,4 +1,6 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:aura_kart_admin_panel/common/widgets/shimmers/shimmer.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/order/order_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
@@ -14,8 +16,10 @@ class OrderInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OrderController());
+    controller.orderStatus.value = order.status;
     return ARoundedContainer(
-      padding: EdgeInsets.all(ASizes.defaultSpace),
+      padding: const EdgeInsets.all(ASizes.defaultSpace),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +45,7 @@ class OrderInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Items'),
-                    Text('${order.items!.length} Items',
+                    Text('${order.items.length} Items',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ],
                 ),
@@ -52,32 +56,43 @@ class OrderInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Status'),
-                    ARoundedContainer(
-                      radius: ASizes.cardRadiusSm,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: ASizes.sm, vertical: 0),
-                      backgroundColor:
-                          AHelperFunctions.getOrderStatusColor(order.status)
-                              .withValues(alpha: 0.1),
-                      child: DropdownButton<OrderStatus>(
-                        padding: EdgeInsets.symmetric(vertical: 0),
-                        value: order.status,
-                        onChanged: (OrderStatus? newValue) {},
-                        items: OrderStatus.values.map(
-                          (OrderStatus status) {
-                            return DropdownMenuItem<OrderStatus>(
-                              value: status,
-                              child: Text(
-                                status.name.capitalize.toString(),
-                                style: TextStyle(
-                                  color: AHelperFunctions.getOrderStatusColor(
-                                      order.status),
-                                ),
-                              ),
-                            );
-                          },
-                        ).toList(),
-                      ),
+                    Obx(
+                      () {
+                        if (controller.statusLoader.value)
+                          return const AShimmerEffect(
+                              width: double.infinity, height: 55);
+                        return ARoundedContainer(
+                          radius: ASizes.cardRadiusSm,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: ASizes.sm, vertical: 0),
+                          backgroundColor: AHelperFunctions.getOrderStatusColor(
+                                  controller.orderStatus.value)
+                              .withOpacity(0.1),
+                          child: DropdownButton<OrderStatus>(
+                            padding: const EdgeInsets.symmetric(vertical: 0),
+                            value: controller.orderStatus.value,
+                            onChanged: (OrderStatus? newValue) {
+                              if (newValue != null) {
+                                controller.updateOrderStatus(order, newValue);
+                              }
+                            },
+                            items: OrderStatus.values.map((OrderStatus status) {
+                                return DropdownMenuItem<OrderStatus>(
+                                  value: status,
+                                  child: Text(
+                                    status.name.capitalize.toString(),
+                                    style: TextStyle(
+                                      color:
+                                          AHelperFunctions.getOrderStatusColor(
+                                              order.status),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -86,8 +101,8 @@ class OrderInfo extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Total'),
-                    Text('\u{20B9}${order.totalAmount}',
+                    const Text('Total'),
+                    Text('\$${order.totalAmount}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ],
                 ),
