@@ -45,7 +45,7 @@ class BrandModel {
     };
   }
 
-  /// Map Json oriented document snapshot from Firebase to UserModel
+  /// Map Json oriented document snapshot from Firebase to BannerModel
   factory BrandModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data();
@@ -68,7 +68,7 @@ class BrandModel {
     }
   }
 
-  /// Map Json oriented document snapshot from Firebase to UserModel
+  /// Map Json oriented document snapshot from Firebase to BannerModel
   factory BrandModel.fromJson(Map<String, dynamic> document) {
     final data = document;
     

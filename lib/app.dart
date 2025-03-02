@@ -3,7 +3,6 @@ import 'package:aura_kart_admin_panel/routes/app_routes.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'utils/constants/colors.dart';
 import 'utils/constants/text_strings.dart';
 import 'utils/device/web_material_scroll.dart';
 import 'utils/theme/theme.dart';
@@ -27,10 +26,10 @@ class MyApp extends StatelessWidget {
         name: '/page-not-found',
         page: () => const Scaffold(body: Center(child: Text('Page Not Found'))),
       ),
-      home: const Scaffold(
-        backgroundColor: AColors.primary,
-        body: Center(child: CircularProgressIndicator(color: Colors.white)),
-      ),
+      // home: const Scaffold(
+      //   backgroundColor: AColors.primary,
+      //   body: Center(child: CircularProgressIndicator(color: Colors.white)),
+      // ),
     );
   }
 }

@@ -14,7 +14,8 @@ class OrdersTabletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(OrderController());
-    return  Scaffold(
+
+    return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(ASizes.defaultSpace),
@@ -22,25 +23,34 @@ class OrdersTabletScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Breadcrums
-               const ABreadcrumbsWithHeading(
+              const ABreadcrumbsWithHeading(
                   heading: 'Orders', breadcrumbItems: ['Orders']),
-               const SizedBox(height: ASizes.spaceBtwSections),
+              const SizedBox(height: ASizes.spaceBtwSections),
 
               // Table Body
               ARoundedContainer(
                 child: Column(
                   children: [
                     // Table Header
-                   const  ATableHeader(showLeftWidget: false),
-                    const SizedBox(height: ASizes.spaceBtwItems),
+                    ATableHeader(
+                      showLeftWidget: false,
+                      searchController: controller.searchTextController,
+                      searchOnChanged: (query) => controller.searchQuery(query),
+                    ),
                     
-                   // Table
-                    Obx(() {
-                      // show loader
-                      if (controller.isLoading.value)
-                        return const ALoaderAnimation();
-                      return const OrderTable();
-                    }),
+                    const SizedBox(height: ASizes.spaceBtwItems),
+
+                    // Table
+                    Obx(
+                      () {
+                        // Show Loader
+                        if (controller.isLoading.value) {
+                          return const ALoaderAnimation();
+                        }
+
+                        return const OrderTable();
+                      },
+                    ),
                   ],
                 ),
               )

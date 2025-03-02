@@ -14,6 +14,7 @@ class OrdersMobileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(OrderController());
+    
     return  Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -31,14 +32,21 @@ class OrdersMobileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     // Table Header
-                    const ATableHeader(showLeftWidget: false),
+                    ATableHeader(
+                      showLeftWidget: false,
+                      searchController: controller.searchTextController,
+                      searchOnChanged: (query) => controller.searchQuery(query),
+                    ),
+                    
                     const SizedBox(height: ASizes.spaceBtwItems),
                     
                     // Table
                     Obx(() {
-                      // show loader
-                      if (controller.isLoading.value)
+                      // Show Loader
+                      if (controller.isLoading.value) {
                         return const ALoaderAnimation();
+                      }
+
                       return const OrderTable();
                     }),
                   ],

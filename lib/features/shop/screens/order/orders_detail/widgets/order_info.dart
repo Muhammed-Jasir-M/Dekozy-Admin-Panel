@@ -18,6 +18,7 @@ class OrderInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(OrderController());
     controller.orderStatus.value = order.status;
+
     return ARoundedContainer(
       padding: const EdgeInsets.all(ASizes.defaultSpace),
       child: Column(
@@ -58,16 +59,18 @@ class OrderInfo extends StatelessWidget {
                     Text('Status'),
                     Obx(
                       () {
-                        if (controller.statusLoader.value)
+                        if (controller.statusLoader.value) {
                           return const AShimmerEffect(
                               width: double.infinity, height: 55);
+                        }
+
                         return ARoundedContainer(
                           radius: ASizes.cardRadiusSm,
                           padding: const EdgeInsets.symmetric(
                               horizontal: ASizes.sm, vertical: 0),
                           backgroundColor: AHelperFunctions.getOrderStatusColor(
                                   controller.orderStatus.value)
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                           child: DropdownButton<OrderStatus>(
                             padding: const EdgeInsets.symmetric(vertical: 0),
                             value: controller.orderStatus.value,
@@ -76,7 +79,8 @@ class OrderInfo extends StatelessWidget {
                                 controller.updateOrderStatus(order, newValue);
                               }
                             },
-                            items: OrderStatus.values.map((OrderStatus status) {
+                            items: OrderStatus.values.map(
+                              (OrderStatus status) {
                                 return DropdownMenuItem<OrderStatus>(
                                   value: status,
                                   child: Text(
@@ -84,7 +88,7 @@ class OrderInfo extends StatelessWidget {
                                     style: TextStyle(
                                       color:
                                           AHelperFunctions.getOrderStatusColor(
-                                              order.status),
+                                              controller.orderStatus.value),
                                     ),
                                   ),
                                 );
@@ -102,7 +106,7 @@ class OrderInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Total'),
-                    Text('\$${order.totalAmount}',
+                    Text('₹${order.totalAmount}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ],
                 ),

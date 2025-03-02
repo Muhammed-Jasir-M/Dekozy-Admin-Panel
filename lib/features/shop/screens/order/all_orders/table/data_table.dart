@@ -12,27 +12,37 @@ class OrderTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(OrderController());
-    return Obx(
-      () {
+
+    return Obx(() {
       Text(controller.filteredItems.length.toString());
       Text(controller.selectedRows.length.toString());
-    
-    // table
-    return APaginatedDataTable(
-      minWidth: 700,
-      sortAscending: controller.sortAscending.value,
-      sortColumnIndex: controller.sortColumnIndex.value,
-      columns: [
-        const DataColumn2(label: Text('Order ID')),
-        DataColumn2(label: const Text('Date'), onSort: (columnIndex, ascending) => controller.sortByDate(columnIndex, ascending)),
-        const DataColumn2(label: Text('Items')),
-        DataColumn2(label: Text('Status'),fixedWidth: ADeviceUtils.isMobileScreen(context) ? 120 : null,),
-        const DataColumn2(label: Text('Amount')),
-        const DataColumn2(label: Text('Action'), fixedWidth: 100),
-      ],
-      source: OrderRows(),
-    );
-    }
-    );
+
+      // Table
+      return APaginatedDataTable(
+        minWidth: 700,
+        sortAscending: controller.sortAscending.value,
+        sortColumnIndex: controller.sortColumnIndex.value,
+        columns: [
+          const DataColumn2(label: Text('Order ID')),
+          DataColumn2(
+            label: const Text('Date'),
+            onSort: (columnIndex, ascending) =>
+                controller.sortByDate(columnIndex, ascending),
+          ),
+          const DataColumn2(label: Text('Items')),
+          DataColumn2(
+            label: Text('Status'),
+            fixedWidth: ADeviceUtils.isMobileScreen(context) ? 120 : null,
+          ),
+          DataColumn2(
+            label: const Text('Amount'),
+            onSort: (columnIndex, ascending) =>
+                controller.sortByAmount(columnIndex, ascending),
+          ),
+          const DataColumn2(label: Text('Action'), fixedWidth: 100),
+        ],
+        source: OrderRows(),
+      );
+    });
   }
 }

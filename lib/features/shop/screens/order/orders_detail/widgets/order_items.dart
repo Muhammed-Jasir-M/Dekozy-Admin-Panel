@@ -6,7 +6,6 @@ import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
-import 'package:aura_kart_admin_panel/utils/helpers/pricing_calculator.dart';
 import 'package:flutter/material.dart';
 
 class OrderItems extends StatelessWidget {
@@ -47,10 +46,10 @@ class OrderItems extends StatelessWidget {
                       children: [
                         ARoundedImage(
                           backgroundColor: AColors.primaryBackground,
-                          imageType: item?.image != null
+                          imageType: item.image != null
                               ? ImageType.network
                               : ImageType.asset,
-                          image: item?.image ?? AImages.defaultImage,
+                          image: item.image ?? AImages.defaultImage,
                         ),
                         SizedBox(width: ASizes.spaceBtwItems),
                         Expanded(
@@ -58,7 +57,7 @@ class OrderItems extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item!.title,
+                                item.title,
                                 style: Theme.of(context).textTheme.titleMedium,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -66,9 +65,7 @@ class OrderItems extends StatelessWidget {
                               if (item.selectedVariation != null)
                                 Text(
                                   item.selectedVariation!.entries
-                                      .map(
-                                        (e) => ('${e.key}: ${e.value}'),
-                                      )
+                                      .map((e) => ('${e.key} : ${e.value} '))
                                       .toString(),
                                 ),
                             ],
@@ -80,7 +77,7 @@ class OrderItems extends StatelessWidget {
                   const SizedBox(width: ASizes.spaceBtwItems),
                   SizedBox(
                     width: ASizes.xl * 2,
-                    child: Text('\$${item.price.toStringAsFixed(1)}',
+                    child: Text('₹${item.price.toStringAsFixed(1)}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ),
                   SizedBox(
@@ -94,8 +91,7 @@ class OrderItems extends StatelessWidget {
                     width: ADeviceUtils.isMobileScreen(context)
                         ? ASizes.xl * 1.4
                         : ASizes.xl * 2,
-                    child: Text(
-                        '\$${(item.price * item.quantity).toStringAsFixed(2)}',
+                    child: Text('₹${item.totalAmount}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ),
                 ],
@@ -115,7 +111,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Subtotal',
                         style: Theme.of(context).textTheme.titleLarge),
-                    Text('\$$subTotal',
+                    Text('₹$subTotal',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
@@ -125,7 +121,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Discount',
                         style: Theme.of(context).textTheme.titleLarge),
-                    Text('\$0.00',
+                    Text('₹0.00',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
@@ -136,7 +132,7 @@ class OrderItems extends StatelessWidget {
                     Text('Shipping',
                         style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\$${order.shippingCost.toStringAsFixed(2)}',
+                      '₹${order.shippingCost.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
@@ -147,7 +143,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Tax', style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\$${order.taxCost.toStringAsFixed(2)}',
+                      '₹${order.taxCost.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
@@ -161,7 +157,7 @@ class OrderItems extends StatelessWidget {
                     Text('Total',
                         style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\$${order.totalAmount.toStringAsFixed(2)}',
+                      '₹${order.totalAmount.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],

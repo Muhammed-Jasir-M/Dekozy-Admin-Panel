@@ -11,21 +11,21 @@ class OrderDetailController extends GetxController {
   Rx<OrderModel> order = OrderModel.empty().obs;
   Rx<UserModel> customer = UserModel.empty().obs;
 
-  // load customer orders
-  Future<void> getCUstomerOfCurrentOrder() async {
+  // Load Customer Orders
+  Future<void> getCustomerOfCurrentOrder() async {
     try {
-      // show loader while loading categories
+      // Show loader while loading data
       loading.value = true;
 
-      // fetvh customer ordesr and address
-      final user = await UserRepository.instance.fetchUserDetails(order.value.userId);
-      
+      // Fetch customer orders and addresses
+      final user =
+          await UserRepository.instance.fetchUserDetails(order.value.userId);
+
       customer.value = user;
     } catch (e) {
-      ALoaders.errorSnackBar(title: 'Uh Oh!!', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
       loading.value = false;
     }
   }
 }
-  

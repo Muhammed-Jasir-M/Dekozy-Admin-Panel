@@ -24,7 +24,6 @@ class AImages {
   static const String uploadingImageIllustration = "assets/images/animations/uploading-files-from-computer-to-cloud-storage.gif";
   static const String verifyIllustration = "assets/images/animations/sammy-line-travel-backpack-with-passport-and-air-ticket.gif";
 
-
   // Lottie Animations
   static String defaultLoaderAnimation = "assets/images/animations/default-loader-animation.json";
   static String cartAnimation = "assets/images/animations/lady-adding-product-in-cart-animation.json";
@@ -62,6 +61,5 @@ class AImages {
   static const String paytm = "assets/icons/payment_methods/paytm.png";
   static const String successfulPaymentIcon = "assets/icons/payment_methods/successful_payment_icon.png";
 
-  static String ;
 }
 

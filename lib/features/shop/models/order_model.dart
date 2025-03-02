@@ -14,7 +14,7 @@ class OrderModel {
   final double taxCost;
   final DateTime orderDate;
   final String paymentMethod;
-  final AddressModel?  shippingAddress;
+  final AddressModel? shippingAddress;
   final AddressModel? billingAddress;
   final DateTime? deliveryDate;
   final List<CartItemModel> items;
@@ -48,7 +48,7 @@ class OrderModel {
       : status == OrderStatus.shipped
           ? 'Shipment on the way'
           : 'Processing';
- 
+
   /// Static function to create an empty model
   static OrderModel empty() => OrderModel(
         id: '',
@@ -85,27 +85,42 @@ class OrderModel {
       docId: snapshot.id,
       id: data.containsKey('id') ? data['id'] as String : '',
       userId: data.containsKey('userId') ? data['userId'] as String : '',
-      status: data.containsKey('status') ? OrderStatus.values.firstWhere
-              ((e) => e.toString() == data['status']): OrderStatus.pending,
-               // Default fallback
-      totalAmount: data.containsKey('totalAmount') ? data['totalAmount'] as double : 0.0,
-      shippingCost: data.containsKey('shippingCost') ? (data['shippingCost'] as num).toDouble() : 0.0,
-      taxCost: data.containsKey('taxCost') ? (data['taxCost'] as num).toDouble() : 0.0,
-      orderDate: (data['orderDate'] as Timestamp).toDate(),
-      paymentMethod: data.containsKey('paymentMethod') ? data['paymentMethod'] as String : 'Cash on delivery',
+      status: data.containsKey('status')
+          ? OrderStatus.values.firstWhere((e) => e.toString() == data['status'])
+          : OrderStatus.pending,
+      totalAmount:
+          data.containsKey('totalAmount') ? data['totalAmount'] as double : 0.0,
+      shippingCost: data.containsKey('shippingCost')
+          ? (data['shippingCost'] as num).toDouble()
+          : 0.0,
+      taxCost: data.containsKey('taxCost')
+          ? (data['taxCost'] as num).toDouble()
+          : 0.0,
+      orderDate: data.containsKey('orderDate')
+          ? (data['orderDate'] as Timestamp).toDate()
+          : DateTime.now(),
+      paymentMethod: data.containsKey('paymentMethod')
+          ? data['paymentMethod'] as String
+          : 'Cash on delivery',
       shippingAddress: data.containsKey('shippingAddress')
-          ? AddressModel.fromMap(data['shippingAddress'] as Map<String, dynamic>)
+          ? AddressModel.fromMap(
+              data['shippingAddress'] as Map<String, dynamic>)
           : null,
       billingAddress: data.containsKey('billingAddress')
           ? AddressModel.fromMap(data['billingAddress'] as Map<String, dynamic>)
           : null,
-      billingAddressSameAsShipping: data.containsKey('billingAddressSameAsShipping')
-          ? data['billingAddressSameAsShipping'] as bool
-          : true,
-      deliveryDate: data['deliveryDate'] == null ? null : (data['deliveryDate'] as Timestamp).toDate(),
+      billingAddressSameAsShipping:
+          data.containsKey('billingAddressSameAsShipping')
+              ? data['billingAddressSameAsShipping'] as bool
+              : true,
+      deliveryDate:
+          data.containsKey('deliveryData') && data['deliveryDate'] == null
+              ? (data['deliveryDate'] as Timestamp).toDate()
+              : null,
       items: data.containsKey('items')
           ? (data['items'] as List<dynamic>)
-              .map((itemData) => CartItemModel.fromJson(itemData as Map<String, dynamic>))
+              .map((itemData) =>
+                  CartItemModel.fromJson(itemData as Map<String, dynamic>))
               .toList()
           : [],
     );

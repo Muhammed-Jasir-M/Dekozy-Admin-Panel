@@ -12,10 +12,11 @@ class OrderDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final order = Get.arguments;
     final orderId = Get.parameters['orderId'];
+
     return ASiteTemplate(
-      desktop: OrderDetailDesktopScreen(order: order),
-      tablet: OrderDetailTabletScreen(order: order),
-      mobile: OrderDetailMobileScreen(order: order),
+      desktop: OrderDetailDesktopScreen(order: order, orderId: orderId),
+      tablet: OrderDetailTabletScreen(order: order, orderId: orderId),
+      mobile: OrderDetailMobileScreen(order: order, orderId: orderId),
     );
   }
 }

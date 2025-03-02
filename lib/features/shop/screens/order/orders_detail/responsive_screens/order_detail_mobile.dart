@@ -9,9 +9,11 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class OrderDetailMobileScreen extends StatelessWidget {
-  const OrderDetailMobileScreen({super.key, required this.order});
+  const OrderDetailMobileScreen({super.key, required this.order, this.orderId});
 
   final OrderModel order;
+
+  final String? orderId;
 
   @override
   Widget build(BuildContext context) {

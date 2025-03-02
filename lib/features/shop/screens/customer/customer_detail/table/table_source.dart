@@ -16,10 +16,10 @@ class CustomerOrderRows extends DataTableSource {
       id: 'id',
       status: OrderStatus.shipped,
       totalAmount: 234,
-      shippingCost: 50, // ✅ FIXED: Added required 'shippingCost' parameter
-      taxCost: 18, // ✅ FIXED: Added required 'taxCost' parameter
+      shippingCost: 50,
+      taxCost: 18,
       orderDate: DateTime.now(),
-      items: [], // ✅ FIXED: Added required 'items' parameter
+      items: [],
     );
 
     const totalAmount = '2453';
@@ -42,22 +42,22 @@ class CustomerOrderRows extends DataTableSource {
           ),
         ),
         DataCell(Text(order.formattedOrderDate)),
-        DataCell(Text('${5} Items')), // ✅ Removed unnecessary `const`
+        DataCell(Text('${5} Items')),
         DataCell(
           ARoundedContainer(
             radius: ASizes.cardRadiusSm,
             padding: const EdgeInsets.symmetric(
                 vertical: ASizes.sm, horizontal: ASizes.md),
             backgroundColor: AHelperFunctions.getOrderStatusColor(order.status)
-                .withOpacity(0.1), // ✅ Fixed withOpacity instead of withValues
+                .withValues(alpha: 0.1),
             child: Text(
-              order.status.name.capitalizeFirst ?? '', // ✅ Fixed capitalization
+              order.status.name.capitalizeFirst ?? '',
               style: TextStyle(
                   color: AHelperFunctions.getOrderStatusColor(order.status)),
             ),
           ),
         ),
-        DataCell(Text('\u{20B9}$totalAmount')), // ✅ Removed `const`
+        DataCell(Text('\u{20B9}$totalAmount')),
       ],
     );
   }

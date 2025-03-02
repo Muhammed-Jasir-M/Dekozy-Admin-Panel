@@ -7,15 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class OrderRepository extends GetxController {
-  //  single item instance of the orderrepository
+  // Singleton item instance of the OrderRepository
   static OrderRepository get instance => Get.find();
 
-  // firebase firestore instance
+  // Firebase Firestore Instance
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // functions--------------------------
-
-  // get all orders related tro the current ussr
+  // Get all orders related to the current user
   Future<List<OrderModel>> getAllOrders() async {
     try {
       final result = await _db
@@ -32,11 +30,11 @@ class OrderRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong...please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // store a mew user order
+  // Store a new user order
   Future<void> addOrder(OrderModel order) async {
     try {
       await _db.collection("Orders").add(order.toJson());
@@ -47,13 +45,15 @@ class OrderRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong...please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // update a specific value of an order instance
+  // Update a specific value of an order instance
   Future<void> updateOrderSpecificValue(
-      String orderId, Map<String, dynamic> data) async {
+    String orderId,
+    Map<String, dynamic> data,
+  ) async {
     try {
       await _db.collection('Orders').doc(orderId).update(data);
     } on FirebaseException catch (e) {
@@ -63,11 +63,11 @@ class OrderRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong...please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // delete an order
+  // Delete an order
   Future<void> deleteOrder(String orderId) async {
     try {
       await _db.collection('Orders').doc(orderId).delete();
@@ -78,7 +78,7 @@ class OrderRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong...please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 }

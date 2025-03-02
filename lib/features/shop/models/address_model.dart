@@ -10,7 +10,7 @@ class AddressModel {
   final String state;
   final String postalCode;
   final String country;
-  final DateTime? dateTime; 
+  final DateTime? dateTime;
   bool selectedAddress;
 
   AddressModel({
@@ -25,18 +25,19 @@ class AddressModel {
     this.dateTime,
     this.selectedAddress = true,
   });
-  
+
   String get formattedPhoneNo => AFormatter.formatPhoneNumber(phoneNumber);
 
   static AddressModel empty() => AddressModel(
-      id: '',
-      name: '',
-      phoneNumber: '',
-      street: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      country: '',);
+        id: '',
+        name: '',
+        phoneNumber: '',
+        street: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        country: '',
+      );
 
   Map<String, dynamic> toJson() {
     return {
@@ -70,7 +71,7 @@ class AddressModel {
 
   factory AddressModel.fromDocumentSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;
-    
+
     return AddressModel(
       id: snapshot.id,
       name: data['Name'] ?? '',

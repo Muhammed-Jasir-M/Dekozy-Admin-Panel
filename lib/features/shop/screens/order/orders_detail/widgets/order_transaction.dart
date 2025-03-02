@@ -31,9 +31,7 @@ class OrderTransaction extends StatelessWidget {
                 child: Row(
                   children: [
                     ARoundedImage(
-                      imageType: ImageType.asset,
-                      image: AImages.paypal,
-                    ),
+                        imageType: ImageType.asset, image: AImages.paypal),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,8 +39,7 @@ class OrderTransaction extends StatelessWidget {
                           Text('Payment via ${order.paymentMethod.capitalize}',
                               style: Theme.of(context).textTheme.titleLarge),
                           // Adjust your Payment Method Fee if any
-                          Text(
-                              '${order.paymentMethod.capitalize} fee \u{20B9}',
+                          Text('${order.paymentMethod.capitalize} fee \u{20B9}25',
                               style: Theme.of(context).textTheme.labelMedium),
                         ],
                       ),
@@ -67,7 +64,7 @@ class OrderTransaction extends StatelessWidget {
                   children: [
                     Text('Total',
                         style: Theme.of(context).textTheme.labelMedium),
-                    Text('\$${order.totalAmount}',
+                    Text('₹${order.totalAmount}',
                         style: Theme.of(context).textTheme.bodyLarge),
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 
 import '../../../utils/constants/image_strings.dart';
@@ -19,8 +20,8 @@ class ALoaderAnimation extends StatelessWidget {
     return Center(
       child:Column(
         children: [
-          Image(image: const AssetImage(AImages.ridingIllustraton), height: height, width: width),
-          const SizedBox(height: ASizes   .spaceBtwItems),
+          Lottie.asset(AImages.defaultLoaderAnimation, height: 200, width: 200),
+          const SizedBox(height: ASizes.spaceBtwItems),
           const Text('Loading your data....'),
         ],
       )

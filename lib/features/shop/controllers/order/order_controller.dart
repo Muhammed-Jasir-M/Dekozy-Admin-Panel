@@ -28,7 +28,7 @@ class OrderController extends ABaseController<OrderModel> {
     await _orderRepository.deleteOrder(item.docId);
   }
 
-  void sortById(int sortColumnIndex, bool ascending) {
+  void sortByAmount(int sortColumnIndex, bool ascending) {
     sortByProperty(sortColumnIndex, ascending,
         (OrderModel o) => o.totalAmount.toString().toLowerCase());
   }
@@ -38,23 +38,26 @@ class OrderController extends ABaseController<OrderModel> {
         (OrderModel o) => o.orderDate.toString().toLowerCase());
   }
 
-  // update product status
+  // Update Product Status
   Future<void> updateOrderStatus(
-      OrderModel order, OrderStatus newStatus) async {
+    OrderModel order,
+    OrderStatus newStatus,
+  ) async {
     try {
       statusLoader.value = true;
       order.status = newStatus;
       await _orderRepository.updateOrderSpecificValue(
-          order.docId, {'status': newStatus.toString()});
+        order.docId,
+        {'status': newStatus.toString()},
+      );
       updateItemfromLists(order);
       orderStatus.value = newStatus;
       ALoaders.successSnackBar(
           title: 'Updated', message: 'Order status updated');
     } catch (e) {
-      ALoaders.warningSnackBar(title: 'Uh Oh', message: e.toString());
+      ALoaders.warningSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
       statusLoader.value = false;
     }
   }
 }
-  

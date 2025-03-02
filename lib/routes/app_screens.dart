@@ -1,12 +1,12 @@
 class AppScreens {
   static const home = '/';
   static const store = '/store';
-  static const favourites = '/settings';
+  static const favourites = '/favourites';
   static const settings = '/settings';
   static const subCategories = '/sub-categories';
   static const search = '/search';
   static const productReviews = '/product-reviews';
-  static const productDetail = '/product-details';
+  static const productDetail = '/product-detail';
   static const order = '/order';
   static const checkout = '/checkout';
   static const cart = '/cart';
@@ -16,11 +16,11 @@ class AppScreens {
   static const userAddress = '/user-address';
   static const signUp = '/signup';
   static const signupSuccess = '/signup-success';
-  static const verifyEmail = '/verify-Email';
+  static const verifyEmail = '/verify-email';
   static const signIn = '/sign-in';
   static const resetPassword = '/reset-password';
   static const forgetPassword = '/forget-password';
-  static const onBoarding = '/onboarding';
+  static const onBoarding = '/on-boarding';
 
   static List<String> allAppScreenItems = [
     home,
