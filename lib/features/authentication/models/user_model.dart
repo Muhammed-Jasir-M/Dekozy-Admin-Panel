@@ -93,15 +93,9 @@ class UserModel {
             : '',
         role: data.containsKey('Role')
             ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString()
-                ? AppRole.admin
-                : AppRole.user
-            : AppRole.user,
-        createdAt: data.containsKey('CreatedAt')
-            ? data['CreatedAt']?.toDate() ?? DateTime.now()
-            : DateTime.now(),
-        updatedAt: data.containsKey('UpdatedAt')
-            ? data['UpdatedAt']?.toDate() ?? DateTime.now()
-            : DateTime.now(),
+            ? AppRole.admin: AppRole.user: AppRole.user,
+        createdAt: data.containsKey('CreatedAt')? data['CreatedAt']?.toDate() ?? DateTime.now(): DateTime.now(),
+        updatedAt: data.containsKey('UpdatedAt')? data['UpdatedAt']?.toDate() ?? DateTime.now(): DateTime.now(),
       );
     } else {
       return UserModel.empty();

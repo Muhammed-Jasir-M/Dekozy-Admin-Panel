@@ -29,3 +29,4 @@ class ALoaderAnimation extends StatelessWidget {
     );
   }
 }
+    

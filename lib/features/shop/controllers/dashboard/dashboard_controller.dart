@@ -23,6 +23,7 @@ class DashboardController extends GetxController {
       deliveryDate: DateTime(2024, 5, 20),
       items: [], // ✅ FIXED: Added required 'items' parameter
     ),
+    
     OrderModel(
       id: 'CWT0013',
       status: OrderStatus.processing,
