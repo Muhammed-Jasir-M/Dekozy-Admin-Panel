@@ -15,6 +15,7 @@ class CreateBannerMobileScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(ASizes.defaultSpace),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Breadcrumbs
               ABreadcrumbsWithHeading(

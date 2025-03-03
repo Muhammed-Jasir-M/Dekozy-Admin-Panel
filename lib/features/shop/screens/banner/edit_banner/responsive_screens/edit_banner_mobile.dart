@@ -18,6 +18,7 @@ class EditBannerMobileScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(ASizes.defaultSpace),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Breadcrumbs
               const ABreadcrumbsWithHeading(

@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OrderRows extends DataTableSource {
-  final controller = OrderController.instance;
+  final controller = Get.put(OrderController());
+  
   @override
   DataRow? getRow(int index) {
     final order = DashboardController.orders[index];

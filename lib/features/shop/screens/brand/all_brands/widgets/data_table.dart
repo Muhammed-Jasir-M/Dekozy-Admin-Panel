@@ -51,6 +51,6 @@ class BrandTable extends StatelessWidget {
         ],
         source: BrandRows(),
       );
-    });
+    },);
   }
 }
