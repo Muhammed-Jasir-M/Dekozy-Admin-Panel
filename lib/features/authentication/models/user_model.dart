@@ -1,3 +1,5 @@
+import 'package:aura_kart_admin_panel/features/shop/models/address_model.dart';
+import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/formatters/formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +15,8 @@ class UserModel {
   AppRole role;
   DateTime? createdAt;
   DateTime? updatedAt;
+  List<OrderModel>? orders;
+  List<AddressModel>? addresses;
 
   // Constructor
   UserModel({
@@ -93,9 +97,15 @@ class UserModel {
             : '',
         role: data.containsKey('Role')
             ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString()
-            ? AppRole.admin: AppRole.user: AppRole.user,
-        createdAt: data.containsKey('CreatedAt')? data['CreatedAt']?.toDate() ?? DateTime.now(): DateTime.now(),
-        updatedAt: data.containsKey('UpdatedAt')? data['UpdatedAt']?.toDate() ?? DateTime.now(): DateTime.now(),
+                ? AppRole.admin
+                : AppRole.user
+            : AppRole.user,
+        createdAt: data.containsKey('CreatedAt')
+            ? data['CreatedAt']?.toDate() ?? DateTime.now()
+            : DateTime.now(),
+        updatedAt: data.containsKey('UpdatedAt')
+            ? data['UpdatedAt']?.toDate() ?? DateTime.now()
+            : DateTime.now(),
       );
     } else {
       return UserModel.empty();
