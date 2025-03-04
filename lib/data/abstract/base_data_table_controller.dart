@@ -66,7 +66,6 @@ abstract class ABaseController<T> extends GetxController {
   ) {
     sortAscending.value = ascending;
     this.sortColumnIndex.value = sortColumIndex;
-
     filteredItems.sort((a, b) {
       if (ascending) {
         return property(a).compareTo(property(b));
