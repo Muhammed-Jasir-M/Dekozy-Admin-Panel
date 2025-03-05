@@ -1,3 +1,4 @@
+import 'package:aura_kart_admin_panel/data/repositories/address/address_repository.dart';
 import 'package:aura_kart_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:aura_kart_admin_panel/features/authentication/models/user_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
@@ -67,4 +68,29 @@ class CustomerDetailController extends GetxController {
   }
 
   // search query filter
+  void searchQuery(String query) {
+    filteredCustomerOrers.assignAll(
+      allCustomerOrders.where((customer) =>
+          customer.id.toLowerCase().contains(query.toLowerCase()) ||
+          customer.orderDate.toString().contains(query.toLowerCase())),
+    );
+
+    // notify listeners about th rchange
+    update();
+  }
+
+  // sorting related code
+  void sortById(int sortColumnIndex, bool ascending) {
+    sortAscending.value = ascending;
+    filteredCustomerOrers.sort((a, b) {
+      if (ascending) {
+        return a.id.toLowerCase().compareTo(b.id.toLowerCase());
+      } else {
+        return b.id.toLowerCase().compareTo(a.id.toLowerCase());
+      }
+    });
+    this.sortColumnIndex.value = sortColumnIndex;
+
+    update();
+  }
 }

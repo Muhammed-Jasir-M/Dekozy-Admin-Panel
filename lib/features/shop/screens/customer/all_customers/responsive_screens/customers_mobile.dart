@@ -6,7 +6,7 @@ import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class CustomersMobileScreen extends StatelessWidget {
-  const CustomersMobileScreen({super.key});
+  const CustomersMobileScreen({super.key, required customer});
 
   @override
   Widget build(BuildContext context) {

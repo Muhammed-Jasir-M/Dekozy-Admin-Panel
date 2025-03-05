@@ -5,7 +5,7 @@ import 'package:aura_kart_admin_panel/features/shop/screens/brand/all_brands/bra
 import 'package:aura_kart_admin_panel/features/shop/screens/brand/edit_brand/edit_brand.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/category/create_category/create_category.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/category/edit_category/edit_catogory.dart';
-import 'package:aura_kart_admin_panel/features/shop/screens/customer/all_customers/customers.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/customer/all_customers/customer.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/customer/customer_detail/customer_detail.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/dashboard.dart';
 import 'package:aura_kart_admin_panel/features/authentication/screens/forget_password/forget_password.dart';
