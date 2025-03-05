@@ -15,9 +15,13 @@ class CustomerRows extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     final customer = controller.filteredItems[index];
+
     return DataRow2(
-      onTap: () => Get.toNamed(ARoutes.customerDetails,
-          arguments: customer, parameters: {'customerId': customer.id ?? ''}),
+      onTap: () => Get.toNamed(
+        ARoutes.customerDetails,
+        arguments: customer,
+        parameters: {'customerId': customer.id ?? ''},
+      ),
       selected: controller.selectedRows[index],
       onSelectChanged: (value) =>
           controller.selectedRows[index] = value ?? false,
@@ -57,9 +61,11 @@ class CustomerRows extends DataTableSource {
           ATableActionButtons(
             view: true,
             edit: false,
-            onViewPressed: () => Get.toNamed(ARoutes.customerDetails,
-                arguments: customer,
-                parameters: {'customerId': customer.id ?? ''}),
+            onViewPressed: () => Get.toNamed(
+              ARoutes.customerDetails,
+              arguments: customer,
+              parameters: {'customerId': customer.id ?? ''},
+            ),
             onDeletePressed: () => controller.confrimAndDeleteItem(customer),
           ),
         ),

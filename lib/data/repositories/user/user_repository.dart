@@ -26,19 +26,23 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong.please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  /// Function to fetch user details based on user ID
+  /// Function to fetch admin details based on user ID
   Future<UserModel> fetchAdminDetails() async {
     try {
-      final docSnapshot = await _db
+      final documentSnapshot = await _db
           .collection('Users')
           .doc(AuthenticationRepository.instance.authUser!.uid)
           .get();
 
-      return UserModel.fromSnapshot(docSnapshot);
+      if (documentSnapshot.exists) {
+        return UserModel.fromSnapshot(documentSnapshot);
+      } else {
+        return UserModel.empty();
+      }
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
     } on FormatException catch (_) {
@@ -46,7 +50,7 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. $e';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
@@ -66,11 +70,11 @@ class UserRepository extends GetxController {
       throw APlatformException(e.code).message;
     } catch (e) {
       if (kDebugMode) print('Something went wrong: $e');
-      throw 'SOmething Went Wrong: $e';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // fcuntoin to fetch user details based on userId
+  // Function to fetch user details based on userId
   Future<UserModel> fetchUserDetails(String id) async {
     try {
       final documentSnapshot = await _db.collection("Users").doc(id).get();
@@ -87,16 +91,16 @@ class UserRepository extends GetxController {
       throw APlatformException(e.code).message;
     } catch (e) {
       if (kDebugMode) print('Something Went Wrong : $e');
-      throw 'Something went wrong : $e';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // fucntion to fetch uyser ordertd based on id of user
+  /// Fucntion to fetch user orders based on Id of user
   Future<List<OrderModel>> fetchUserOrders(String userId) async {
     try {
       final documentSnapshot = await _db
           .collection("Orders")
-          .where('UserId', isEqualTo: userId)
+          .where('userId', isEqualTo: userId)
           .get();
       return documentSnapshot.docs
           .map((doc) => OrderModel.fromSnapshot(doc))
@@ -109,11 +113,11 @@ class UserRepository extends GetxController {
       throw APlatformException(e.code).message;
     } catch (e) {
       if (kDebugMode) print('Something went wrong: $e');
-      throw 'Something went wrong: $e';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // funtion to update user bdata in firestore
+  /// Funtion to update user data in firestore
   Future<void> updateUserDetails(UserModel updateUser) async {
     try {
       await _db
@@ -127,11 +131,11 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong... please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // update any fields in specific users collectoin
+  /// Update any fields in specific users collectoin
   Future<void> updateSingleField(Map<String, dynamic> json) async {
     try {
       await _db
@@ -145,7 +149,7 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong..please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
@@ -158,7 +162,7 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw e.message!;
     } catch (e) {
-      throw 'Something went wrong...please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 }

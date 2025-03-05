@@ -12,10 +12,14 @@ class CustomerDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final customer = Get.arguments;
     final customerId = Get.parameters['customerId'];
+
     return ASiteTemplate(
-      desktop: CustomerDetailDesktopScreen(customer: customer),
-      tablet: CustomerDetailTabletScreen(customer: customer),
-      mobile: CustomerDetailMobileScreen(customer: customer),
+      desktop: CustomerDetailDesktopScreen(
+          customer: customer, customerId: customerId ?? ''),
+      tablet: CustomerDetailTabletScreen(
+          customer: customer, customerId: customerId ?? ''),
+      mobile: CustomerDetailMobileScreen(
+          customer: customer, customerId: customerId ?? ''),
     );
   }
 }

@@ -20,7 +20,8 @@ class CustomerInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Customer Info',style: Theme.of(context).textTheme.headlineMedium),
+          Text('Customer Info',
+              style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: ASizes.spaceBtwSections),
 
           // Personal Info Card
@@ -29,18 +30,30 @@ class CustomerInfo extends StatelessWidget {
               ARoundedImage(
                 padding: 0,
                 backgroundColor: AColors.primaryBackground,
-                image: customer.profilePicture.isNotEmpty ? customer.profilePicture : AImages.user,
-                imageType: customer.profilePicture.isNotEmpty ? ImageType.network : ImageType.asset,
+                image: customer.profilePicture.isNotEmpty
+                    ? customer.profilePicture
+                    : AImages.user,
+                imageType: customer.profilePicture.isNotEmpty
+                    ? ImageType.network
+                    : ImageType.asset,
               ),
-
               const SizedBox(width: ASizes.spaceBtwItems),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(customer.fullName,style: Theme.of(context).textTheme.titleLarge,overflow: TextOverflow.ellipsis,maxLines: 1),
-                     Text(customer.email,overflow: TextOverflow.ellipsis,maxLines: 1),
+                    Text(
+                      customer.fullName,
+                      style: Theme.of(context).textTheme.titleLarge,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    Text(
+                      customer.email,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ],
                 ),
               ),
@@ -52,10 +65,12 @@ class CustomerInfo extends StatelessWidget {
           // Meta Data
           Row(
             children: [
-              const SizedBox(width: 120, child: Text('UserName')),
+              const SizedBox(width: 120, child: Text('Username')),
               const Text(':'),
               const SizedBox(width: ASizes.spaceBtwItems / 2),
-              Expanded(child: Text(customer.fullName, style: Theme.of(context).textTheme.titleMedium),
+              Expanded(
+                child: Text(customer.username,
+                    style: Theme.of(context).textTheme.titleMedium),
               ),
             ],
           ),
@@ -67,7 +82,8 @@ class CustomerInfo extends StatelessWidget {
               const Text(':'),
               const SizedBox(width: ASizes.spaceBtwItems / 2),
               Expanded(
-                child: Text('India',style: Theme.of(context).textTheme.titleMedium),
+                child: Text('India',
+                    style: Theme.of(context).textTheme.titleMedium),
               ),
             ],
           ),
@@ -79,8 +95,9 @@ class CustomerInfo extends StatelessWidget {
               const Text(':'),
               const SizedBox(width: ASizes.spaceBtwItems / 2),
               Expanded(
-                child: Text(customer.phoneNumber, style: Theme.of(context).textTheme.titleMedium),
-              ),4
+                child: Text(customer.phoneNumber,
+                    style: Theme.of(context).textTheme.titleMedium),
+              ),
             ],
           ),
           const SizedBox(height: ASizes.spaceBtwItems),

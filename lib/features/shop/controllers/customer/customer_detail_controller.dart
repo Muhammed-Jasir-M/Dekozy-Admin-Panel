@@ -9,86 +9,95 @@ import 'package:get/get.dart';
 class CustomerDetailController extends GetxController {
   static CustomerDetailController get instance => Get.find();
 
-  RxBool orderLoading = true.obs;
+  RxBool ordersLoading = true.obs;
   RxBool addressesLoading = true.obs;
   RxInt sortColumnIndex = 1.obs;
   RxBool sortAscending = true.obs;
   RxList<bool> selectedRows = <bool>[].obs;
   Rx<UserModel> customer = UserModel.empty().obs;
+
   final addressReppository = Get.put(AddressRepository());
+
   final searchTextController = TextEditingController();
+
   RxList<OrderModel> allCustomerOrders = <OrderModel>[].obs;
   RxList<OrderModel> filteredCustomerOrers = <OrderModel>[].obs;
 
-  // load cy=ustomer orders
+  /// Load customer orders
   Future<void> getCustomerOrders() async {
     try {
-      // show loader while loading categories
-      orderLoading.value = true;
+      // Show loader while loading data
+      ordersLoading.value = true;
 
-      // fetch customer & addreses
+      // Fetch customer orders & addreses
       if (customer.value.id != null && customer.value.id!.isNotEmpty) {
         customer.value.orders =
-            await UserRepository.instance.fetchUserOrders(customer.value.id);
+            await UserRepository.instance.fetchUserOrders(customer.value.id!);
       }
 
-      // update the categories list
+      // Update the categories list
       allCustomerOrders.assignAll(customer.value.orders ?? []);
 
-      // filter featured categories
+      // Filter featured categories
       filteredCustomerOrers.assignAll(customer.value.orders ?? []);
 
-      // add all rows as false not selected & toggle when required
-      selectedRows.assignAll(List.generate(
-          customer.value.orders != null ? customer.value.orders!.length : 0,
-          (index) => false));
+      // Add all rows as false [Not Selected] & Toggle when required
+      selectedRows.assignAll(
+        List.generate(
+            customer.value.orders != null ? customer.value.orders!.length : 0,
+            (index) => false),
+      );
     } catch (e) {
-      ALoaders.errorSnackBar(title: 'Uh Oh', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
-      orderLoading.value = false;
+      ordersLoading.value = false;
     }
   }
 
-  // load customer orders
+  /// Load customer address
   Future<void> getCustomerAddresses() async {
     try {
-      // show loader while loading categories
+      // Show loader while loading data
       addressesLoading.value = true;
 
       // fetch customer orders & addresses
       if (customer.value.id != null && customer.value.id!.isNotEmpty) {
         customer.value.addresses =
-            await addressReppository.fetchUserAddresses(customer.value.id!);
+            await addressReppository.fecthUserAddresses(customer.value.id!);
       }
     } catch (e) {
-      ALoaders.errorSnackBar(title: 'Uh Oh', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
       addressesLoading.value = false;
     }
   }
 
-  // search query filter
+  /// Search query filter
   void searchQuery(String query) {
     filteredCustomerOrers.assignAll(
-      allCustomerOrders.where((customer) =>
-          customer.id.toLowerCase().contains(query.toLowerCase()) ||
-          customer.orderDate.toString().contains(query.toLowerCase())),
+      allCustomerOrders.where(
+        (customer) =>
+            customer.id.toLowerCase().contains(query.toLowerCase()) ||
+            customer.orderDate.toString().contains(query.toLowerCase()),
+      ),
     );
 
-    // notify listeners about th rchange
+    // notify listeners about the change
     update();
   }
 
-  // sorting related code
+  /// sorting related code
   void sortById(int sortColumnIndex, bool ascending) {
     sortAscending.value = ascending;
-    filteredCustomerOrers.sort((a, b) {
-      if (ascending) {
-        return a.id.toLowerCase().compareTo(b.id.toLowerCase());
-      } else {
-        return b.id.toLowerCase().compareTo(a.id.toLowerCase());
-      }
-    });
+    filteredCustomerOrers.sort(
+      (a, b) {
+        if (ascending) {
+          return a.id.toLowerCase().compareTo(b.id.toLowerCase());
+        } else {
+          return b.id.toLowerCase().compareTo(a.id.toLowerCase());
+        }
+      },
+    );
     this.sortColumnIndex.value = sortColumnIndex;
 
     update();

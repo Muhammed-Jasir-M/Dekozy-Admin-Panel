@@ -114,7 +114,7 @@ class OrderModel {
               ? data['billingAddressSameAsShipping'] as bool
               : true,
       deliveryDate:
-          data.containsKey('deliveryData') && data['deliveryDate'] == null
+          data.containsKey('deliveryDate') && data['deliveryDate'] != null
               ? (data['deliveryDate'] as Timestamp).toDate()
               : null,
       items: data.containsKey('items')

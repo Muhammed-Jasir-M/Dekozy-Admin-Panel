@@ -10,28 +10,32 @@ class CustomerTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CustomerController());
-    return Obx(() {
-      Text(controller.filteredItems.length.toString());
-      Text(controller.selectedRows.length.toString());
+    final controller = CustomerController.instance;
 
-      // table
-      return APaginatedDataTable(
-        minWidth: 700,
-        sortAscending: controller.sortAscending.value,
-        sortColumnIndex: controller.sortColumnIndex.value,
-        columns: [
-          DataColumn2(
+    return Obx(
+      () {
+        Text(controller.filteredItems.length.toString());
+        Text(controller.selectedRows.length.toString());
+
+        // Table
+        return APaginatedDataTable(
+          minWidth: 700,
+          sortAscending: controller.sortAscending.value,
+          sortColumnIndex: controller.sortColumnIndex.value,
+          columns: [
+            DataColumn2(
               label: const Text('Customer'),
               onSort: (columnIndex, ascending) =>
-                  controller.sortbyName(columnIndex, ascending)),
-          const DataColumn2(label: Text('Email')),
-          const DataColumn2(label: Text('Phone Number')),
-          const DataColumn2(label: Text('Registered')),
-          const DataColumn2(label: Text('Action'), fixedWidth: 100),
-        ],
-        source: CustomerRows(),
-      );
-    });
+                  controller.sortbyName(columnIndex, ascending),
+            ),
+            const DataColumn2(label: Text('Email')),
+            const DataColumn2(label: Text('Phone Number')),
+            const DataColumn2(label: Text('Registered')),
+            const DataColumn2(label: Text('Action'), fixedWidth: 100),
+          ],
+          source: CustomerRows(),
+        );
+      },
+    );
   }
 }

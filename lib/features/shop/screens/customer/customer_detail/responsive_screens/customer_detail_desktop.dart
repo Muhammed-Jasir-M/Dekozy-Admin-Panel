@@ -10,13 +10,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomerDetailDesktopScreen extends StatelessWidget {
-  const CustomerDetailDesktopScreen({super.key, required this.customer});
+  const CustomerDetailDesktopScreen({
+    super.key,
+    required this.customer,
+    required this.customerId,
+  });
 
   final UserModel customer;
+  final String customerId;
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(CustomerDetailController());
     controller.customer.value = customer;
 
@@ -27,13 +31,13 @@ class CustomerDetailDesktopScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // Breadcrumbs
-               ABreadcrumbsWithHeading(
+              ABreadcrumbsWithHeading(
                 returnToPreviousScreen: true,
                 heading: customer.fullName,
-                breadcrumbItems: const [ARoutes.customers, 'Details']),
-               const SizedBox(height: ASizes.spaceBtwSections),
+                breadcrumbItems: const [ARoutes.customers, 'Details'],
+              ),
+              const SizedBox(height: ASizes.spaceBtwSections),
 
               // Body
               Row(

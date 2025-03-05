@@ -34,8 +34,11 @@ class UserModel {
 
   // Helper Methods
   String get fullName => '$firstName $lastName';
+
   String get formattedDate => AFormatter.formatDate(createdAt);
+
   String get formattedUpdatedAtDate => AFormatter.formatDate(updatedAt);
+  
   String get formattedPhoneNo => AFormatter.formatPhoneNumber(phoneNumber);
 
   // Static function to split full name into first and last name.

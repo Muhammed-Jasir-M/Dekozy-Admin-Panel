@@ -8,14 +8,24 @@ class AddressRepository extends GetxController {
 
   final _db = FirebaseFirestore.instance;
 
+  /// Fetch user addresses from firebase based on userId
   Future<List<AddressModel>> fecthUserAddresses(String userId) async {
     try {
-      // wuery firestore collection to get user address
-      final result = await _db.collection('Users').doc(userId).collection('Addresses').get();
-      // convert firestore document snapshots to addressodel obkjetcs
-      return result.docs.map((documentSnapshot) =>AddressModel.fromDocumentSnapshot(documentSnapshot)).toList();
+      // Query firestore collection to get user address
+      final result = await _db
+          .collection('Users')
+          .doc(userId)
+          .collection('Addresses')
+          .get();
+
+      // Convert firestore document snapshots to addressmodel objects
+      return result.docs
+          .map((documentSnapshot) =>
+              AddressModel.fromDocumentSnapshot(documentSnapshot))
+          .toList();
+
     } catch (e) {
-      throw 'Something went wrong while fetching Address Information.Try again later';
+      throw 'Something went wrong while fetching Address Information. Try again later';
     }
   }
 
@@ -23,7 +33,12 @@ class AddressRepository extends GetxController {
   Future<void> updateSelectedField(String addressId, bool selected) async {
     try {
       final userId = AuthenticationRepository.instance.authUser!.uid;
-      await _db.collection('Users').doc(userId).collection('Addresses').doc(addressId).update({'SelectedAddress': selected});
+      await _db
+          .collection('Users')
+          .doc(userId)
+          .collection('Addresses')
+          .doc(addressId)
+          .update({'SelectedAddress': selected});
     } catch (e) {
       throw 'Unable to update your address selection.Try again later';
     }
