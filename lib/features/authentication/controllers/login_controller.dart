@@ -1,5 +1,5 @@
 import 'package:aura_kart_admin_panel/data/repositories/authentication/authentication_repository.dart';
-import 'package:aura_kart_admin_panel/features/authentication/models/user_model.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/models/user_model.dart';
 import 'package:aura_kart_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:aura_kart_admin_panel/features/authentication/controllers/user_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
@@ -77,7 +77,8 @@ class LoginController extends GetxController {
 
         ALoaders.errorSnackBar(
           title: 'Not Authorized',
-          message: 'You are not authorized or Don\'t have access. Contact Admin',
+          message:
+              'You are not authorized or Don\'t have access. Contact Admin',
         );
       } else {
         // Redirect

@@ -1,7 +1,7 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/models/address_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/customer/customer_detail_controller.dart';
-import 'package:aura_kart_admin_panel/features/shop/models/address_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

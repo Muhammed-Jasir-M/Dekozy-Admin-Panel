@@ -1,6 +1,6 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
-import 'package:aura_kart_admin_panel/features/authentication/models/user_model.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/models/user_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';

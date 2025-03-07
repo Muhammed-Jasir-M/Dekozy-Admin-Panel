@@ -1,5 +1,5 @@
 import 'package:aura_kart_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
-import 'package:aura_kart_admin_panel/features/authentication/models/user_model.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/models/user_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/customer/customer_detail_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/customer/customer_detail/widgets/customer_info.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/customer/customer_detail/widgets/customer_orders.dart';
@@ -23,7 +23,7 @@ class CustomerDetailMobileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(CustomerDetailController());
     controller.customer.value = customer;
-    
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(

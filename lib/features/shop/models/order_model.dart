@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/features/shop/models/address_model.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/models/address_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/cart_item.model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/helpers/helper_functions.dart';

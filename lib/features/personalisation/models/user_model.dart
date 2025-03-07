@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/features/shop/models/address_model.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/models/address_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/formatters/formatter.dart';
@@ -38,7 +38,7 @@ class UserModel {
   String get formattedDate => AFormatter.formatDate(createdAt);
 
   String get formattedUpdatedAtDate => AFormatter.formatDate(updatedAt);
-  
+
   String get formattedPhoneNo => AFormatter.formatPhoneNumber(phoneNumber);
 
   // Static function to split full name into first and last name.

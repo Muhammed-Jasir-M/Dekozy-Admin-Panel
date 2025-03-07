@@ -1,5 +1,5 @@
 import 'package:aura_kart_admin_panel/data/repositories/authentication/authentication_repository.dart';
-import 'package:aura_kart_admin_panel/features/shop/models/address_model.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/models/address_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +23,6 @@ class AddressRepository extends GetxController {
           .map((documentSnapshot) =>
               AddressModel.fromDocumentSnapshot(documentSnapshot))
           .toList();
-
     } catch (e) {
       throw 'Something went wrong while fetching Address Information. Try again later';
     }

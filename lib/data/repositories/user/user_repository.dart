@@ -1,5 +1,5 @@
 import 'package:aura_kart_admin_panel/data/repositories/authentication/authentication_repository.dart';
-import 'package:aura_kart_admin_panel/features/authentication/models/user_model.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/models/user_model.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/format_exceptions.dart';
