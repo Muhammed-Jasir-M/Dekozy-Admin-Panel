@@ -1,10 +1,13 @@
 import 'package:aura_kart_admin_panel/common/widgets/images/circular_image.dart';
 import 'package:aura_kart_admin_panel/common/widgets/layouts/sidebars/menu/menu_item.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/controllers/settings_controller.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
+import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class ASidebar extends StatelessWidget {
@@ -23,18 +26,39 @@ class ASidebar extends StatelessWidget {
           child: Column(
             children: [
               // Image
-              Center(
-                child: ACircularImage(
-                  width: 120,
-                  height: 120,
-                  image: AImages.darkAppLogo,
-                  backgroundColor: Colors.transparent,
-                ),
-              ),
-              SizedBox(height: ASizes.spaceBtwSections),
+               Row(
+                children: [
+                  Obx(
+                  () => ACircularImage(
+                  width: 60,
+                 height: 60,
+                 padding: 0,
+                 margin: ASizes.sm,
+                 backgroundColor: Colors.transparent,
+                 imageType: SettingsController.instance.settings.value.appLogo.isNotEmpty ? ImageType.network : ImageType.asset,
+                 image: SettingsController.instance.settings.value.appLogo.isNotEmpty
+                 ? SettingsController.instance.settings.value.appLogo
+                 : AImages.darkAppLogo,
+                 ),
+                 ),
+
+                 Expanded(
+                  child: Obx(
+                    () => Text(
+                      SettingsController.instance.settings.value.appName,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    ),
+                    ),
+                ],
+               ),
+
+               
+               SizedBox(height: ASizes.spaceBtwSections),
 
               Padding(
-                padding: EdgeInsets.all(ASizes.md),
+                padding: const EdgeInsets.all(ASizes.md),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -46,6 +70,12 @@ class ASidebar extends StatelessWidget {
                           .bodySmall!
                           .apply(letterSpacingDelta: 1.2),
                     ),
+
+
+
+
+
+
                     const SizedBox(height: ASizes.sm),
 
                     // Menu Items

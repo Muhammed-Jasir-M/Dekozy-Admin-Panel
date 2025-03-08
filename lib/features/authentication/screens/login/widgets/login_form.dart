@@ -86,9 +86,8 @@ class ALoginForm extends StatelessWidget {
             /// Sign In Button
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => controller.emailAndPasswordSignIn(),
-                child: const Text(ATexts.signIn),
+              child: ElevatedButton(onPressed: () => controller.emailAndPasswordSignIn(),child: const Text(ATexts.signIn),
+              //child: ElevatedButton(onPressed: () => controller.registerAdmin(),child: const Text('Register Admin'),
               ),
             ),
 

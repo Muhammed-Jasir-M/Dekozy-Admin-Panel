@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:aura_kart_admin_panel/common/widgets/containers/circular_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -26,7 +27,11 @@ class AImageUploader extends StatelessWidget {
     this.bottom = 0,
     this.right,
     this.left = 0,
+    this.loading = false,
   });
+
+  // whether display loading instead of icon
+  final bool loading;
 
   /// Whether to display the image in a circular shape
   final bool circular;
@@ -85,15 +90,21 @@ class AImageUploader extends StatelessWidget {
                 imageType: imageType,
                 memoryImage: memoryImage,
                 backgroundColor: AColors.primaryBackground,
-                padding: 1,
               ),
+
         // Display the edit icon button on top of the image
         Positioned(
           top: top,
           left: left,
           right: right,
           bottom: bottom,
-          child: ACircularIcon(
+          child: loading
+          ? const ACircularContainer(
+             width: ASizes.xl,
+            height: ASizes.xl,
+            child: CircularProgressIndicator(strokeWidth: 2, backgroundColor: AColors.primary, color: Colors.white),
+          )
+          : ACircularIcon(
             icon: icon,
             size: ASizes.md,
             color: Colors.white,

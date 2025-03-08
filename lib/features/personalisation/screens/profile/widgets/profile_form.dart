@@ -1,7 +1,9 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:aura_kart_admin_panel/features/authentication/controllers/user_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:aura_kart_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class ProfileForm extends StatelessWidget {
@@ -9,6 +11,10 @@ class ProfileForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
+    controller.fisrtNameController.text = controller.user.value.firstName;
+    controller.lastNameController.text = controller.user.value.lastName;
+    controller.phoneController.text = controller.user.value.phoneNumber;
     return Column(
       children: [
         ARoundedContainer(
@@ -30,13 +36,13 @@ class ProfileForm extends StatelessWidget {
                         // First Name
                         Expanded(
                           child: TextFormField(
+                            controller:  controller.fisrtNameController,
                             decoration: const InputDecoration(
                               hintText: 'First Name',
                               label: Text('First Name'),
                               prefixIcon: Icon(Iconsax.user),
                             ),
-                            validator: (value) => AValidator.validateEmptyText(
-                                'First Name', value),
+                            validator: (value) => AValidator.validateEmptyText('First Name', value),
                           ),
                         ),
                         const SizedBox(width: ASizes.spaceBtwInputFields),
@@ -44,6 +50,7 @@ class ProfileForm extends StatelessWidget {
                         // Last Nanme
                         Expanded(
                           child: TextFormField(
+                            controller: controller.lastNameController,
                             decoration: const InputDecoration(
                               hintText: 'Last Name',
                               label: Text('Last Name'),
@@ -75,6 +82,7 @@ class ProfileForm extends StatelessWidget {
                         // Phone
                         Expanded(
                           child: TextFormField(
+                            controller: controller.phoneController,
                             decoration: const InputDecoration(
                               hintText: 'Phone',
                               label: Text('Phone'),
@@ -94,9 +102,13 @@ class ProfileForm extends StatelessWidget {
               // Update Button
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Update Profile'),
+                child: Obx(
+                  () => ElevatedButton(
+                  onPressed: () => controller.loading.value ? () {} : controller.updateUserInformation(),
+                  child: controller.loading.value
+                  ? const CircularProgressIndicator(color: Colors.white, strokeWidth: 2)
+                  : const Text('Update Profile'),
+                ), 
                 ),
               ),
             ],

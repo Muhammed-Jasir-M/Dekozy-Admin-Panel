@@ -19,7 +19,7 @@ class ACircularImage extends StatelessWidget {
     this.imageType = ImageType.asset,
     this.fit = BoxFit.cover,
     this.padding = ASizes.sm,
-    this.file,
+    this.file, required double margin,
   });
 
   final BoxFit? fit;
