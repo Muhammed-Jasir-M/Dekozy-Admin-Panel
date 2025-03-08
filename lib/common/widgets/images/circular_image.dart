@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/enums.dart';
@@ -79,15 +78,28 @@ class ACircularImage extends StatelessWidget {
   // Function to build the network image widget
   Widget _buildNetworkImage() {
     if (image != null) {
-      // Use CachedNetworkImage for efficient loading and caching of network images // Not working in Web but just for loading
-      return CachedNetworkImage(
+      return Image.network(
+        image!,
         fit: fit,
         color: overlayColor,
-        imageUrl: image!,
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-        progressIndicatorBuilder: (context, url, downloadProgress) =>
-            const AShimmerEffect(width: 55, height: 55),
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) {
+            return child;
+          } 
+
+          return AShimmerEffect(width: width, height: height);
+        },
+        errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
       );
+      // Use CachedNetworkImage for efficient loading and caching of network images // Not working in Web but just for loading
+      // return CachedNetworkImage(
+      //   fit: fit,
+      //   color: overlayColor,
+      //   imageUrl: image!,
+      //   errorWidget: (context, url, error) => const Icon(Icons.error),
+      //   progressIndicatorBuilder: (context, url, downloadProgress) =>
+      //       const AShimmerEffect(width: 55, height: 55),
+      // );
     } else {
       // Return an empty container if no image is provided
       return Container();
