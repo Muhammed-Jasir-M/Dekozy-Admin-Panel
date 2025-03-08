@@ -21,7 +21,7 @@ class DashboardController extends GetxController {
       taxCost: 18, // ✅ FIXED: Added required 'taxCost' parameter
       orderDate: DateTime(2024, 5, 20),
       deliveryDate: DateTime(2024, 5, 20),
-      items: [], // ✅ FIXED: Added required 'items' parameter
+      items: [], 
     ),
     
     OrderModel(
@@ -122,7 +122,7 @@ class DashboardController extends GetxController {
       case OrderStatus.shipped:
         return 'Shipped';
       case OrderStatus.delivered:
-        return 'Delivered'; // ✅ FIXED typo (previously "Delevered")
+        return 'Delivered';
       case OrderStatus.cancelled:
         return 'Cancelled';
     }

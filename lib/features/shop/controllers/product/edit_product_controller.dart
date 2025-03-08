@@ -28,7 +28,7 @@ class EditProductController extends GetxController {
   final isLoading = false.obs;
   final selectedCategoriesLoader = false.obs;
   final productType = ProductType.single.obs;
-  final productVisibility = ProductVisibility.hidden.obs;
+  final productVisibility = ProductVisibility.published.obs;
 
   // Controllers and keys
   final stockPriceFormKey = GlobalKey<FormState>();
@@ -218,6 +218,7 @@ class EditProductController extends GetxController {
       product.salePrice = double.tryParse(salePrice.text.trim()) ?? 0;
       product.thumbnail =
           imagesController.selectedThumbnailImageUrl.value ?? '';
+      product.armodel = imagesController.selectedArModelUrl.value ?? '';
       product.productType = productType.value.toString();
       product.description = description.text.trim();
 
@@ -306,7 +307,7 @@ class EditProductController extends GetxController {
       PopScope(
         canPop: false,
         child: AlertDialog(
-          title: const Text('Uploading Product'),
+          title: const Text('Updating Product'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -348,50 +349,54 @@ class EditProductController extends GetxController {
     return Row(
       children: [
         AnimatedSwitcher(
-          duration: const Duration(seconds: 2),
+          duration: const Duration(milliseconds: 500),
           child: value.value
               ? const Icon(
                   CupertinoIcons.checkmark_alt_circle_fill,
+                  key: ValueKey('filled'),
                   color: Colors.green,
                 )
               : const Icon(
                   CupertinoIcons.checkmark_alt_circle,
+                  key: ValueKey('outlined'),
                   color: Colors.blue,
                 ),
         ),
         const SizedBox(width: ASizes.spaceBtwItems),
-        Text(label),
+        Expanded(child: Text(label)),
       ],
     );
   }
 
   // Function to show completion dialog
   void showCompletionDialog() {
-    Get.dialog(AlertDialog(
-      title: const Text('Congradulations!'),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Get.back();
-            Get.back();
-          },
-          child: const Text('Go to Products'),
-        )
-      ],
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Lottie.asset(AImages.uploadingCompletedAnimation,
-              height: 200, width: 200),
-          const SizedBox(height: ASizes.spaceBtwItems),
-          Text(
-            'Congradulations!',
-            style: Theme.of(Get.context!).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: ASizes.spaceBtwItems),
-          Text('Your product has been successfully updated'),
+    Get.dialog(
+      AlertDialog(
+        title: const Text('Congratulations!'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+              Get.back();
+            },
+            child: const Text('Go to Products'),
+          )
         ],
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Lottie.asset(AImages.uploadingCompletedAnimation,
+                height: 200, width: 200),
+            const SizedBox(height: ASizes.spaceBtwItems),
+            Text(
+              'Congratulations!',
+              style: Theme.of(Get.context!).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: ASizes.spaceBtwItems),
+            Text('Your product has been successfully updated'),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

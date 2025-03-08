@@ -19,7 +19,8 @@ class ACircularImage extends StatelessWidget {
     this.imageType = ImageType.asset,
     this.fit = BoxFit.cover,
     this.padding = ASizes.sm,
-    this.file, required double margin,
+    this.margin,
+    this.file,
   });
 
   final BoxFit? fit;
@@ -30,12 +31,14 @@ class ACircularImage extends StatelessWidget {
   final Color? backgroundColor;
   final Uint8List? memoryImage;
   final double width, height, padding;
+  final double? margin;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
       height: height,
+      margin: margin != null ? EdgeInsets.all(margin!) : EdgeInsets.zero,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: backgroundColor ??

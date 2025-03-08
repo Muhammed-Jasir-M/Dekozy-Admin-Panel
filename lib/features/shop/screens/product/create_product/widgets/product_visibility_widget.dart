@@ -4,7 +4,7 @@ import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../../utils/constants/sizes.dart';
+import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 
 class ProductVisibilityWidget extends StatelessWidget {
   const ProductVisibilityWidget({super.key});
@@ -40,15 +40,11 @@ class ProductVisibilityWidget extends StatelessWidget {
   // Helper method to build a radio button for product visibility
   Widget _buildVisibilityRadioButton(ProductVisibility value, String label,
       CreateProductController controller) {
-    return RadioMenuButton(
+    return RadioListTile<ProductVisibility>(
       value: value,
       groupValue: controller.productVisibility.value,
-      onChanged: (value) {
-        // Update the selected product visibility in the controller
-        controller.productVisibility.value =
-            value ?? ProductVisibility.published;
-      },
-      child: Text(label),
+      onChanged: (value) => controller.productVisibility.value = value ?? ProductVisibility.published,
+      title: Text(label),
     );
   }
 }

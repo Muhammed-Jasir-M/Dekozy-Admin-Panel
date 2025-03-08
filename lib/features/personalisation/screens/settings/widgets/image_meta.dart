@@ -13,9 +13,8 @@ class ImageAndMeta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = SettingsController.instance;
-    
+
     return ARoundedContainer(
       padding: const EdgeInsets.symmetric(
           vertical: ASizes.lg, horizontal: ASizes.md),
@@ -36,12 +35,19 @@ class ImageAndMeta extends StatelessWidget {
                   icon: Iconsax.camera,
                   loading: controller.loading.value,
                   onIconButtonPressed: () => controller.updateAppLogo(),
-                  imageType: controller.settings.value.appLogo.isNotEmpty ? ImageType.network :  ImageType.asset,
-                  image: controller.settings.value.appLogo.isNotEmpty ? controller.settings.value.appLogo :  AImages.user,
+                  imageType: controller.settings.value.appLogo.isNotEmpty
+                      ? ImageType.network
+                      : ImageType.asset,
+                  image: controller.settings.value.appLogo.isNotEmpty
+                      ? controller.settings.value.appLogo
+                      : AImages.defaultImage,
                 ),
               ),
               const SizedBox(height: ASizes.spaceBtwItems),
-              Obx(() => Text(controller.settings.value.appName, style: Theme.of(context).textTheme.headlineLarge)),
+              Obx(
+                () => Text(controller.settings.value.appName,
+                    style: Theme.of(context).textTheme.headlineLarge),
+              ),
               const SizedBox(height: ASizes.spaceBtwSections),
             ],
           )

@@ -1,6 +1,6 @@
 import 'package:aura_kart_admin_panel/common/widgets/images/rounded_image.dart';
 import 'package:aura_kart_admin_panel/common/widgets/shimmers/shimmer.dart';
-import 'package:aura_kart_admin_panel/features/authentication/controllers/user_controller.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/controllers/user_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';

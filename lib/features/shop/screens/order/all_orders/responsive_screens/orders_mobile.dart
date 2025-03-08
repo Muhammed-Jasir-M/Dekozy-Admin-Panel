@@ -33,9 +33,10 @@ class OrdersMobileScreen extends StatelessWidget {
                   children: [
                     // Table Header
                     ATableHeader(
-                      showLeftWidget: false,
-                      searchController: controller.searchTextController,
-                      searchOnChanged: (query) => controller.searchQuery(query),
+                        showLeftWidget: false,
+                        searchController: controller.searchTextController,
+                        searchOnChanged: (query) =>
+                            controller.searchQuery(query),
                     ),
 
                     const SizedBox(height: ASizes.spaceBtwItems),
@@ -45,10 +46,10 @@ class OrdersMobileScreen extends StatelessWidget {
                       () {
                         // Show Loader
                         if (controller.isLoading.value) {
-                          return const ALoaderAnimation();
+                          return ALoaderAnimation();
                         }
 
-                        return const OrderTable();
+                        return OrderTable();
                       },
                     ),
                   ],

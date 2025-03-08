@@ -11,27 +11,27 @@ import 'package:get/get.dart';
 class SettingsController extends GetxController {
   static SettingsController get instance => Get.find();
 
-  // observable variable
+  /// Variable
   RxBool loading = false.obs;
   Rx<SettingsModel> settings = SettingsModel().obs;
 
   final formkey = GlobalKey<FormState>();
+
   final appNameController = TextEditingController();
   final taxController = TextEditingController();
   final shippingController = TextEditingController();
   final freeShippingThresholdController = TextEditingController();
 
-  // dependencies
-  final settingsRepository = Get.put(SettingsRepository);
+  final settingsRepository = Get.put(SettingsRepository());
 
   @override
   void onInit() {
-    // fetch setting details on controller oinitializatyion
+    // Fetch setting details on controller initialization
     fetchSettingDetails();
     super.onInit();
   }
 
-  // fetch settings details from the repository
+  // Fetch settings details from the repository
   Future<SettingsModel> fetchSettingDetails() async {
     try {
       loading.value = true;
@@ -51,38 +51,40 @@ class SettingsController extends GetxController {
       return settings;
     } catch (e) {
       ALoaders.errorSnackBar(
-          title: 'Something went wrong', message: e.toString());
+          title: 'Something went wrong.', message: e.toString());
       return SettingsModel();
     }
   }
 
-  // pick thumbnail image from media
+  // Pick Thumbnail mage from media
   void updateAppLogo() async {
     try {
       loading.value = true;
+
       final controller = Get.put(MediaController());
       List<ImageModel>? selectedImages =
           await controller.selectImagesFromMedia();
 
-      // handle the selected images
+      // Handle the selected images
       if (selectedImages != null && selectedImages.isNotEmpty) {
-        // set the selected image to main image or perform any other action
+        // Set the selected image to main image or perform any other action
         ImageModel selectedImage = selectedImages.first;
 
-        // update profile in firestore
+        // Update profile in Firestore
         await settingsRepository
             .updateSingleField({'appLogo': selectedImage.url});
 
-        // update the main image using selectedimage
+        // Update the main image using selectedImage
         settings.value.appLogo = selectedImage.url;
         settings.refresh();
+
         ALoaders.errorSnackBar(
-            title: 'Congratulations', message: 'App logto has been nupdated');
+            title: 'Congratulations', message: 'App Logo has been updated.');
       }
       loading.value = false;
     } catch (e) {
       loading.value = false;
-      ALoaders.errorSnackBar(title: 'Uh oh ', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 
@@ -90,18 +92,19 @@ class SettingsController extends GetxController {
     try {
       loading.value = true;
 
-      // check internet comnnectiviuty
+      // Check Internet
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AFullScreenLoader.stopLoading();
         return;
       }
 
-      // form validation
+      // Form Validation
       if (!formkey.currentState!.validate()) {
         AFullScreenLoader.stopLoading();
         return;
       }
+
       settings.value.appName = appNameController.text.trim();
       settings.value.taxRate =
           double.tryParse(taxController.text.trim()) ?? 0.0;
@@ -114,12 +117,12 @@ class SettingsController extends GetxController {
       settings.refresh();
 
       loading.value = false;
+
       ALoaders.successSnackBar(
           title: 'Congratulations', message: 'App settings has been updated');
     } catch (e) {
       loading.value = false;
-      ALoaders.errorSnackBar(title: 'uh Oh', message: e.toString());
+      ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 }
-

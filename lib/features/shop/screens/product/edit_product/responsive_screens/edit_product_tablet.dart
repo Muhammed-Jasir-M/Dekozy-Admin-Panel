@@ -1,6 +1,7 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_image_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/product_model.dart';
+import 'package:aura_kart_admin_panel/features/shop/screens/product/create_product/widgets/product_ar_model.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
@@ -126,6 +127,9 @@ class EditProductTabletScreen extends StatelessWidget {
                             ],
                           ),
                         ),
+                        const SizedBox(height: ASizes.spaceBtwSections),
+
+                        const ProductArModel(),
                         const SizedBox(height: ASizes.spaceBtwSections),
 
                         // Product Brand

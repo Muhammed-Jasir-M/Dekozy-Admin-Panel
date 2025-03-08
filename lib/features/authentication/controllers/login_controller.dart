@@ -1,7 +1,7 @@
 import 'package:aura_kart_admin_panel/data/repositories/authentication/authentication_repository.dart';
 import 'package:aura_kart_admin_panel/features/personalisation/models/user_model.dart';
 import 'package:aura_kart_admin_panel/data/repositories/user/user_repository.dart';
-import 'package:aura_kart_admin_panel/features/authentication/controllers/user_controller.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/controllers/user_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/text_strings.dart';
@@ -11,6 +11,9 @@ import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import '../../../data/repositories/settings/setting_repository.dart';
+import '../../personalisation/models/setting_model.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
@@ -94,7 +97,10 @@ class LoginController extends GetxController {
   Future<void> registerAdmin() async {
     try {
       // Start Loading
-      AFullScreenLoader.openLoadingDialog('Registering Admin Account',AImages.docerAnimation,);
+      AFullScreenLoader.openLoadingDialog(
+        'Registering Admin Account',
+        AImages.docerAnimation,
+      );
 
       // Check internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -116,11 +122,22 @@ class LoginController extends GetxController {
           id: AuthenticationRepository.instance.authUser!.uid,
           firstName: 'Aura',
           lastName: 'Admin',
+          username: 'aura-admin',
           email: ATexts.adminEmail,
+          phoneNumber: '1234567890',
           role: AppRole.admin,
           createdAt: DateTime.now(),
         ),
       );
+
+      // Create settings record in firestore
+      final settingsRepository = Get.put(SettingsRepository());
+      await settingsRepository.registerSettings(SettingsModel(
+        appLogo: '',
+        appName: 'AuraKart',
+        taxRate: 0,
+        shippingCost: 0,
+      ));
 
       // Remove Loader
       AFullScreenLoader.stopLoading();

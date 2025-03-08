@@ -45,15 +45,17 @@ class CustomerDetailTabletScreen extends StatelessWidget {
                 children: [
                   // Customer Information on Left side
                   Expanded(
-                    child: Column(
-                      children: [
-                        // Customer  Info
-                        CustomerInfo(customer: customer),
-                        const SizedBox(height: ASizes.spaceBtwSections),
+                    child: Obx(
+                      () => Column(
+                        children: [
+                          // Customer  Info
+                          CustomerInfo(customer: controller.customer.value),
+                          const SizedBox(height: ASizes.spaceBtwSections),
 
-                        // Shipping Adress
-                        const ShippingAddress(),
-                      ],
+                          // Shipping Adress
+                          const ShippingAddress(),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(width: ASizes.spaceBtwSections),

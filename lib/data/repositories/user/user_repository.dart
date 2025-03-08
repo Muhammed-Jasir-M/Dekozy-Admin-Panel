@@ -6,7 +6,6 @@ import 'package:aura_kart_admin_panel/utils/exceptions/format_exceptions.dart';
 import 'package:aura_kart_admin_panel/utils/exceptions/platform_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -39,6 +38,7 @@ class UserRepository extends GetxController {
           .get();
 
       if (documentSnapshot.exists) {
+        print(UserModel.fromSnapshot(documentSnapshot));
         return UserModel.fromSnapshot(documentSnapshot);
       } else {
         return UserModel.empty();
@@ -59,9 +59,11 @@ class UserRepository extends GetxController {
     try {
       final querySnapshot =
           await _db.collection("Users").orderBy('FirstName').get();
-      return querySnapshot.docs
+      final result = querySnapshot.docs
           .map((doc) => UserModel.fromSnapshot(doc))
           .toList();
+      print(result);
+      return result;
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
     } on FormatException catch (_) {
@@ -69,7 +71,7 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      if (kDebugMode) print('Something went wrong: $e');
+      print(e.toString());
       throw 'Something went wrong!. Please try again';
     }
   }
@@ -79,6 +81,7 @@ class UserRepository extends GetxController {
     try {
       final documentSnapshot = await _db.collection("Users").doc(id).get();
       if (documentSnapshot.exists) {
+        print(UserModel.fromSnapshot(documentSnapshot));
         return UserModel.fromSnapshot(documentSnapshot);
       } else {
         return UserModel.empty();
@@ -90,7 +93,7 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      if (kDebugMode) print('Something Went Wrong : $e');
+      print(e.toString());
       throw 'Something went wrong!. Please try again';
     }
   }
@@ -112,7 +115,7 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      if (kDebugMode) print('Something went wrong: $e');
+      print(e.toString());
       throw 'Something went wrong!. Please try again';
     }
   }

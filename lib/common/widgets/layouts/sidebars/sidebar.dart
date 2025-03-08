@@ -26,36 +26,38 @@ class ASidebar extends StatelessWidget {
           child: Column(
             children: [
               // Image
-               Row(
+              Row(
                 children: [
                   Obx(
-                  () => ACircularImage(
-                  width: 60,
-                 height: 60,
-                 padding: 0,
-                 margin: ASizes.sm,
-                 backgroundColor: Colors.transparent,
-                 imageType: SettingsController.instance.settings.value.appLogo.isNotEmpty ? ImageType.network : ImageType.asset,
-                 image: SettingsController.instance.settings.value.appLogo.isNotEmpty
-                 ? SettingsController.instance.settings.value.appLogo
-                 : AImages.darkAppLogo,
-                 ),
-                 ),
-
-                 Expanded(
-                  child: Obx(
-                    () => Text(
-                      SettingsController.instance.settings.value.appName,
-                      style: Theme.of(context).textTheme.headlineLarge,
-                      overflow: TextOverflow.ellipsis,
+                    () => ACircularImage(
+                      width: 60,
+                      height: 60,
+                      padding: 0,
+                      margin: ASizes.sm,
+                      backgroundColor: Colors.transparent,
+                      imageType: SettingsController
+                              .instance.settings.value.appLogo.isNotEmpty
+                          ? ImageType.network
+                          : ImageType.asset,
+                      image: SettingsController
+                              .instance.settings.value.appLogo.isNotEmpty
+                          ? SettingsController.instance.settings.value.appLogo
+                          : AImages.darkAppLogo,
                     ),
+                  ),
+                  Expanded(
+                    child: Obx(
+                      () => Text(
+                        SettingsController.instance.settings.value.appName,
+                        style: Theme.of(context).textTheme.headlineLarge,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    ),
+                  ),
                 ],
-               ),
+              ),
 
-               
-               SizedBox(height: ASizes.spaceBtwSections),
+              SizedBox(height: ASizes.spaceBtwSections),
 
               Padding(
                 padding: const EdgeInsets.all(ASizes.md),
@@ -70,11 +72,6 @@ class ASidebar extends StatelessWidget {
                           .bodySmall!
                           .apply(letterSpacingDelta: 1.2),
                     ),
-
-
-
-
-
 
                     const SizedBox(height: ASizes.sm),
 

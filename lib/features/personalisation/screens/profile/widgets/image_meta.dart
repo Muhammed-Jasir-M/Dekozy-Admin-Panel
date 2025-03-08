@@ -1,6 +1,6 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/images/image_uploader.dart';
-import 'package:aura_kart_admin_panel/features/authentication/controllers/user_controller.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/controllers/user_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
@@ -32,13 +32,22 @@ class ImageAndMeta extends StatelessWidget {
                   width: 200,
                   height: 200,
                   circular: true,
+                  loading: controller.loading.value,
+                  onIconButtonPressed: () => controller.updateProfilePicture(),
                   icon: Iconsax.camera,
-                  imageType: ImageType.asset,
-                  image: AImages.user,
+                  imageType: controller.user.value.profilePicture.isNotEmpty
+                      ? ImageType.network
+                      : ImageType.asset,
+                  image: controller.user.value.profilePicture.isNotEmpty
+                      ? controller.user.value.profilePicture
+                      : AImages.user,
                 ),
               ),
               const SizedBox(height: ASizes.spaceBtwItems),
-              Obx(() => Text(controller.user.value.fullName, style: Theme.of(context).textTheme.headlineLarge)),
+              Obx(
+                () => Text(controller.user.value.fullName,
+                    style: Theme.of(context).textTheme.headlineLarge),
+              ),
               Obx(() => Text(controller.user.value.email)),
               const SizedBox(height: ASizes.spaceBtwSections),
             ],

@@ -79,50 +79,57 @@ class OrderModel {
   }
 
   factory OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>;
+    final data = snapshot.data() as Map<String, dynamic>?;
 
-    return OrderModel(
-      docId: snapshot.id,
-      id: data.containsKey('id') ? data['id'] as String : '',
-      userId: data.containsKey('userId') ? data['userId'] as String : '',
-      status: data.containsKey('status')
-          ? OrderStatus.values.firstWhere((e) => e.toString() == data['status'])
-          : OrderStatus.pending,
-      totalAmount:
-          data.containsKey('totalAmount') ? data['totalAmount'] as double : 0.0,
-      shippingCost: data.containsKey('shippingCost')
-          ? (data['shippingCost'] as num).toDouble()
-          : 0.0,
-      taxCost: data.containsKey('taxCost')
-          ? (data['taxCost'] as num).toDouble()
-          : 0.0,
-      orderDate: data.containsKey('orderDate')
-          ? (data['orderDate'] as Timestamp).toDate()
-          : DateTime.now(),
-      paymentMethod: data.containsKey('paymentMethod')
-          ? data['paymentMethod'] as String
+    if (data == null) {
+      return OrderModel.empty();
+    } else {
+      return OrderModel(
+        docId: snapshot.id,
+        id: data.containsKey('id') ? data['id'] as String : '',
+        userId: data.containsKey('userId') ? data['userId'] as String : '',
+        status: data.containsKey('status')
+            ? OrderStatus.values
+                .firstWhere((e) => e.toString() == data['status'])
+            : OrderStatus.pending,
+        totalAmount: data.containsKey('totalAmount')
+            ? data['totalAmount'] as double
+            : 0.0,
+        shippingCost: data.containsKey('shippingCost')
+            ? (data['shippingCost'] as num).toDouble()
+            : 0.0,
+        taxCost: data.containsKey('taxCost')
+            ? (data['taxCost'] as num).toDouble()
+            : 0.0,
+        orderDate: data.containsKey('orderDate')
+            ? (data['orderDate'] as Timestamp).toDate()
+            : DateTime.now(),
+        paymentMethod: data.containsKey('paymentMethod')
+            ? data['paymentMethod'] as String
           : 'Cash on delivery',
-      shippingAddress: data.containsKey('shippingAddress')
-          ? AddressModel.fromMap(
-              data['shippingAddress'] as Map<String, dynamic>)
-          : null,
-      billingAddress: data.containsKey('billingAddress')
-          ? AddressModel.fromMap(data['billingAddress'] as Map<String, dynamic>)
-          : null,
-      billingAddressSameAsShipping:
-          data.containsKey('billingAddressSameAsShipping')
-              ? data['billingAddressSameAsShipping'] as bool
-              : true,
-      deliveryDate:
-          data.containsKey('deliveryDate') && data['deliveryDate'] != null
-              ? (data['deliveryDate'] as Timestamp).toDate()
-              : null,
-      items: data.containsKey('items')
-          ? (data['items'] as List<dynamic>)
-              .map((itemData) =>
-                  CartItemModel.fromJson(itemData as Map<String, dynamic>))
-              .toList()
-          : [],
-    );
+        shippingAddress: data.containsKey('shippingAddress')
+            ? AddressModel.fromMap(
+                data['shippingAddress'] as Map<String, dynamic>)
+            : null,
+        billingAddress: data.containsKey('billingAddress')
+            ? AddressModel.fromMap(
+                data['billingAddress'] as Map<String, dynamic>)
+            : null,
+        billingAddressSameAsShipping:
+            data.containsKey('billingAddressSameAsShipping')
+                ? data['billingAddressSameAsShipping'] as bool
+                : true,
+        deliveryDate:
+            data.containsKey('deliveryDate') && data['deliveryDate'] != null
+                ? (data['deliveryDate'] as Timestamp).toDate()
+                : null,
+        items: data.containsKey('items')
+            ? (data['items'] as List<dynamic>)
+                .map((itemData) =>
+                    CartItemModel.fromJson(itemData as Map<String, dynamic>))
+                .toList()
+            : [],
+      );
+    }
   }
 }

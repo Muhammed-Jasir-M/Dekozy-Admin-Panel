@@ -9,6 +9,9 @@ class ProductImagesController extends GetxController {
   // Rx Observable for the selected thumbnail images
   Rx<String?> selectedThumbnailImageUrl = Rx<String?>(null);
 
+  // Rx Observable for the selected Ar model
+  Rx<String?> selectedArModelUrl = Rx<String?>(null);
+
   // Lists to store additional product Images
   final RxList<String> additionalProductImageUrls = <String>[].obs;
 
@@ -24,6 +27,21 @@ class ProductImagesController extends GetxController {
       ImageModel selectedImage = selectedImages.first;
       // Update the main image using the selectedImage
       selectedThumbnailImageUrl.value = selectedImage.url;
+    }
+  }
+
+  /// Pick AR Model from Media
+  void selectArModel() async {
+    final controller = Get.put(MediaController());
+
+    List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
+
+    // Handle the Selected images
+    if (selectedImages != null && selectedImages.isNotEmpty) {
+      // Set the selected  images to the main image or perform any other action
+      ImageModel selectedImage = selectedImages.first;
+      // Update the main image using the selectedImage
+      selectedArModelUrl.value = selectedImage.url;
     }
   }
 
@@ -43,12 +61,12 @@ class ProductImagesController extends GetxController {
     }
   }
 
-  /// Funtion to remove Product Image
+  /// Function to remove Product Image
   Future<void> removeImage(int index) async {
     additionalProductImageUrls.removeAt(index);
   }
 
-  /// Pick Multiple Images from Media
+  /// Pick a Single Image for Product Variation from Media
   void selectVariationImage(ProductVariationModel variation) async {
     final controller = Get.put(MediaController());
     List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();

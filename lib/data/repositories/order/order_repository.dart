@@ -18,7 +18,7 @@ class OrderRepository extends GetxController {
     try {
       final result = await _db
           .collection('Orders')
-          .orderBy('OrderDate', descending: true)
+          .orderBy('orderDate', descending: true)
           .get();
       return result.docs
           .map((documentSnapshot) => OrderModel.fromSnapshot(documentSnapshot))
@@ -30,6 +30,7 @@ class OrderRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
+      print(e.toString());
       throw 'Something went wrong!. Please try again';
     }
   }

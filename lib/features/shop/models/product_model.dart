@@ -13,6 +13,7 @@ class ProductModel {
   DateTime? date;
   double salePrice;
   String thumbnail;
+  String armodel;
   bool? isFeatured;
   BrandModel? brand;
   String? description;
@@ -29,6 +30,7 @@ class ProductModel {
     required this.stock,
     required this.price,
     required this.thumbnail,
+    required this.armodel,
     required this.productType,
     this.soldQuantity = 0,
     this.sku,
@@ -52,6 +54,7 @@ class ProductModel {
         stock: 0,
         price: 0,
         thumbnail: '',
+        armodel: '',
         productType: '',
       );
 
@@ -64,6 +67,7 @@ class ProductModel {
       'Price': price,
       'Images': images ?? [],
       'Thumbnail': thumbnail,
+      'ArModel': armodel,
       'SalePrice': salePrice,
       'IsFeatured': isFeatured,
       'CategoryId': categoryId,
@@ -96,6 +100,7 @@ class ProductModel {
       price: double.parse((data['Price'] ?? 0.0).toString()),
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
       thumbnail: data['Thumbnail'] ?? '',
+      armodel: data['ArModel'] ?? '',
       categoryId: data['CategoryId'] ?? '',
       description: data['Description'] ?? '',
       productType: data['ProductType'] ?? '',
@@ -125,6 +130,7 @@ class ProductModel {
       price: double.parse((data['Price'] ?? 0.0).toString()),
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
       thumbnail: data['Thumbnail'] ?? '',
+      armodel: data['ArModel'] ?? '',
       categoryId: data['CategoryId'] ?? '',
       description: data['Description'] ?? '',
       productType: data['ProductType'] ?? '',

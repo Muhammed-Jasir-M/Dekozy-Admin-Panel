@@ -42,7 +42,7 @@ class UserModel {
   String get formattedPhoneNo => AFormatter.formatPhoneNumber(phoneNumber);
 
   // Static function to split full name into first and last name.
-  static List<String> nameParts(fullName) => fullName.split(" ");
+  static List<String> nameParts(String fullName) => fullName.split(" ");
 
   // Static function to generate username from fullname.
   static String generateUsername(fullName) {
@@ -57,14 +57,14 @@ class UserModel {
 
   // Static function to create an empty user model.
   static UserModel empty() => UserModel(
-        id: '',
-        firstName: '',
-        lastName: '',
-        phoneNumber: '',
-        profilePicture: '',
-        username: '',
+        // id: '',
+        // firstName: '',
+        // lastName: '',
+        // phoneNumber: '',
+        // profilePicture: '',
+        // username: '',
         email: '',
-        role: AppRole.user,
+        // role: AppRole.user,
       );
 
   // Convert model to JSON structure for storing data in Firebase.
@@ -78,7 +78,7 @@ class UserModel {
       'ProfilePicture': profilePicture,
       'Role': role.name.toString(),
       'CreatedAt': createdAt,
-      'UpdatedAt': updatedAt = DateTime.now(),
+      'UpdatedAt': updatedAt ?? DateTime.now(),
     };
   }
 
@@ -91,7 +91,7 @@ class UserModel {
         id: document.id,
         firstName: data.containsKey('FirstName') ? data['FirstName'] ?? '' : '',
         lastName: data.containsKey('LastName') ? data['LastName'] ?? '' : '',
-        username: data.containsKey('UserName') ? data['Username'] ?? '' : '',
+        username: data.containsKey('UserName') ? data['UserName'] ?? '' : '',
         email: data.containsKey('Email') ? data['Email'] ?? '' : '',
         phoneNumber:
             data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',

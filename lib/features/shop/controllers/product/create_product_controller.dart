@@ -25,7 +25,7 @@ class CreateProductController extends GetxController {
   // Observables for loading state and product details
   final isLoading = false.obs;
   final productType = ProductType.single.obs;
-  final productVisibility = ProductVisibility.hidden.obs;
+  final productVisibility = ProductVisibility.published.obs;
 
   // Controllers and keys
   final stockPriceFormKey = GlobalKey<FormState>();
@@ -136,6 +136,7 @@ class CreateProductController extends GetxController {
         images: imagesController.additionalProductImageUrls,
         salePrice: double.tryParse(salePrice.text.trim()) ?? 0,
         thumbnail: imagesController.selectedThumbnailImageUrl.value ?? '',
+        armodel: imagesController.selectedArModelUrl.value ?? '',
         productType: productType.value.toString(),
         description: description.text.trim(),
       );
@@ -250,19 +251,21 @@ class CreateProductController extends GetxController {
     return Row(
       children: [
         AnimatedSwitcher(
-          duration: const Duration(seconds: 2),
+          duration: const Duration(milliseconds: 500),
           child: value.value
               ? const Icon(
                   CupertinoIcons.checkmark_alt_circle_fill,
+                  key: ValueKey('filled'),
                   color: Colors.green,
                 )
               : const Icon(
                   CupertinoIcons.checkmark_alt_circle,
+                  key: ValueKey('outlined'),
                   color: Colors.blue,
                 ),
         ),
         const SizedBox(width: ASizes.spaceBtwItems),
-        Text(label),
+        Expanded(child: Text(label)),
       ],
     );
   }
@@ -271,7 +274,7 @@ class CreateProductController extends GetxController {
   void showCompletionDialog() {
     Get.dialog(
       AlertDialog(
-        title: const Text('Congradulations!'),
+        title: const Text('Congratulations!'),
         actions: [
           TextButton(
             onPressed: () {
@@ -288,7 +291,7 @@ class CreateProductController extends GetxController {
             Lottie.asset(AImages.uploadingCompletedAnimation, height: 200, width: 200),
             const SizedBox(height: ASizes.spaceBtwItems),
             Text(
-              'Congradulations!',
+              'Congratulations!',
               style: Theme.of(Get.context!).textTheme.headlineSmall,
             ),
             const SizedBox(height: ASizes.spaceBtwItems),

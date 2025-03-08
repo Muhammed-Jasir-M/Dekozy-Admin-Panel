@@ -30,7 +30,7 @@ class AImageUploader extends StatelessWidget {
     this.loading = false,
   });
 
-  // whether display loading instead of icon
+  /// Whether display loading instead of icon
   final bool loading;
 
   /// Whether to display the image in a circular shape
@@ -99,18 +99,22 @@ class AImageUploader extends StatelessWidget {
           right: right,
           bottom: bottom,
           child: loading
-          ? const ACircularContainer(
-             width: ASizes.xl,
-            height: ASizes.xl,
-            child: CircularProgressIndicator(strokeWidth: 2, backgroundColor: AColors.primary, color: Colors.white),
-          )
-          : ACircularIcon(
-            icon: icon,
-            size: ASizes.md,
-            color: Colors.white,
-            onPressed: onIconButtonPressed,
-            backgroundColor: AColors.primary.withValues(alpha: 0.9),
-          ),
+              ? const ACircularContainer(
+                  width: ASizes.xl,
+                  height: ASizes.xl,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    backgroundColor: AColors.primary,
+                    color: Colors.white,
+                  ),
+                )
+              : ACircularIcon(
+                  icon: icon,
+                  size: ASizes.md,
+                  color: Colors.white,
+                  onPressed: onIconButtonPressed,
+                  backgroundColor: AColors.primary.withValues(alpha: 0.9),
+                ),
         )
       ],
     );

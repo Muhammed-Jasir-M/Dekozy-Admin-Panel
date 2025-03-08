@@ -70,7 +70,11 @@ class AddressModel {
   }
 
   factory AddressModel.fromDocumentSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>;
+    final data = snapshot.data() as Map<String, dynamic>?;
+
+    if (data == null) {
+      return AddressModel.empty();
+    }
 
     return AddressModel(
       id: snapshot.id,
@@ -88,6 +92,14 @@ class AddressModel {
 
   @override
   String toString() {
+    if ((street.isEmpty) &&
+        (city.isEmpty) &&
+        (state.isEmpty) &&
+        (postalCode.isEmpty) &&
+        (country.isEmpty)) {
+      return '';
+    }
+
     return '$street, $city, $state, $postalCode, $country';
   }
 }

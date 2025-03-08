@@ -40,7 +40,7 @@ class CustomerDetailMobileScreen extends StatelessWidget {
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Customer Info
-              CustomerInfo(customer: customer),
+              Obx(() => CustomerInfo(customer: controller.customer.value)),
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Shipping Adress

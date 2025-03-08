@@ -14,12 +14,12 @@ class SettingsRepository extends GetxController {
 
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  //function to save data on firestore
+  /// Function to save settings data to firestore
   Future<void> registerSettings(SettingsModel settings) async {
     try {
       await _db
           .collection("Settings")
-          .doc('GLOBAL_SETTTINGS')
+          .doc('GLOBAL_SETTINGS')
           .set(settings.toJson());
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
@@ -28,15 +28,15 @@ class SettingsRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Someting went wrong....please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // fucntion to fetch setting details based on setting id
+  /// Fucntion to fetch setting details based on setting Id
   Future<SettingsModel> getSettings() async {
     try {
       final querySnapshot =
-          await _db.collection("Settings").doc('GLOBAL_SETINGS').get();
+          await _db.collection("Settings").doc('GLOBAL_SETTINGS').get();
       return SettingsModel.fromSnapshot(querySnapshot);
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
@@ -46,11 +46,11 @@ class SettingsRepository extends GetxController {
       throw APlatformException(e.code).message;
     } catch (e) {
       if (kDebugMode) print('Something went wrong: $e');
-      throw 'Something went wrong: $e';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // function to update setting data in firestore
+  /// Function to update settings data in firestore
   Future<void> updateSettingsDetails(SettingsModel updatedSetting) async {
     try {
       await _db
@@ -64,11 +64,11 @@ class SettingsRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something Went Wrong....please try again';
+      throw 'Something went wrong!. Please try again';
     }
   }
 
-  // update any field specific settings cololectoin
+  /// Update any field specific settings collection
   Future<void> updateSingleField(Map<String, dynamic> json) async {
     try {
       await _db.collection("Settings").doc('GLOBAL_SETTINGS').update(json);
@@ -79,7 +79,7 @@ class SettingsRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong...okease try again';
+      throw 'Something went wrong!. Please try again';
     }  
   }
 }

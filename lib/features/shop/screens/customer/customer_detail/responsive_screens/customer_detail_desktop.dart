@@ -45,20 +45,22 @@ class CustomerDetailDesktopScreen extends StatelessWidget {
                 children: [
                   // Customer Information on right side
                   Expanded(
-                    child: Column(
-                      children: [
-                        // Customer  Info
-                        CustomerInfo(customer: customer),
-                        const SizedBox(height: ASizes.spaceBtwSections),
+                    child: Obx(() {
+                      return Column(
+                        children: [
+                          // Customer Info
+                          CustomerInfo(customer: controller.customer.value),
+                          const SizedBox(height: ASizes.spaceBtwSections),
 
-                        // Shipping Adress
-                        const ShippingAddress(),
-                      ],
-                    ),
+                          // Shipping Address
+                          const ShippingAddress(),
+                        ],
+                      );
+                    }),
                   ),
                   const SizedBox(width: ASizes.spaceBtwSections),
 
-                  // left Side Customer Orders
+                  // Left Side Customer Orders
                   const Expanded(flex: 2, child: CustomerOrders())
                 ],
               ),
