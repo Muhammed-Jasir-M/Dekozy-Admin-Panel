@@ -3,7 +3,7 @@ import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:get/get.dart';
 
 import '../../../../data/abstract/base_data_table_controller.dart';
-import '../../../../data/repositories/product/product_repositroy.dart';
+import '../../../../data/repositories/product/product_repository.dart';
 
 class ProductController extends ABaseController<ProductModel> {
   static ProductController get instance => Get.find();

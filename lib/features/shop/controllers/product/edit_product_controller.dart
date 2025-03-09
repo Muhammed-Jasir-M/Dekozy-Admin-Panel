@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/data/repositories/product/product_repositroy.dart';
+import 'package:aura_kart_admin_panel/data/repositories/product/product_repository.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_attributes_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_controller.dart';
@@ -53,7 +53,7 @@ class EditProductController extends GetxController {
   final RxList<CategoryModel> selectedCategories = <CategoryModel>[].obs;
   final List<CategoryModel> alreadyAddedCategories = <CategoryModel>[];
 
-  // Flags for traciing different tasks
+  // Flags for tracing different tasks
   RxBool thumbnailUploader = false.obs;
   RxBool additionalImagesUploader = false.obs;
   RxBool productDataUploader = false.obs;
@@ -92,6 +92,9 @@ class EditProductController extends GetxController {
             .assignAll(product.images ?? []);
       }
 
+      // Set the ar model url as the armodel
+      imagesController.selectedArModelUrl.value = product.armodel;
+
       // Product Attributes & Variations (assuming you have a method to fetch variations in ProductVariationController)
       attributesController.productAttributes
           .assignAll(product.productAttributes ?? []);
@@ -100,8 +103,7 @@ class EditProductController extends GetxController {
       variationController
           .initializeVariationControllers(product.productVariations ?? []);
 
-      isLoading.value =
-          false; // Set Loading state back to false after initialization
+      isLoading.value = false;
 
       update();
     } catch (e) {
@@ -195,6 +197,10 @@ class EditProductController extends GetxController {
       // Additional Product Images
       additionalImagesUploader.value = true;
 
+      if (imagesController.selectedArModelUrl.value == null) {
+        throw 'Select a Ar Model for the Product';
+      }
+
       // Product Variation Images
       final variations = ProductVariationController.instance.productVariations;
       if (productType.value == ProductType.single && variations.isNotEmpty) {
@@ -257,19 +263,19 @@ class EditProductController extends GetxController {
                 .removeProductCategory(product.id, existingCategoryId);
           }
         }
-
-        // Update Product List
-        ProductController.instance.updateItemfromLists(product);
-
-        // Reset Values
-        resetValues();
-
-        // Close the Loader
-        AFullScreenLoader.stopLoading();
-
-        // Show Success Message
-        showCompletionDialog();
       }
+
+      // Update Product List
+      ProductController.instance.updateItemfromLists(product);
+
+      // Reset Values
+      resetValues();
+
+      // Close the Loader
+      AFullScreenLoader.stopLoading();
+
+      // Show Success Message
+      showCompletionDialog();
     } catch (e) {
       AFullScreenLoader.stopLoading();
       ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -350,20 +356,34 @@ class EditProductController extends GetxController {
       children: [
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return ScaleTransition(scale: animation, child: child);
+          },
           child: value.value
               ? const Icon(
                   CupertinoIcons.checkmark_alt_circle_fill,
                   key: ValueKey('filled'),
                   color: Colors.green,
+                  size: 24,
                 )
               : const Icon(
                   CupertinoIcons.checkmark_alt_circle,
                   key: ValueKey('outlined'),
                   color: Colors.blue,
+                  size: 24,
                 ),
         ),
         const SizedBox(width: ASizes.spaceBtwItems),
-        Expanded(child: Text(label)),
+        Expanded(
+          child: AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 300),
+            style: TextStyle(
+              color: value.value ? Colors.green : Colors.black,
+              fontWeight: value.value ? FontWeight.bold : FontWeight.normal,
+            ),
+            child: Text(label),
+          ),
+        ),
       ],
     );
   }

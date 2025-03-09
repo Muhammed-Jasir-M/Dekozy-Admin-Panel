@@ -1,4 +1,4 @@
-import 'package:aura_kart_admin_panel/data/repositories/product/product_repositroy.dart';
+import 'package:aura_kart_admin_panel/data/repositories/product/product_repository.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_attributes_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/product/product_image_controller.dart';
@@ -159,19 +159,19 @@ class CreateProductController extends GetxController {
           await ProductRepository.instance
               .createProductCategory(productCategory);
         }
-
-        // Update Product List
-        ProductController.instance.addItemToLists(newRecord);
-
-        // Reset Form Values
-        resetValues();
-
-        // Close the Loader
-        AFullScreenLoader.stopLoading();
-
-        // Show Success Message
-        showCompletionDialog();
       }
+
+      // Update Product List
+      ProductController.instance.addItemToLists(newRecord);
+
+      // Reset Form Values
+      resetValues();
+
+      // Close the Loader
+      AFullScreenLoader.stopLoading();
+
+      // Show Success Message
+      showCompletionDialog();
     } catch (e) {
       AFullScreenLoader.stopLoading();
       ALoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -252,20 +252,34 @@ class CreateProductController extends GetxController {
       children: [
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return ScaleTransition(scale: animation, child: child);
+          },
           child: value.value
               ? const Icon(
                   CupertinoIcons.checkmark_alt_circle_fill,
                   key: ValueKey('filled'),
                   color: Colors.green,
+                  size: 24,
                 )
               : const Icon(
                   CupertinoIcons.checkmark_alt_circle,
                   key: ValueKey('outlined'),
                   color: Colors.blue,
+                  size: 24,
                 ),
         ),
         const SizedBox(width: ASizes.spaceBtwItems),
-        Expanded(child: Text(label)),
+        Expanded(
+          child: AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 300),
+            style: TextStyle(
+              color: value.value ? Colors.green : Colors.black,
+              fontWeight: value.value ? FontWeight.bold : FontWeight.normal,
+            ),
+            child: Text(label),
+          ),
+        ),
       ],
     );
   }
@@ -288,7 +302,8 @@ class CreateProductController extends GetxController {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Lottie.asset(AImages.uploadingCompletedAnimation, height: 200, width: 200),
+            Lottie.asset(AImages.uploadingCompletedAnimation,
+                height: 200, width: 200),
             const SizedBox(height: ASizes.spaceBtwItems),
             Text(
               'Congratulations!',
