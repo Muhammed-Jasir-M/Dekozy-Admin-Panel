@@ -3,6 +3,7 @@ import 'package:aura_kart_admin_panel/data/repositories/order/order_repository.d
 import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/popups/loaders.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 class OrderController extends ABaseController<OrderModel> {
@@ -60,4 +61,6 @@ class OrderController extends ABaseController<OrderModel> {
       statusLoader.value = false;
     }
   }
+
+  Widget sortById(int columnIndex, bool ascending) {}
 }

@@ -14,11 +14,16 @@ class ADashboardCard extends StatelessWidget {
     this.color = AColors.success,
     required this.stats,
     this.onTap,
+    required headingIcon,
+    required MaterialColor headingIconColor,
+    required Color headingIconBgColor,
+    required BuildContext context,
   });
 
   final String title, subTitle;
-  final IconData icon;
-  final Color color;
+  final BuildContext context;
+  final IconData icon, headingIcon;
+  final Color color, headingIconColor, headingColor, headinIconBgColor;
   final int stats;
   final void Function()? onTap;
 

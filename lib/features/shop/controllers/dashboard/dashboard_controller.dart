@@ -1,76 +1,41 @@
+import 'package:aura_kart_admin_panel/data/abstract/base_data_table_controller.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/customer/customer_controller.dart';
+import 'package:aura_kart_admin_panel/features/shop/controllers/order/order_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/models/order_model.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 
-class DashboardController extends GetxController {
+class DashboardController extends ABaseController<OrderModel> {
   static DashboardController get instance => Get.find();
 
-  final RxList<double> weeklySales = <double>[].obs;
+  final orderController = Get.put(OrderController());
+  final customerController = Get.put(CustomerController());
 
+  final RxList<double> weeklySales = <double>[].obs;
   final RxMap<OrderStatus, int> orderStatusData = <OrderStatus, int>{}.obs;
   final RxMap<OrderStatus, double> totalAmounts = <OrderStatus, double>{}.obs;
 
-  /// Order
-  static final List<OrderModel> orders = [
-    OrderModel(
-      id: 'CWT0012',
-      status: OrderStatus.processing,
-      totalAmount: 265,
-      shippingCost: 50, // ✅ FIXED: Added required 'shippingCost' parameter
-      taxCost: 18, // ✅ FIXED: Added required 'taxCost' parameter
-      orderDate: DateTime(2024, 5, 20),
-      deliveryDate: DateTime(2024, 5, 20),
-      items: [], 
-    ),
-    
-    OrderModel(
-      id: 'CWT0013',
-      status: OrderStatus.processing,
-      totalAmount: 300,
-      shippingCost: 55,
-      taxCost: 20,
-      orderDate: DateTime(2024, 5, 21),
-      deliveryDate: DateTime(2024, 5, 22),
-      items: [],
-    ),
-    OrderModel(
-      id: 'CWT0014',
-      status: OrderStatus.shipped,
-      totalAmount: 400,
-      shippingCost: 60,
-      taxCost: 25,
-      orderDate: DateTime(2024, 5, 22),
-      deliveryDate: DateTime(2024, 5, 23),
-      items: [],
-    ),
-    OrderModel(
-      id: 'CWT0015',
-      status: OrderStatus.delivered,
-      totalAmount: 500,
-      shippingCost: 65,
-      taxCost: 30,
-      orderDate: DateTime(2024, 5, 23),
-      deliveryDate: DateTime(2024, 5, 24),
-      items: [],
-    ),
-    OrderModel(
-      id: 'CWT0016',
-      status: OrderStatus.delivered,
-      totalAmount: 600,
-      shippingCost: 70,
-      taxCost: 35,
-      orderDate: DateTime(2024, 5, 24),
-      deliveryDate: DateTime(2024, 5, 25),
-      items: [],
-    ),
-  ];
-
+// order
   @override
-  void onInit() {
+  Future<List<OrderModel>> fetchItems() async {
+    // fetch orders if empty
+    if (orderController.allItems.isEmpty) {
+      await orderController.fetchItems();
+    }
+
+    // fetch custometrs if empty
+    if (orderController.allItems.isEmpty) {
+      await customerController.fetchItems();
+    }
+
+    // calculate the weekly sales
     _calculateWeeklySales();
+
+    // calculate order status counts
     _calculateOrderStatusData();
-    super.onInit();
+
+    return orderController.allItems;
   }
 
   // Calculate Weekly Sales
@@ -78,7 +43,7 @@ class DashboardController extends GetxController {
     // Reset weekly sales to zeros
     weeklySales.value = List<double>.filled(7, 0.0);
 
-    for (var order in orders) {
+    for (var order in orderController.allItems) {
       final DateTime orderWeekStart =
           AHelperFunctions.getStartOfWeek(order.orderDate);
 
@@ -103,7 +68,7 @@ class DashboardController extends GetxController {
     // Map to store total amounts for each status
     totalAmounts.value = {for (var status in OrderStatus.values) status: 0.0};
 
-    for (var order in orders) {
+    for (var order in orderController.allItems) {
       // Count Orders
       final status = order.status;
       orderStatusData[status] = (orderStatusData[status] ?? 0) + 1;
@@ -125,6 +90,25 @@ class DashboardController extends GetxController {
         return 'Delivered';
       case OrderStatus.cancelled:
         return 'Cancelled';
+    }
+  }
+
+  @override
+  bool containsSearchQuery(OrderModel item, String query) => false;
+
+  @override
+  Future<void> deleteItem(OrderModel item) async {}
+
+  @override
+  Future<List<OrderModel>> fetchItems() async {
+    // fetch orders if empty
+    if (orderController.allItems.isEmpty) {
+      await orderController.fetchItems();
+    }
+
+    // fetch custometrs if empty
+    if (orderController.allItems.isEmpty) {
+      await customerController.fetchItems();
     }
   }
 }
