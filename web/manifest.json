@@ -1,11 +1,11 @@
 {
-    "name": "aura_kart_admin_panel",
-    "short_name": "aura_kart_admin_panel",
+    "name": "Aurkart-Admin-panel",
+    "short_name": "Aurkart-Admin-panel",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A fast and user-friendly Flutter Web dashboard for managing products,orders and analytics",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

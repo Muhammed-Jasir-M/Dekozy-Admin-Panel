@@ -16,7 +16,7 @@ class ATexts {
   static const String skip = "Skip";
   static const String done = "Done";
   static const String submit = "Submit";
-  static const String appName = "Aura-Kart";
+  static const String appName = "Aurkart-Admin-panel";
   static const String tContinue = "Continue";
 
   // Authentication Forms

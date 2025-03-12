@@ -1,5 +1,5 @@
 name: aura_kart_admin_panel
-description: "A new Flutter project."
+description: "Aurkart Admin panel -A fast and user-friendly Flutter Web dashboard for managing products,orders and analytics"
 # The following line prevents the package from being accidentally published to
 publish_to: 'none' 
 
