@@ -1,7 +1,11 @@
+import 'package:aura_kart_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:aura_kart_admin_panel/features/shop/screens/dashboard/table/data_table.dart';
+import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../../common/widgets/containers/rounded_container.dart';
 import '../widgets/order_status_graph.dart';
@@ -12,6 +16,8 @@ class DashboardTabletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(DashboardController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -25,21 +31,37 @@ class DashboardTabletScreen extends StatelessWidget {
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Cards
-              const Row(
+              Row(
                 children: [
                   Expanded(
-                    child: ADashboardCard(
-                      title: 'Sales Total',
-                      subTitle: '\u{20B9}365',
-                      stats: 25,
+                    child: Obx(
+                      () => ADashboardCard(
+                        headingIcon: Iconsax.note,
+                        headingIconColor: Colors.blue,
+                        headingIconBgColor: Colors.blue.withValues(alpha: 0.1),
+                        context: context,
+                        title: 'Sales Total',
+                        subTitle:
+                            '₹${controller.orderController.allItems.fold(0.0, (previousValue, element) => previousValue + element.totalAmount).toStringAsFixed(2)}',
+                        stats: 25,
+                      ),
                     ),
                   ),
                   SizedBox(width: ASizes.spaceBtwItems),
                   Expanded(
-                    child: ADashboardCard(
-                      title: 'Average order value',
-                      subTitle: '\u{20B9}25',
-                      stats: 15,
+                    child: Obx(
+                      () => ADashboardCard(
+                        headingIcon: Iconsax.external_drive,
+                        headingIconColor: Colors.green,
+                        headingIconBgColor: Colors.green.withValues(alpha: 0.1),
+                        title: 'Average Order Value',
+                        context: context,
+                        subTitle:
+                            '₹${(controller.orderController.allItems.fold(0.0, (previousValue, element) => previousValue + element.totalAmount) / controller.orderController.allItems.length).toStringAsFixed(2)}',
+                        stats: 15,
+                        icon: Iconsax.arrow_down,
+                        color: AColors.error,
+                      ),
                     ),
                   ),
                 ],
@@ -48,18 +70,34 @@ class DashboardTabletScreen extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: ADashboardCard(
-                      title: 'Total Orders',
-                      subTitle: '36',
-                      stats: 44,
+                    child: Obx(
+                      () => ADashboardCard(
+                        headingIcon: Iconsax.box,
+                        headingIconColor: Colors.deepPurple,
+                        headingIconBgColor:
+                            Colors.deepPurple.withValues(alpha: 0.1),
+                        title: 'Total Orders',
+                        subTitle:
+                            '₹${controller.orderController.allItems.length}',
+                        context: context,
+                        stats: 44,
+                      ),
                     ),
                   ),
                   SizedBox(width: ASizes.spaceBtwItems),
                   Expanded(
-                    child: ADashboardCard(
-                      title: 'Visitors',
-                      subTitle: '25353',
-                      stats: 3,
+                    child: Obx(
+                      () => ADashboardCard(
+                        headingIcon: Iconsax.user,
+                        headingIconColor: Colors.deepOrange,
+                        headingIconBgColor:
+                            Colors.deepOrange.withValues(alpha: 0.1),
+                        context: context,
+                        title: 'Visitors',
+                        subTitle: controller.customerController.allItems.length
+                            .toString(),
+                        stats: 2,
+                      ),
                     ),
                   ),
                 ],

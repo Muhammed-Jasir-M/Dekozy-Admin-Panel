@@ -16,23 +16,22 @@ class DashboardController extends ABaseController<OrderModel> {
   final RxMap<OrderStatus, int> orderStatusData = <OrderStatus, int>{}.obs;
   final RxMap<OrderStatus, double> totalAmounts = <OrderStatus, double>{}.obs;
 
-// order
   @override
   Future<List<OrderModel>> fetchItems() async {
-    // fetch orders if empty
+    // Fetch Orders if empty
     if (orderController.allItems.isEmpty) {
       await orderController.fetchItems();
     }
 
-    // fetch custometrs if empty
-    if (orderController.allItems.isEmpty) {
+    // Fetch Custometrs if empty
+    if (customerController.allItems.isEmpty) {
       await customerController.fetchItems();
     }
 
-    // calculate the weekly sales
+    // Calculate the weekly sales
     _calculateWeeklySales();
 
-    // calculate order status counts
+    // Calculate order status counts
     _calculateOrderStatusData();
 
     return orderController.allItems;
@@ -74,7 +73,7 @@ class DashboardController extends ABaseController<OrderModel> {
       orderStatusData[status] = (orderStatusData[status] ?? 0) + 1;
 
       // Calculate total amounts for each status
-      totalAmounts[status] = (totalAmounts[status] ?? 0) + 1;
+      totalAmounts[status] = (totalAmounts[status] ?? 0) + order.totalAmount;
     }
   }
 
@@ -90,7 +89,7 @@ class DashboardController extends ABaseController<OrderModel> {
         return 'Delivered';
       case OrderStatus.cancelled:
         return 'Cancelled';
-    }
+      }
   }
 
   @override
@@ -98,17 +97,4 @@ class DashboardController extends ABaseController<OrderModel> {
 
   @override
   Future<void> deleteItem(OrderModel item) async {}
-
-  @override
-  Future<List<OrderModel>> fetchItems() async {
-    // fetch orders if empty
-    if (orderController.allItems.isEmpty) {
-      await orderController.fetchItems();
-    }
-
-    // fetch custometrs if empty
-    if (orderController.allItems.isEmpty) {
-      await customerController.fetchItems();
-    }
-  }
 }

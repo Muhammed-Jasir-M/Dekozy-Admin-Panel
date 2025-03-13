@@ -1,4 +1,5 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:aura_kart_admin_panel/common/widgets/icons/circular_icon.dart';
 import 'package:aura_kart_admin_panel/common/widgets/texts/section_heading.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
@@ -14,16 +15,16 @@ class ADashboardCard extends StatelessWidget {
     this.color = AColors.success,
     required this.stats,
     this.onTap,
-    required headingIcon,
-    required MaterialColor headingIconColor,
-    required Color headingIconBgColor,
-    required BuildContext context,
+    required this.headingIcon,
+    required this.headingIconColor,
+    required this.headingIconBgColor,
+    required this.context,
   });
 
   final String title, subTitle;
   final BuildContext context;
   final IconData icon, headingIcon;
-  final Color color, headingIconColor, headingColor, headinIconBgColor;
+  final Color color, headingIconColor, headingIconBgColor;
   final int stats;
   final void Function()? onTap;
 
@@ -35,7 +36,17 @@ class ADashboardCard extends StatelessWidget {
       child: Column(
         children: [
           /// Heading
-          ASectionHeading(title: title, textColor: AColors.textSecondary),
+          Row(
+            children: [
+              ACircularIcon(
+                icon: headingIcon,
+                backgroundColor: headingIconBgColor,
+                color: headingIconColor,
+              ),
+              const SizedBox(width: ASizes.spaceBtwItems),
+              ASectionHeading(title: title, textColor: AColors.textSecondary),
+            ],
+          ),
           const SizedBox(height: ASizes.spaceBtwSections),
 
           Row(

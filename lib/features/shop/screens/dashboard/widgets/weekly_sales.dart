@@ -1,4 +1,3 @@
-import 'package:aura_kart_admin_panel/common/widgets/containers/circular_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/common/widgets/icons/circular_icon.dart';
 import 'package:aura_kart_admin_panel/common/widgets/loaders/loader_animation.dart';
@@ -17,6 +16,7 @@ class AWeekklySaleGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DashboardController());
+
     return ARoundedContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,58 +25,74 @@ class AWeekklySaleGraph extends StatelessWidget {
             children: [
               ACircularIcon(
                 icon: Iconsax.graph,
-                backgroundColor: Colors.brown.withOpacity(0.1),
+                backgroundColor: Colors.brown.withValues(alpha: 0.1),
                 color: Colors.brown,
                 size: ASizes.md,
-              )
-            
-          const SizedBox(width: ASizes.spaceBtwItems),
-          Text('Weekly Sales',style: Theme.of(context).textTheme.headlineSmall),
-          ],
+              ),
+              const SizedBox(width: ASizes.spaceBtwItems),
+              Text('Weekly Sales',
+                  style: Theme.of(context).textTheme.headlineSmall),
+            ],
           ),
+
           const SizedBox(height: ASizes.spaceBtwSections),
 
           // Graph
           Obx(
-            () => controller.weeklySales.isNotEmpty ?
-             SizedBox(
-              height: 400,
-              child: BarChart(
-                BarChartData(
-                  titlesData: buildFlTitleData(controller.weeklySales),
-                  borderData: FlBorderData(show: true,border: const Border(top: BorderSide.none, right: BorderSide.none),),
-                  gridData: const FlGridData(
-                    show: true,
-                    drawHorizontalLine: true,
-                    drawVerticalLine: false,
-                    horizontalInterval: 200,
-                  ),
-                  barGroups: controller.weeklySales
-                      .asMap()
-                      .entries
-                      .map(
-                        (entry) => BarChartGroupData(
-                          x: entry.key,
-                          barRods: [
-                            BarChartRodData(
-                              width: 30,
-                              toY: entry.value,
-                              color: AColors.primary,
-                              borderRadius: BorderRadius.circular(ASizes.sm),
-                            ),
-                          ],
+            () => controller.weeklySales.isNotEmpty
+                ? SizedBox(
+                    height: 400,
+                    child: BarChart(
+                      BarChartData(
+                        titlesData: buildFlTitleData(controller.weeklySales),
+                        borderData: FlBorderData(
+                          show: true,
+                          border: const Border(
+                              top: BorderSide.none, right: BorderSide.none),
                         ),
-                      )
-                      .toList(),
-                  groupsSpace: ASizes.spaceBtwItems,
-                  barTouchData: BarTouchData(
-                    touchTooltipData: BarTouchTooltipData(getTooltipColor: (_) => AColors.secondary,),
-                    touchCallback: ADeviceUtils.isDesktopScreen(context)? (barTouchEvent, barTouchResponse) {} : null,
+                        gridData: const FlGridData(
+                          show: true,
+                          drawHorizontalLine: true,
+                          drawVerticalLine: true,
+                          horizontalInterval: 200,
+                        ),
+                        barGroups: controller.weeklySales
+                            .asMap()
+                            .entries
+                            .map(
+                              (entry) => BarChartGroupData(
+                                x: entry.key,
+                                barRods: [
+                                  BarChartRodData(
+                                    width: 30,
+                                    toY: entry.value,
+                                    color: AColors.primary,
+                                    borderRadius:
+                                        BorderRadius.circular(ASizes.sm),
+                                  ),
+                                ],
+                              ),
+                            )
+                            .toList(),
+                        groupsSpace: ASizes.spaceBtwItems,
+                        barTouchData: BarTouchData(
+                          touchTooltipData: BarTouchTooltipData(
+                            getTooltipColor: (_) => AColors.secondary,
+                          ),
+                          touchCallback: ADeviceUtils.isDesktopScreen(context)
+                              ? (barTouchEvent, barTouchResponse) {}
+                              : null,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox(
+                    height: 400,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [ALoaderAnimation()],
+                    ),
                   ),
-                ),
-              ),
-            ) 
-            : const SizedBox(height: 400, child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [ALoaderAnimation()])),
           ),
         ],
       ),
@@ -84,7 +100,7 @@ class AWeekklySaleGraph extends StatelessWidget {
   }
 
   FlTitlesData buildFlTitleData(List<double> weeklySales) {
-    // calculate step height fot the left ricing
+    // Calculate step height for the left pricing
     double maxOrder = weeklySales.reduce((a, b) => a > b ? a : b).toDouble();
     double stepHeight = (maxOrder / 10).ceilToDouble();
 
@@ -105,13 +121,19 @@ class AWeekklySaleGraph extends StatelessWidget {
 
             return SideTitleWidget(
               space: 0,
-              axisSide: AxisSide.bottom,
+              meta: meta,
               child: Text(day),
             );
           },
         ),
       ),
-      leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true,interval: stepHeight <= 0 ? 500 : stepHeight ,reservedSize: 50,),),
+      leftTitles: AxisTitles(
+        sideTitles: SideTitles(
+          showTitles: true,
+          interval: stepHeight <= 0 ? 500 : stepHeight,
+          reservedSize: 50,
+        ),
+      ),
       rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
       topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
     );

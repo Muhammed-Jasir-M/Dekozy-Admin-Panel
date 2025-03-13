@@ -13,23 +13,34 @@ class DashboardOrderTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = OrderController.instance;
-    return Obx(() {
-      Text(controller.filteredItems.length.toString());
-      Text(controller.selectedRows.length.toString());
 
-      return APaginatedDataTable(
-        minWidth: 700,
-        tableHeight: 500,
-        dataRowHeight: ASizes.xl * 1.2,
-        columns: [
-          DataColumn2(label: const Text('Order ID'), onSort: (columnIndex, ascending) => controller.sortById(columnIndex,ascending)),
-          const DataColumn2(label: Text('Date')),
-          const DataColumn2(label: Text('Items')),
-          DataColumn2(label: const Text('Status') , fixedWidth: ADeviceUtils.isMobileScreen(context) ? 120 : null),
-          DataColumn2(label: Text('Amount')),
-        ],
-        source: OrderRows(),
-      );
-    });
+    return Obx(
+      () {
+        Text(controller.filteredItems.length.toString());
+        Text(controller.selectedRows.length.toString());
+
+        return APaginatedDataTable(
+          minWidth: 700,
+          tableHeight: 500,
+          dataRowHeight: ASizes.xl * 1.2,
+          sortAscending: controller.sortAscending.value,
+          sortColumnIndex: controller.sortColumnIndex.value,
+          columns: [
+            DataColumn2(
+              label: const Text('Order ID'),
+              onSort: (columnIndex, ascending) =>
+                  controller.sortById(columnIndex, ascending),
+            ),
+            const DataColumn2(label: Text('Date')),
+            const DataColumn2(label: Text('Items')),
+            DataColumn2(
+                label: const Text('Status'),
+                fixedWidth: ADeviceUtils.isMobileScreen(context) ? 120 : null),
+            DataColumn2(label: Text('Amount')),
+          ],
+          source: OrderRows(),
+        );
+      },
+    );
   }
 }

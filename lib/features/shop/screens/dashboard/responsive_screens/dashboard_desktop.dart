@@ -16,6 +16,7 @@ class DashboardDesktopScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DashboardController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -29,45 +30,51 @@ class DashboardDesktopScreen extends StatelessWidget {
               const SizedBox(height: ASizes.spaceBtwSections),
 
               // Cards
-               Row(
+              Row(
                 children: [
                   Expanded(
                     child: Obx(
                       () => ADashboardCard(
                         headingIcon: Iconsax.note,
                         headingIconColor: Colors.blue,
-                        headingIconBgColor: Colors.blue.withOpacity(0.1),
+                        headingIconBgColor: Colors.blue.withValues(alpha: 0.1),
                         context: context,
                         title: 'Sales Total',
-                        subTitle: '\$${controller.orderController.allItems.fold(0.0, (previousValue, element) => previousValue + element.totalAmount).toStringAsFixed(2)}',
+                        subTitle:
+                            '₹${controller.orderController.allItems.fold(0.0, (previousValue, element) => previousValue + element.totalAmount).toStringAsFixed(2)}',
                         stats: 25,
                       ),
                     ),
                   ),
                   const SizedBox(width: ASizes.spaceBtwItems),
-                   Expanded(
+                  Expanded(
                     child: Obx(
-                      () =>  ADashboardCard(
-                         headingIcon: Iconsax.external_drive,
-                         headingIconColor: Colors.green,
-                         headingIconBgColor: Colors.green.withOpacity(0.1);
-                          title: 'Average Order Value',
-                          context: context,
-                          subTitle: '\$${(controller.orderController.allItems.fold(0.0, (previousValue, element) => previousValue + element.totalAmount) / controller.orderController.allItems.length).toStringAsFixed(2)}',
-                          stats: 15,
-                          icon: Iconsax.arrow_down,
-                          color: AColors.error,),
+                      () => ADashboardCard(
+                        headingIcon: Iconsax.external_drive,
+                        headingIconColor: Colors.green,
+                        headingIconBgColor: Colors.green.withValues(alpha: 0.1),
+                        title: 'Average Order Value',
+                        context: context,
+                        subTitle:
+                            '₹${(controller.orderController.allItems.fold(0.0, (previousValue, element) => previousValue + element.totalAmount) / controller.orderController.allItems.length).toStringAsFixed(2)}',
+                        stats: 15,
+                        icon: Iconsax.arrow_down,
+                        color: AColors.error,
+                      ),
                     ),
                   ),
                   SizedBox(width: ASizes.spaceBtwItems),
                   Expanded(
                     child: Obx(
-                      () =>  ADashboardCard(
+                      () => ADashboardCard(
                         headingIcon: Iconsax.box,
                         headingIconColor: Colors.deepPurple,
-                        headingIconBgColor: Colors.deepPurple.withOpacity(0.1),
+                        headingIconBgColor:
+                            Colors.deepPurple.withValues(alpha: 0.1),
                         title: 'Total Orders',
-                        subTitle: '\$${controller.orderController.allItems.length}',
+                        subTitle:
+                            '₹${controller.orderController.allItems.length}',
+                        context: context,
                         stats: 44,
                       ),
                     ),
@@ -78,10 +85,12 @@ class DashboardDesktopScreen extends StatelessWidget {
                       () => ADashboardCard(
                         headingIcon: Iconsax.user,
                         headingIconColor: Colors.deepOrange,
-                        headingIconBgColor: Colors.deepOrange.withOpacity(0.1),
-                        context: context, 
+                        headingIconBgColor:
+                            Colors.deepOrange.withValues(alpha: 0.1),
+                        context: context,
                         title: 'Visitors',
-                        subTitle: controller.customerController.allItems.length.toString(),
+                        subTitle: controller.customerController.allItems.length
+                            .toString(),
                         stats: 2,
                       ),
                     ),
@@ -89,7 +98,6 @@ class DashboardDesktopScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: ASizes.spaceBtwSections),
-
 
               /// Graphs
               Row(
@@ -109,7 +117,9 @@ class DashboardDesktopScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Recent Orders',style:Theme.of(context).textTheme.headlineSmall,
+                                'Recent Orders',
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
                               ),
                               const SizedBox(height: ASizes.spaceBtwSections),
                               const DashboardOrderTable(),

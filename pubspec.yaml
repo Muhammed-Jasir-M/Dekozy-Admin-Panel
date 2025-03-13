@@ -1,5 +1,5 @@
 name: aura_kart_admin_panel
-description: "Aurkart Admin panel -A fast and user-friendly Flutter Web dashboard for managing products,orders and analytics"
+description: "A fast and user-friendly Flutter Web dashboard for managing products,orders and analytics"
 # The following line prevents the package from being accidentally published to
 publish_to: 'none' 
 
@@ -71,6 +71,7 @@ dev_dependencies:
 flutter:
 
   # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true

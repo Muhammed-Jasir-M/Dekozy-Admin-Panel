@@ -1,5 +1,4 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
-import 'package:aura_kart_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
 import 'package:aura_kart_admin_panel/features/shop/controllers/order/order_controller.dart';
 import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
@@ -15,10 +14,12 @@ class OrderRows extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     final order = controller.filteredItems[index];
+
     return DataRow2(
-      onTap: () => Get.toNamed(ARoutes.orderDetails, arguments: order   ),
+      onTap: () => Get.toNamed(ARoutes.orderDetails, arguments: order),
       selected: controller.selectedRows[index],
-      onSelectChanged: (value) => controller.selectedRows[index] = value ?? false,
+      onSelectChanged: (value) =>
+          controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Text(
@@ -41,7 +42,8 @@ class OrderRows extends DataTableSource {
             child: Text(
               order.status.name.capitalize.toString(),
               style: TextStyle(
-                  color: AHelperFunctions.getOrderStatusColor(order.status)),
+                color: AHelperFunctions.getOrderStatusColor(order.status),
+              ),
             ),
           ),
         ),
@@ -57,5 +59,6 @@ class OrderRows extends DataTableSource {
   int get rowCount => controller.filteredItems.length;
 
   @override
-  int get selectedRowCount => controller.selectedRows.where((selected) => selected).length;
+  int get selectedRowCount =>
+      controller.selectedRows.where((selected) => selected).length;
 }

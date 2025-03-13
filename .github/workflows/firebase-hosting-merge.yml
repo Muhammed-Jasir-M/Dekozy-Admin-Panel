@@ -34,13 +34,24 @@ jobs:
           echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env
           echo "CLOUDINARY_UPLOAD_PRESET=${{ secrets.CLOUDINARY_UPLOAD_PRESET }}" >> .env
 
-      - name: Build Web App
+      - name: Build Web App (Release)
         run: flutter build web --release
 
-      - name: Deploy to Firebase Hosting
+      - name: Deploy Release to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_AURA_KART }}
           projectId: aura-kart
           channelId: live
+
+      - name: Build Web App (Debug)
+        run: flutter build web --debug
+
+      - name: Deploy Debug to Firebase Hosting (Preview)
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_AURA_KART }}
+          projectId: aura-kart
+          channelId: debug
