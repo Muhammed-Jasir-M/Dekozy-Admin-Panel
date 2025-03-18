@@ -16,7 +16,7 @@ class ATexts {
   static const String skip = "Skip";
   static const String done = "Done";
   static const String submit = "Submit";
-  static const String appName = "Dekozy-Dashboard";
+  static const String appName = "Dekozy Admin Panel";
   static const String tContinue = "Continue";
 
   // Authentication Forms
