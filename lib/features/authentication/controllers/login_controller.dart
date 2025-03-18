@@ -120,9 +120,9 @@ class LoginController extends GetxController {
       await userRepository.createUser(
         UserModel(
           id: AuthenticationRepository.instance.authUser!.uid,
-          firstName: 'Aura',
+          firstName: 'Dekozy',
           lastName: 'Admin',
-          username: 'aura-admin',
+          username: 'dekozy-admin',
           email: ATexts.adminEmail,
           phoneNumber: '1234567890',
           role: AppRole.admin,
@@ -134,7 +134,7 @@ class LoginController extends GetxController {
       final settingsRepository = Get.put(SettingsRepository());
       await settingsRepository.registerSettings(SettingsModel(
         appLogo: '',
-        appName: 'AuraKart',
+        appName: 'Dekozy',
         taxRate: 0,
         shippingCost: 0,
       ));

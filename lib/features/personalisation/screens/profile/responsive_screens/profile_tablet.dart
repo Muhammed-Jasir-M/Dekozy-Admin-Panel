@@ -18,7 +18,7 @@ class ProfileTabletScreen extends StatelessWidget {
             children: [
               // Breadcrumbs
               ABreadcrumbsWithHeading(
-                  heading: 'Profilie', breadcrumbItems: ['Profile']),
+                  heading: 'Profile', breadcrumbItems: ['Profile']),
               SizedBox(height: ASizes.spaceBtwSections),
 
               // Body

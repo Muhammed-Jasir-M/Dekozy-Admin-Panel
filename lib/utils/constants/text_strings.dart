@@ -1,6 +1,6 @@
 class ATexts {
   // Admin Default Credentials
-  static const String adminEmail = "support@aurakart.com";
+  static const String adminEmail = "support@dekozy.com";
   static const String adminPassword = "Admin@123";
 
   // Storage Paths
@@ -66,5 +66,5 @@ class ATexts {
 
   // Home
   static const String homeAppbarTitle = "Good day for shopping";
-  static const String homeAppbarSubTitle = "Aura-Kart";
+  static const String homeAppbarSubTitle = "Dekozy";
 }
