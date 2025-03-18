@@ -35,7 +35,7 @@ class BrandsTabletScreen extends StatelessWidget {
                   children: [
                     // Table header
                     ATableHeader(
-                      buttonText: 'Create New Brand',
+                      buttonText: 'Create Brand',
                       onPressed: () => Get.toNamed(ARoutes.createBrand),
                       searchOnChanged: (query) => controller.searchQuery(query),
                     ),

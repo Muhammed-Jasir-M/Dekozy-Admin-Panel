@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:aura_kart_admin_panel/features/personalisation/screens/settings/widgets/image_meta.dart';
 
 import '../../../../../common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import '../../../../../utils/constants/sizes.dart';
-import '../../profile/widgets/image_meta.dart';
 import '../widgets/settings_form.dart';
 
 class SettingsTabletScreen extends StatelessWidget {

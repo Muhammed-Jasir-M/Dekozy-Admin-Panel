@@ -29,14 +29,26 @@ class CategoriesMobileScreen extends StatelessWidget {
                   heading: 'Categories', breadcrumbItems: ['Categories']),
               const SizedBox(height: ASizes.spaceBtwSections),
 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: () => Get.toNamed(ARoutes.createCategory),
+                      child: Text('Create Category'),
+                    ),
+                  ),
+                ],
+              ),
+
               // Table Body
               ARoundedContainer(
                 child: Column(
                   children: [
                     // Table Header
                     ATableHeader(
-                      buttonText: 'Create New Category',
-                      onPressed: () => Get.toNamed(ARoutes.createCategory),
+                      showLeftWidget: false,
                       searchController: controller.searchTextController,
                       searchOnChanged: (query) => controller.searchQuery(query),
                     ),
@@ -48,7 +60,7 @@ class CategoriesMobileScreen extends StatelessWidget {
                         if (controller.isLoading.value) {
                           return const ALoaderAnimation();
                         }
-                        
+
                         return const CategoryTable();
                       },
                     ),

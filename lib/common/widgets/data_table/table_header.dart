@@ -10,46 +10,70 @@ class ATableHeader extends StatelessWidget {
     this.searchController,
     this.searchOnChanged,
     this.showLeftWidget = true,
+    this.searchEnabled = true,
   });
 
   final Function()? onPressed;
   final String buttonText;
   final bool showLeftWidget;
+  final bool searchEnabled;
   final TextEditingController? searchController;
   final Function(String)? searchOnChanged;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: ADeviceUtils.isDesktopScreen(context) ? 3 : 1,
-          child: showLeftWidget
-              ? Row(
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      child: ElevatedButton(
-                        onPressed: onPressed,
-                        child: Text(buttonText),
-                      ),
+    final isMobileScreen = ADeviceUtils.isMobileScreen(context);
+    final isDesktopScreen = ADeviceUtils.isDesktopScreen(context);
+
+    return isMobileScreen
+        ? Row(
+            children: [
+              if (searchEnabled)
+                Flexible(
+                  child: TextFormField(
+                    controller: searchController,
+                    onChanged: searchOnChanged,
+                    decoration: const InputDecoration(
+                      hintText: 'Search here...',
+                      prefixIcon: Icon(Iconsax.search_normal),
                     ),
-                  ],
+                  ),
                 )
-              : const SizedBox.shrink(),
-        ),
-        Expanded(
-          flex: ADeviceUtils.isDesktopScreen(context) ? 2 : 1,
-          child: TextFormField(
-            controller: searchController,
-            onChanged: searchOnChanged,
-            decoration: const InputDecoration(
-              hintText: 'Search here...',
-              prefixIcon: Icon(Iconsax.search_normal),
-            ),
-          ),
-        ),
-      ],
-    );
+              else
+                SizedBox.shrink()
+            ],
+          )
+        : Row(
+            children: [
+              Expanded(
+                flex: isDesktopScreen ? 3 : 1,
+                child: showLeftWidget
+                    ? Row(
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            child: ElevatedButton(
+                              onPressed: onPressed,
+                              child: Text(buttonText),
+                            ),
+                          ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
+              ),
+              if (searchEnabled)
+                Expanded(
+                  flex: isDesktopScreen ? 2 : 1,
+                  child: TextFormField(
+                    controller: searchController,
+                    onChanged: searchOnChanged,
+                    decoration: const InputDecoration(
+                      hintText: 'Search here...',
+                      prefixIcon: Icon(Iconsax.search_normal),
+                    ),
+                  ),
+                ),
+            ],
+          );
   }
 }

@@ -29,6 +29,19 @@ class ProductsMobileScreen extends StatelessWidget {
                   heading: 'Products', breadcrumbItems: ['Products']),
               const SizedBox(height: ASizes.spaceBtwSections),
 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: () => Get.toNamed(ARoutes.createProduct),
+                      child: Text('Add Product'),
+                    ),
+                  ),
+                ],
+              ),
+
               // Table Body
               Obx(
                 () {
@@ -41,8 +54,7 @@ class ProductsMobileScreen extends StatelessWidget {
                       children: [
                         // Table Header
                         ATableHeader(
-                          buttonText: 'Add Product',
-                          onPressed: () => Get.toNamed(ARoutes.createProduct),
+                          showLeftWidget: false,
                           searchOnChanged: (query) =>
                               controller.searchQuery(query),
                         ),

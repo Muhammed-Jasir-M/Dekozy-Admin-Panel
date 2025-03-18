@@ -22,6 +22,7 @@ class BrandRows extends DataTableSource {
       selected: controller.selectedRows[index],
       onSelectChanged: (value) =>
           controller.selectedRows[index] = value ?? false,
+      onTap: () => Get.toNamed(ARoutes.editBrand, arguments: brand),
       cells: [
         DataCell(
           Row(

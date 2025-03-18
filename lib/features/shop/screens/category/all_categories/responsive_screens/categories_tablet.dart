@@ -35,7 +35,7 @@ class CategoriesTabletScreen extends StatelessWidget {
                   children: [
                     // Table Header
                     ATableHeader(
-                      buttonText: 'Create New Category',
+                      buttonText: 'Create Category',
                       onPressed: () => Get.toNamed(ARoutes.createCategory),
                       searchController: controller.searchTextController,
                       searchOnChanged: (query) => controller.searchQuery(query),

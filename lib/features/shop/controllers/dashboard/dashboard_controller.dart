@@ -67,13 +67,21 @@ class DashboardController extends ABaseController<OrderModel> {
     // Map to store total amounts for each status
     totalAmounts.value = {for (var status in OrderStatus.values) status: 0.0};
 
-    for (var order in orderController.allItems) {
-      // Count Orders
-      final status = order.status;
-      orderStatusData[status] = (orderStatusData[status] ?? 0) + 1;
+    if (orderController.allItems.isEmpty) {
+      // If there are no orders, set default values
+      for (var status in OrderStatus.values) {
+        orderStatusData[status] = 0;
+        totalAmounts[status] = 0.0;
+      }
+    } else {
+      for (var order in orderController.allItems) {
+        // Count Orders
+        final status = order.status;
+        orderStatusData[status] = (orderStatusData[status] ?? 0) + 1;
 
-      // Calculate total amounts for each status
-      totalAmounts[status] = (totalAmounts[status] ?? 0) + order.totalAmount;
+        // Calculate total amounts for each status
+        totalAmounts[status] = (totalAmounts[status] ?? 0) + order.totalAmount;
+      }
     }
   }
 

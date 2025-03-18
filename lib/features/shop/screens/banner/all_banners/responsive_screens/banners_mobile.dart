@@ -29,6 +29,19 @@ class BannersMobileScreen extends StatelessWidget {
                   heading: 'Banners', breadcrumbItems: ['Banners']),
               const SizedBox(height: ASizes.spaceBtwSections),
 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: () => Get.toNamed(ARoutes.createBanner),
+                      child: Text('Create Banner'),
+                    ),
+                  ),
+                ],
+              ),
+
               // Table Body
               Obx(
                 () {
@@ -41,10 +54,7 @@ class BannersMobileScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         // Table Header
-                        ATableHeader(
-                          buttonText: 'Create New Banner',
-                          onPressed: () => Get.toNamed(ARoutes.createBanner),
-                        ),
+                        ATableHeader(searchEnabled: false, showLeftWidget: false),
                         const SizedBox(height: ASizes.spaceBtwItems),
 
                         // Table

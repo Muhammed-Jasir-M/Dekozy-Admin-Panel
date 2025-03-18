@@ -23,7 +23,9 @@ class BannerController extends ABaseController<BannerModel> {
     if (route.isEmpty) return '';
 
     // Remove the leading '/'
-    String formatted = route.substring(1);
+    String formatted = route.startsWith('/') ? route.substring(1) : route;
+
+    if (formatted.isEmpty) return ''; 
 
     // Capitalize the first character
     formatted = formatted[0].toUpperCase() + formatted.substring(1);

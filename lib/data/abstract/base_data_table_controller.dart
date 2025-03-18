@@ -88,7 +88,7 @@ abstract class ABaseController<T> extends GetxController {
     final filteredItemIndex = filteredItems.indexWhere((i) => i == item);
 
     if (itemIndex != -1) allItems[itemIndex] = item;
-    if (filteredItemIndex != -1) filteredItems[itemIndex] = item;
+    if (filteredItemIndex != -1) filteredItems[filteredItemIndex] = item;
   }
 
   // Method for removing an item from the lists.

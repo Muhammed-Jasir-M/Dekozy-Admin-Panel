@@ -29,7 +29,7 @@ class SettingsModel {
     };
   }
 
-  /// factgory model to create a  settingmodel from firebase document snapshot
+  /// Factory model to create a  settingmodel from firebase document snapshot
   factory SettingsModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data();

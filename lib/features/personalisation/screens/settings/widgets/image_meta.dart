@@ -4,9 +4,9 @@ import 'package:aura_kart_admin_panel/features/personalisation/controllers/setti
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class ImageAndMeta extends StatelessWidget {
   const ImageAndMeta({super.key});
@@ -32,7 +32,7 @@ class ImageAndMeta extends StatelessWidget {
                   width: 200,
                   height: 200,
                   circular: true,
-                  icon: Iconsax.camera,
+                  icon: CupertinoIcons.camera,
                   loading: controller.loading.value,
                   onIconButtonPressed: () => controller.updateAppLogo(),
                   imageType: controller.settings.value.appLogo.isNotEmpty

@@ -18,9 +18,9 @@ class CategoryTable extends StatelessWidget {
         Text(controller.selectedRows.length.toString());
 
         return APaginatedDataTable(
+          minWidth: 700,
           sortAscending: controller.sortAscending.value,
           sortColumnIndex: controller.sortColumnIndex.value,
-          minWidth: 700,
           columns: [
             DataColumn2(
               label: const Text('Category'),

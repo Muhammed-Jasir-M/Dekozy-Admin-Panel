@@ -57,14 +57,14 @@ class UserModel {
 
   // Static function to create an empty user model.
   static UserModel empty() => UserModel(
-        // id: '',
-        // firstName: '',
-        // lastName: '',
-        // phoneNumber: '',
-        // profilePicture: '',
-        // username: '',
+        id: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        profilePicture: '',
+        username: '',
         email: '',
-        // role: AppRole.user,
+        role: AppRole.user,
       );
 
   // Convert model to JSON structure for storing data in Firebase.
@@ -72,7 +72,7 @@ class UserModel {
     return {
       'FirstName': firstName,
       'LastName': lastName,
-      'UserName': username,
+      'Username': username,
       'Email': email,
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
@@ -91,7 +91,7 @@ class UserModel {
         id: document.id,
         firstName: data.containsKey('FirstName') ? data['FirstName'] ?? '' : '',
         lastName: data.containsKey('LastName') ? data['LastName'] ?? '' : '',
-        username: data.containsKey('UserName') ? data['UserName'] ?? '' : '',
+        username: data.containsKey('Username') ? data['Username'] ?? '' : '',
         email: data.containsKey('Email') ? data['Email'] ?? '' : '',
         phoneNumber:
             data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',

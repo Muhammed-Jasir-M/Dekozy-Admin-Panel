@@ -34,8 +34,6 @@ class CustomerDetailController extends GetxController {
         customer.value.orders =
             await UserRepository.instance.fetchUserOrders(customer.value.id!);
       }
-
-      print(customer.value.orders);
       
       // Update the categories list
       allCustomerOrders.assignAll(customer.value.orders ?? []);

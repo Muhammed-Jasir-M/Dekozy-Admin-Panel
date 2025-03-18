@@ -32,7 +32,7 @@ class ADashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ARoundedContainer(
       onTap: onTap,
-      padding: const EdgeInsets.all(ASizes.lg),
+      padding: const EdgeInsets.all(ASizes.md),
       child: Column(
         children: [
           /// Heading
@@ -52,7 +52,14 @@ class ADashboardCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(subTitle, style: Theme.of(context).textTheme.headlineMedium),
+              Expanded(
+                child: Text(
+                  subTitle,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
 
               /// Right Side Stats
               Column(
@@ -61,6 +68,7 @@ class ADashboardCard extends StatelessWidget {
                   /// Indicator
                   SizedBox(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Icon(icon, color: color, size: ASizes.iconSm),
                         Text(
@@ -74,10 +82,10 @@ class ADashboardCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 135,
+                    width: 115,
                     child: Text(
-                      'Compared to Dec 2023',
-                      style: Theme.of(context).textTheme.labelMedium,
+                      'last month',
+                      style: Theme.of(context).textTheme.labelSmall,
                       overflow: TextOverflow.ellipsis,
                     ),
                   )

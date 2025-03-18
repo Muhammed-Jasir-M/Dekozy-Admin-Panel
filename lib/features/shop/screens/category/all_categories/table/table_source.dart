@@ -23,6 +23,7 @@ class CategoryRows extends DataTableSource {
       selected: controller.selectedRows[index],
       onSelectChanged: (value) =>
           controller.selectedRows[index] = value ?? false,
+      onTap: () => Get.toNamed(ARoutes.editCategory, arguments: category),
       cells: [
         DataCell(
           Row(

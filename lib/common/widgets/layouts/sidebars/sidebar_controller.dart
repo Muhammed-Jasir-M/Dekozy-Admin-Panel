@@ -1,11 +1,10 @@
-import 'package:aura_kart_admin_panel/routes/routes.dart';
 import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:get/get.dart';
  
 import '../../../../data/repositories/authentication/authentication_repository.dart';
 
 class SidebarController extends GetxController {
-  final activeItem = ARoutes.dashboard.obs;
+  final activeItem = ''.obs;
   final hoverItem = ''.obs;
 
   void changeActiveItems(String route) => activeItem.value = route;

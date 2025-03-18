@@ -4,9 +4,9 @@ import 'package:aura_kart_admin_panel/features/personalisation/controllers/user_
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/image_strings.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class ImageAndMeta extends StatelessWidget {
   const ImageAndMeta({super.key});
@@ -34,7 +34,7 @@ class ImageAndMeta extends StatelessWidget {
                   circular: true,
                   loading: controller.loading.value,
                   onIconButtonPressed: () => controller.updateProfilePicture(),
-                  icon: Iconsax.camera,
+                  icon: CupertinoIcons.camera,
                   imageType: controller.user.value.profilePicture.isNotEmpty
                       ? ImageType.network
                       : ImageType.asset,

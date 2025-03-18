@@ -42,8 +42,9 @@ class BannersDesktopScreen extends StatelessWidget {
                       children: [
                         // Table Header
                         ATableHeader(
-                          buttonText: 'Create New Banner',
+                          buttonText: 'Create Banner',
                           onPressed: () => Get.toNamed(ARoutes.createBanner),
+                          searchEnabled: false,
                         ),
                         const SizedBox(height: ASizes.spaceBtwItems),
 

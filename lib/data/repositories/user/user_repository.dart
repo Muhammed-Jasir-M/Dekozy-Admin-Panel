@@ -38,7 +38,6 @@ class UserRepository extends GetxController {
           .get();
 
       if (documentSnapshot.exists) {
-        print(UserModel.fromSnapshot(documentSnapshot));
         return UserModel.fromSnapshot(documentSnapshot);
       } else {
         return UserModel.empty();
@@ -62,7 +61,6 @@ class UserRepository extends GetxController {
       final result = querySnapshot.docs
           .map((doc) => UserModel.fromSnapshot(doc))
           .toList();
-      print(result);
       return result;
     } on FirebaseAuthException catch (e) {
       throw AFirebaseAuthException(e.code).message;
@@ -81,7 +79,6 @@ class UserRepository extends GetxController {
     try {
       final documentSnapshot = await _db.collection("Users").doc(id).get();
       if (documentSnapshot.exists) {
-        print(UserModel.fromSnapshot(documentSnapshot));
         return UserModel.fromSnapshot(documentSnapshot);
       } else {
         return UserModel.empty();

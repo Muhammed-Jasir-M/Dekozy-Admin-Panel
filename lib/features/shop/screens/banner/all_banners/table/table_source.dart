@@ -11,7 +11,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/sizes.dart';
 
-class BannersRows extends DataTableSource {
+class BannerRows extends DataTableSource {
   final controller = BannerController.instance;
 
   @override

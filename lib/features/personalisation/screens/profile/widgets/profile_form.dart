@@ -1,6 +1,7 @@
 import 'package:aura_kart_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:aura_kart_admin_panel/features/personalisation/controllers/user_controller.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
+import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:aura_kart_admin_panel/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +50,6 @@ class ProfileForm extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: ASizes.spaceBtwInputFields),
-
                         // Last Nanme
                         Expanded(
                           child: TextFormField(
@@ -66,6 +66,39 @@ class ProfileForm extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: ASizes.spaceBtwInputFields),
+
+                    ADeviceUtils.isMobileScreen(context)
+                        ? Column(
+                            children: [
+                              // First Name
+                              TextFormField(
+                                controller: controller.firstNameController,
+                                decoration: const InputDecoration(
+                                  hintText: 'First Name',
+                                  label: Text('First Name'),
+                                  prefixIcon: Icon(Iconsax.user),
+                                ),
+                                validator: (value) =>
+                                    AValidator.validateEmptyText(
+                                        'First Name', value),
+                              ),
+                              const SizedBox(
+                                  height: ASizes.spaceBtwInputFields),
+                              // Last Nanme
+                              TextFormField(
+                                controller: controller.lastNameController,
+                                decoration: const InputDecoration(
+                                  hintText: 'Last Name',
+                                  label: Text('Last Name'),
+                                  prefixIcon: Icon(Iconsax.user),
+                                ),
+                                validator: (value) =>
+                                    AValidator.validateEmptyText(
+                                        'Last Name', value),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
 
                     // Email & Phone
                     Row(
@@ -101,6 +134,34 @@ class ProfileForm extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: ASizes.spaceBtwSections),
+
+              ADeviceUtils.isMobileScreen(context)
+                  ? Column(
+                      children: [
+                        // Email
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: 'Email',
+                            label: Text('Email'),
+                            prefixIcon: Icon(Iconsax.forward),
+                            enabled: false,
+                          ),
+                        ),
+                        const SizedBox(height: ASizes.spaceBtwItems),
+                        // Phone
+                        TextFormField(
+                          controller: controller.phoneController,
+                          decoration: const InputDecoration(
+                            hintText: 'Phone',
+                            label: Text('Phone'),
+                            prefixIcon: Icon(Iconsax.mobile),
+                          ),
+                          validator: (value) =>
+                              AValidator.validateEmptyText('Phone', value),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
 
               // Update Button
               SizedBox(

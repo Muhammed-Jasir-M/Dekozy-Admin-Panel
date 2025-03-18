@@ -22,26 +22,29 @@ class MediaMobileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// Header
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Breadcrumbs
-                  const ABreadcrumbsWithHeading(
-                      heading: 'Media', breadcrumbItems: ['Media Screen']),
 
-                  // Toggle  Images Section Button
+              // Breadcrumbs
+              const ABreadcrumbsWithHeading(
+                  heading: 'Media', breadcrumbItems: ['Media Screen']),
+
+              const SizedBox(width: ASizes.spaceBtwItems),
+
+              // Toggle  Images Section Button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
                   SizedBox(
-                    width: ASizes.buttonWidth * 1.5,
+                    width: ASizes.buttonWidth,
                     child: ElevatedButton.icon(
                       onPressed: () => controller.showImagesUploaderSection
                           .value = !controller.showImagesUploaderSection.value,
-                      icon: const Icon(Iconsax.cloud_add),
-                      label: const Text('Upload Images'),
+                      icon: const Icon(Iconsax.add),
+                      label: const Text('Upload'),
                     ),
                   ),
                 ],
               ),
+
               const SizedBox(height: ASizes.spaceBtwSections),
 
               /// Upload Area

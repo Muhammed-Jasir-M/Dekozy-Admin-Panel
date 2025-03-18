@@ -57,7 +57,7 @@ class DashboardTabletScreen extends StatelessWidget {
                         title: 'Average Order Value',
                         context: context,
                         subTitle:
-                            '₹${(controller.orderController.allItems.fold(0.0, (previousValue, element) => previousValue + element.totalAmount) / controller.orderController.allItems.length).toStringAsFixed(2)}',
+                            '₹${controller.orderController.allItems.isNotEmpty ? (controller.orderController.allItems.fold(0.0, (previousValue, element) => previousValue + element.totalAmount) / controller.orderController.allItems.length).toStringAsFixed(2) : '0.00'}',
                         stats: 15,
                         icon: Iconsax.arrow_down,
                         color: AColors.error,
@@ -78,7 +78,7 @@ class DashboardTabletScreen extends StatelessWidget {
                             Colors.deepPurple.withValues(alpha: 0.1),
                         title: 'Total Orders',
                         subTitle:
-                            '₹${controller.orderController.allItems.length}',
+                            '${controller.orderController.allItems.length}',
                         context: context,
                         stats: 44,
                       ),

@@ -9,6 +9,7 @@ import 'package:aura_kart_admin_panel/features/media/screens/widgets/view_image_
 import 'package:aura_kart_admin_panel/utils/constants/colors.dart';
 import 'package:aura_kart_admin_panel/utils/constants/enums.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
+import 'package:aura_kart_admin_panel/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -41,29 +42,55 @@ class MediaContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Media Images Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Media Folders',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(width: ASizes.spaceBtwItems),
-                  MediaFolderDropdown(
-                    onChanged: (MediaCategory? newValue) {
-                      if (newValue != null) {
-                        controller.selectedPath.value = newValue;
-                        controller.getMediaImages();
-                      }
-                    },
-                  ),
-                ],
-              ),
-              if (allowSelection) buildAddSelectedImagesButton(),
-            ],
-          ),
+          ADeviceUtils.isMobileScreen(context)
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Media Folders',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        const SizedBox(width: ASizes.spaceBtwItems),
+                        MediaFolderDropdown(
+                          onChanged: (MediaCategory? newValue) {
+                            if (newValue != null) {
+                              controller.selectedPath.value = newValue;
+                              controller.getMediaImages();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    if (allowSelection)
+                      const SizedBox(height: ASizes.spaceBtwItems),
+                    if (allowSelection) buildAddSelectedImagesButton(),
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Media Folders',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        const SizedBox(width: ASizes.spaceBtwItems),
+                        MediaFolderDropdown(
+                          onChanged: (MediaCategory? newValue) {
+                            if (newValue != null) {
+                              controller.selectedPath.value = newValue;
+                              controller.getMediaImages();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    if (allowSelection) buildAddSelectedImagesButton(),
+                  ],
+                ),
           SizedBox(height: ASizes.spaceBtwSections),
 
           // Show Media

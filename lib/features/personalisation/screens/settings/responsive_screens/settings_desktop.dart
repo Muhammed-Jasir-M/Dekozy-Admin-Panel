@@ -1,10 +1,9 @@
 import 'package:aura_kart_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
-
+import 'package:aura_kart_admin_panel/features/personalisation/screens/settings/widgets/image_meta.dart';
 import 'package:aura_kart_admin_panel/features/personalisation/screens/settings/widgets/settings_form.dart';
 import 'package:aura_kart_admin_panel/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
-import '../../settings/widgets/image_meta.dart';
 
 class SettingsDesktopScreen extends StatelessWidget {
   const SettingsDesktopScreen({super.key});

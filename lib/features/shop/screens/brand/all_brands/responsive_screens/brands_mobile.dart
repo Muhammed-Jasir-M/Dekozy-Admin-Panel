@@ -29,14 +29,26 @@ class BrandsMobileScreen extends StatelessWidget {
                   heading: 'Brands', breadcrumbItems: ['Brands']),
               const SizedBox(height: ASizes.spaceBtwSections),
 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: () => Get.toNamed(ARoutes.createBrand),
+                      child: Text('Create Brand'),
+                    ),
+                  ),
+                ],
+              ),
+
               // Table body
               ARoundedContainer(
                 child: Column(
                   children: [
                     // Table header
                     ATableHeader(
-                      buttonText: 'Create New Brand',
-                      onPressed: () => Get.toNamed(ARoutes.createBrand),
+                      showLeftWidget: false,
                       searchOnChanged: (query) => controller.searchQuery(query),
                     ),
                     const SizedBox(height: ASizes.spaceBtwItems),
@@ -48,7 +60,7 @@ class BrandsMobileScreen extends StatelessWidget {
                         if (controller.isLoading.value) {
                           return const ALoaderAnimation();
                         }
-                        
+
                         return const BrandTable();
                       },
                     ),

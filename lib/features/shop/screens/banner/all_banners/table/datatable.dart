@@ -31,7 +31,7 @@ class BannersTable extends StatelessWidget {
             DataColumn2(label: Text('Active')),
             DataColumn2(label: Text('Action'), fixedWidth: 100),
           ],
-          source: BannersRows(),
+          source: BannerRows(),
         );
       },
     );

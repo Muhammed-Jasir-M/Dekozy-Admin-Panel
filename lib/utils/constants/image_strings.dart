@@ -1,7 +1,7 @@
 class AImages {
   // App Logos
-  static const String darkAppLogo = "assets/logos/splash-black-logo.png";
-  static const String lightAppLogo = "assets/logos/splash-white-logo.png";
+  static const String darkAppLogo = "assets/logos/splash-black-logo.jpg";
+  static const String lightAppLogo = "assets/logos/splash-white-logo.jpg";
 
   // Default Images
   static const String defaultImage = "assets/images/content/default_image.png";

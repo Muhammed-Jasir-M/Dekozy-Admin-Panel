@@ -117,7 +117,7 @@ class AOrderStatusPieChart extends StatelessWidget {
                                         status),
                               ),
                               Expanded(
-                                child: Text(' $displayStatus)}'),
+                                child: Text(' $displayStatus'),
                               ),
                             ],
                           ),
