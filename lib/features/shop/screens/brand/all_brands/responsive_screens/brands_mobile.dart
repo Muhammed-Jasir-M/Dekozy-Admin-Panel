@@ -42,6 +42,8 @@ class BrandsMobileScreen extends StatelessWidget {
                 ],
               ),
 
+              const SizedBox(height: ASizes.spaceBtwItems),
+
               // Table body
               ARoundedContainer(
                 child: Column(

@@ -41,6 +41,7 @@ class ProductsMobileScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: ASizes.spaceBtwItems),
 
               // Table Body
               Obx(

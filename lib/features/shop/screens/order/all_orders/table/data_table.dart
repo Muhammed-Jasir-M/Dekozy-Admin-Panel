@@ -15,8 +15,8 @@ class OrderTable extends StatelessWidget {
 
     return Obx(
       () {
-        // Text(controller.filteredItems.length.toString());
-        // Text(controller.selectedRows.length.toString());
+        Text(controller.filteredItems.length.toString());
+        Text(controller.selectedRows.length.toString());
 
         // Table
         return APaginatedDataTable(

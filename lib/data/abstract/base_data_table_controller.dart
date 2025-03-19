@@ -35,9 +35,9 @@ abstract class ABaseController<T> extends GetxController {
 
       List<T> fetchedItems = [];
 
-      if (allItems.isEmpty) {
-        fetchedItems = await fetchItems();
-      }
+      // if (allItems.isEmpty) {
+      fetchedItems = await fetchItems();
+      // }
 
       allItems.assignAll(fetchedItems);
       filteredItems.assignAll(allItems);

@@ -41,6 +41,7 @@ class CategoriesMobileScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: ASizes.spaceBtwItems),
 
               // Table Body
               ARoundedContainer(

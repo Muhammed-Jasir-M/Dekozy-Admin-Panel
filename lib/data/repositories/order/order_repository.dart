@@ -20,9 +20,10 @@ class OrderRepository extends GetxController {
           .collection('Orders')
           .orderBy('orderDate', descending: true)
           .get();
-      return result.docs
+      final orderList = result.docs
           .map((documentSnapshot) => OrderModel.fromSnapshot(documentSnapshot))
           .toList();
+      return orderList;
     } on FirebaseException catch (e) {
       throw AFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -30,7 +31,6 @@ class OrderRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      print(e.toString());
       throw 'Something went wrong!. Please try again';
     }
   }

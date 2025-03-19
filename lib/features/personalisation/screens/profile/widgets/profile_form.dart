@@ -17,6 +17,8 @@ class ProfileForm extends StatelessWidget {
     controller.lastNameController.text = controller.user.value.lastName;
     controller.phoneController.text = controller.user.value.phoneNumber;
 
+    final isMobileScreen = ADeviceUtils.isMobileScreen(context);
+
     return Column(
       children: [
         ARoundedContainer(
@@ -34,11 +36,48 @@ class ProfileForm extends StatelessWidget {
                 key: controller.formKey,
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        // First Name
-                        Expanded(
-                          child: TextFormField(
+                    if (!isMobileScreen)
+                      Row(
+                        children: [
+                          // First Name
+                          Expanded(
+                            child: TextFormField(
+                              controller: controller.firstNameController,
+                              decoration: const InputDecoration(
+                                hintText: 'First Name',
+                                label: Text('First Name'),
+                                prefixIcon: Icon(Iconsax.user),
+                              ),
+                              validator: (value) =>
+                                  AValidator.validateEmptyText(
+                                      'First Name', value),
+                            ),
+                          ),
+                          const SizedBox(width: ASizes.spaceBtwInputFields),
+                          // Last Nanme
+                          Expanded(
+                            child: TextFormField(
+                              controller: controller.lastNameController,
+                              decoration: const InputDecoration(
+                                hintText: 'Last Name',
+                                label: Text('Last Name'),
+                                prefixIcon: Icon(Iconsax.user),
+                              ),
+                              validator: (value) =>
+                                  AValidator.validateEmptyText(
+                                      'Last Name', value),
+                            ),
+                          ),
+                        ],
+                      ),
+                    if (!isMobileScreen)
+                      const SizedBox(height: ASizes.spaceBtwInputFields),
+
+                    if (isMobileScreen)
+                      Column(
+                        children: [
+                          // First Name
+                          TextFormField(
                             controller: controller.firstNameController,
                             decoration: const InputDecoration(
                               hintText: 'First Name',
@@ -48,11 +87,9 @@ class ProfileForm extends StatelessWidget {
                             validator: (value) => AValidator.validateEmptyText(
                                 'First Name', value),
                           ),
-                        ),
-                        const SizedBox(width: ASizes.spaceBtwInputFields),
-                        // Last Nanme
-                        Expanded(
-                          child: TextFormField(
+                          const SizedBox(height: ASizes.spaceBtwInputFields),
+                          // Last Nanme
+                          TextFormField(
                             controller: controller.lastNameController,
                             decoration: const InputDecoration(
                               hintText: 'Last Name',
@@ -62,50 +99,51 @@ class ProfileForm extends StatelessWidget {
                             validator: (value) => AValidator.validateEmptyText(
                                 'Last Name', value),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: ASizes.spaceBtwInputFields),
-
-                    ADeviceUtils.isMobileScreen(context)
-                        ? Column(
-                            children: [
-                              // First Name
-                              TextFormField(
-                                controller: controller.firstNameController,
-                                decoration: const InputDecoration(
-                                  hintText: 'First Name',
-                                  label: Text('First Name'),
-                                  prefixIcon: Icon(Iconsax.user),
-                                ),
-                                validator: (value) =>
-                                    AValidator.validateEmptyText(
-                                        'First Name', value),
-                              ),
-                              const SizedBox(
-                                  height: ASizes.spaceBtwInputFields),
-                              // Last Nanme
-                              TextFormField(
-                                controller: controller.lastNameController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Last Name',
-                                  label: Text('Last Name'),
-                                  prefixIcon: Icon(Iconsax.user),
-                                ),
-                                validator: (value) =>
-                                    AValidator.validateEmptyText(
-                                        'Last Name', value),
-                              ),
-                            ],
-                          )
-                        : const SizedBox.shrink(),
+                        ],
+                      ),
+                    if (isMobileScreen)
+                      const SizedBox(height: ASizes.spaceBtwSections),
 
                     // Email & Phone
-                    Row(
-                      children: [
-                        // Email
-                        Expanded(
-                          child: TextFormField(
+                    if (!isMobileScreen)
+                      Row(
+                        children: [
+                          // Email
+                          Expanded(
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                hintText: 'Email',
+                                label: Text('Email'),
+                                prefixIcon: Icon(Iconsax.forward),
+                                enabled: false,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: ASizes.spaceBtwItems),
+                          // Phone
+                          Expanded(
+                            child: TextFormField(
+                              controller: controller.phoneController,
+                              decoration: const InputDecoration(
+                                hintText: 'Phone',
+                                label: Text('Phone'),
+                                prefixIcon: Icon(Iconsax.mobile),
+                              ),
+                              validator: (value) =>
+                                  AValidator.validateEmptyText('Phone', value),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    if (!isMobileScreen)
+                      const SizedBox(height: ASizes.spaceBtwSections),
+
+                    if (isMobileScreen)
+                      Column(
+                        children: [
+                          // Email
+                          TextFormField(
                             decoration: const InputDecoration(
                               hintText: 'Email',
                               label: Text('Email'),
@@ -113,11 +151,9 @@ class ProfileForm extends StatelessWidget {
                               enabled: false,
                             ),
                           ),
-                        ),
-                        const SizedBox(height: ASizes.spaceBtwItems),
-                        // Phone
-                        Expanded(
-                          child: TextFormField(
+                          const SizedBox(height: ASizes.spaceBtwItems),
+                          // Phone
+                          TextFormField(
                             controller: controller.phoneController,
                             decoration: const InputDecoration(
                               hintText: 'Phone',
@@ -127,57 +163,30 @@ class ProfileForm extends StatelessWidget {
                             validator: (value) =>
                                 AValidator.validateEmptyText('Phone', value),
                           ),
+                        ],
+                      ),
+
+                    if (isMobileScreen)
+                      const SizedBox(height: ASizes.spaceBtwSections),
+
+                    // Update Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: Obx(
+                        () => ElevatedButton(
+                          onPressed: () => controller.loading.value
+                              ? () {}
+                              : controller.updateUserInformation(),
+                          child: controller.loading.value
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                )
+                              : const Text('Update Profile'),
                         ),
-                      ],
-                    )
+                      ),
+                    ),
                   ],
-                ),
-              ),
-              const SizedBox(height: ASizes.spaceBtwSections),
-
-              ADeviceUtils.isMobileScreen(context)
-                  ? Column(
-                      children: [
-                        // Email
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'Email',
-                            label: Text('Email'),
-                            prefixIcon: Icon(Iconsax.forward),
-                            enabled: false,
-                          ),
-                        ),
-                        const SizedBox(height: ASizes.spaceBtwItems),
-                        // Phone
-                        TextFormField(
-                          controller: controller.phoneController,
-                          decoration: const InputDecoration(
-                            hintText: 'Phone',
-                            label: Text('Phone'),
-                            prefixIcon: Icon(Iconsax.mobile),
-                          ),
-                          validator: (value) =>
-                              AValidator.validateEmptyText('Phone', value),
-                        ),
-                      ],
-                    )
-                  : const SizedBox.shrink(),
-
-              // Update Button
-              SizedBox(
-                width: double.infinity,
-                child: Obx(
-                  () => ElevatedButton(
-                    onPressed: () => controller.loading.value
-                        ? () {}
-                        : controller.updateUserInformation(),
-                    child: controller.loading.value
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          )
-                        : const Text('Update Profile'),
-                  ),
                 ),
               ),
             ],

@@ -69,7 +69,6 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      print(e.toString());
       throw 'Something went wrong!. Please try again';
     }
   }
@@ -90,7 +89,6 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      print(e.toString());
       throw 'Something went wrong!. Please try again';
     }
   }
@@ -112,7 +110,6 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw APlatformException(e.code).message;
     } catch (e) {
-      print(e.toString());
       throw 'Something went wrong!. Please try again';
     }
   }

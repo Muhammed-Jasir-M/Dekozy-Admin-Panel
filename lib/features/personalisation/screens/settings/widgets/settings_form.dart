@@ -12,6 +12,7 @@ class SettingsForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = SettingsController.instance;
+    final isMobileScreen = ADeviceUtils.isMobileScreen(context);
 
     return Column(
       children: [
@@ -39,11 +40,42 @@ class SettingsForm extends StatelessWidget {
                 ),
                 const SizedBox(height: ASizes.spaceBtwInputFields),
 
-                Row(
-                  children: [
-                    // Tax Rate
-                    Expanded(
-                      child: TextFormField(
+                if (!isMobileScreen)
+                  Row(
+                    children: [
+                      // Tax Rate
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.taxController,
+                          decoration: const InputDecoration(
+                            hintText: 'Tax %',
+                            label: Text('Tax Rate (%)'),
+                            prefixIcon: Icon(Iconsax.tag),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: ASizes.spaceBtwItems),
+                      // Shipping Cost
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.shippingController,
+                          decoration: const InputDecoration(
+                            hintText: 'Shipping Cost',
+                            label: Text('Shipping Cost (\u{20B9})'),
+                            prefixIcon: Icon(Iconsax.ship),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (!isMobileScreen)
+                  const SizedBox(height: ASizes.spaceBtwInputFields),
+
+                if (isMobileScreen)
+                  Column(
+                    children: [
+                      // Tax Rate
+                      TextFormField(
                         controller: controller.taxController,
                         decoration: const InputDecoration(
                           hintText: 'Tax %',
@@ -51,11 +83,9 @@ class SettingsForm extends StatelessWidget {
                           prefixIcon: Icon(Iconsax.tag),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: ASizes.spaceBtwItems),
-                    // Shipping Cost
-                    Expanded(
-                      child: TextFormField(
+                      const SizedBox(height: ASizes.spaceBtwItems),
+                      // Shipping Cost
+                      TextFormField(
                         controller: controller.shippingController,
                         decoration: const InputDecoration(
                           hintText: 'Shipping Cost',
@@ -63,34 +93,10 @@ class SettingsForm extends StatelessWidget {
                           prefixIcon: Icon(Iconsax.ship),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: ASizes.spaceBtwInputFields),
-
-                ADeviceUtils.isMobileScreen(context) ? Column(
-                  children: [
-                    // Tax Rate
-                    TextFormField(
-                      controller: controller.taxController,
-                      decoration: const InputDecoration(
-                        hintText: 'Tax %',
-                        label: Text('Tax Rate (%)'),
-                        prefixIcon: Icon(Iconsax.tag),
-                      ),
-                    ),
-                    const SizedBox(height: ASizes.spaceBtwItems),
-                    // Shipping Cost
-                    TextFormField(
-                      controller: controller.shippingController,
-                      decoration: const InputDecoration(
-                        hintText: 'Shipping Cost',
-                        label: Text('Shipping Cost (\u{20B9})'),
-                        prefixIcon: Icon(Iconsax.ship),
-                      ),
-                    ),
-                  ],
-                ) : const SizedBox.shrink(),
+                    ],
+                  ),
+                if (isMobileScreen)
+                  const SizedBox(height: ASizes.spaceBtwInputFields),
 
                 // Free Shipping Cost
                 TextFormField(
