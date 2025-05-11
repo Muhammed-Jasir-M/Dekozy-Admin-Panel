@@ -1,16 +1,59 @@
-# aura_kart_admin_panel
+# Dekozy Admin Panel
 
-A new Flutter project.
+Dekozy Admin Panel in Flutter Web with Firebase.
+
+This is an e-commerce web app admin panel built using Flutter Web and Firebase. It provides a robust platform for managing your e-commerce store with several features, including:
+
+## Features
+
+- Product management
+- Order tracking
+- User management
+- Analytics and reporting
+- Real-time updates
+- Cloning functionality for easy duplication of data or configurations
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To clone and run this application, follow these steps:
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter SDK installed ([Install Flutter](https://docs.flutter.dev/get-started/install))
+- Firebase project setup ([Firebase Console](https://console.firebase.google.com/))
+- Cloudinary account ([Cloudinary](https://cloudinary.com/))
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Cloning the Repository
+
+```bash
+git clone https://github.com/Muhammed-Jasir-M/Dekozy-Admin-Panel.git
+cd Dekozy-Admin-Panel
+```
+
+### Running the App
+
+1. Configure Firebase:
+
+   - Add your Firebase project configuration in the `firebase_options.dart` file.
+
+2. Configure Cloudinary:
+
+   - Add your Cloudinary API credentials in the appropriate configuration file.
+
+3. Install dependencies:
+
+   ```bash
+   flutter pub get
+   ```
+
+4. Run the app:
+
+   ```bash
+   flutter run
+   ```
+
+## Resources
+
+- [Flutter Documentation](https://docs.flutter.dev/)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [Cloudinary Documentation](https://cloudinary.com/documentation)
